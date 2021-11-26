@@ -1,6 +1,7 @@
 package cegepst.engine;
 
-import cegepst.viking.Resource;
+
+import cegepst.mainGame.miscellaneous.Resource;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;

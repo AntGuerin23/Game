@@ -9,23 +9,29 @@ public class GamePad extends MovementController {
     private int quitKey = KeyEvent.VK_ESCAPE;
     private int fireKey = KeyEvent.VK_X;
     private int fullScreenKey = KeyEvent.VK_F11;
+    private int jumpKey = KeyEvent.VK_SPACE;
 
     public GamePad() {
-        bindPushedKey(quitKey);
-        bindPushedKey(fullScreenKey);
+        bindKey(quitKey);
+        bindKey(fullScreenKey);
+        bindKey(jumpKey);
     }
 
 
-    public boolean isQuitPushed() {
-        return isKeyPushed(quitKey);
+    public boolean isQuitPressed() {
+        return isKeyPressed(quitKey);
     }
 
     public boolean isFirePressed() {
         return isKeyPressed(fireKey);
     }
 
-    public boolean isFullScreenPushed() {
-        return isKeyPushed(fullScreenKey);
+    public boolean isFullScreenHeld() {
+        return isKeyPressed(fullScreenKey);
+    }
+
+    public boolean isJumpPressed() {
+        return isKeyPressed(jumpKey);
     }
 
 

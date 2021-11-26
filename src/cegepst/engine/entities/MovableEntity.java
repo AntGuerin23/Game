@@ -9,50 +9,78 @@ import java.awt.*;
 public abstract class MovableEntity extends UpdatableEntity {
 
     private Collision collision;
-    private Direction direction = Direction.RIGHT;
+    private Direction horizontalDirection = Direction.RIGHT;
+    private Direction verticalDirection = Direction.DOWN;
     private int speed;
+    protected double verticalVelocity;
+    private double jumpForce;
     private boolean moved;
+    private boolean firstJumpingFrame;
     private int lastX;
     private int lastY;
+    private int groundedY;
 
     public MovableEntity() {
         collision = new Collision(this);
-        speed = 1;
+        speed = 1; //Default value
+        jumpForce = 5; //Default value
+        verticalVelocity = 0;
     }
 
     @Override
     public void update() {
         moved = false;
-    }
-
-    public void moveDown() {
-        move(Direction.DOWN);
-    }
-
-    public void moveUp() {
-        move(Direction.UP);
+        moveVertically();
     }
 
     public void moveLeft() {
-        move(Direction.LEFT);
+        moveHorizontally(Direction.LEFT);
     }
 
     public void moveRight() {
-        move(Direction.RIGHT);
+        moveHorizontally(Direction.RIGHT);
     }
 
-    public void move(Direction direction) {
-        this.direction = direction;
-        int allowedSpeed = collision.getAllowedSpeed(direction);
-        x += direction.getVelocityX(allowedSpeed);
-        y += direction.getVelocityY(allowedSpeed);
+    public void jump() {
+        if (isGrounded()) {
+            verticalVelocity = jumpForce;
+            firstJumpingFrame = true;
+            verticalDirection = Direction.UP;
+        }
+    }
+
+    public void moveHorizontally(Direction direction) {
+        this.horizontalDirection = direction;
+        double allowedSpeed = collision.getAllowedSpeed(direction);
+        x += direction.getVelocityX((int) allowedSpeed);
+        y += direction.getVelocityY((int) allowedSpeed);
         moved = (x != lastX || y != lastY);
         lastX = x;
         lastY = y;
     }
 
+    public void moveVertically() {
+        if (isGrounded() && firstJumpingFrame) {
+            y -= (int) verticalVelocity;
+            firstJumpingFrame = false;
+        } else {
+            if (verticalVelocity < 0) {
+                verticalDirection = Direction.DOWN;
+            }
+            y -= (int) collision.getAllowedDownSpeed();
+        }
+    }
+
+    protected boolean isGrounded() {
+        return collision.checkIfGrounded();
+    }
+
     public int getSpeed() {
         return speed;
+    }
+
+    public int getVerticalVelocity() {
+        return (int) verticalVelocity;
     }
 
     public boolean hasMoved() {
@@ -63,29 +91,43 @@ public abstract class MovableEntity extends UpdatableEntity {
         this.speed = speed;
     }
 
+    public void setJumpForce(double jumpForce) {
+        this.jumpForce = jumpForce;
+    }
+
     public void drawHitBox(Buffer buffer) {
-        Rectangle rectangle = getHitBox();
         Color color = new Color (255, 0, 0, 200);
-        buffer.drawRectangle(rectangle.x, rectangle.y, rectangle.width, rectangle.height, color);
+        Rectangle leftOrRightHitbox = getHitBox();
+        buffer.drawRectangle(leftOrRightHitbox.x, leftOrRightHitbox.y, leftOrRightHitbox.width, leftOrRightHitbox.height, color);
+
+        Rectangle lowerHitBox = getLowerHitBox();
+        buffer.drawRectangle(lowerHitBox.x, lowerHitBox.y, lowerHitBox.width, lowerHitBox.height, color);
+//        drawLeftOrRightHitbox();
+//        drawDownOrUpHitbox();
     }
 
     public Rectangle getHitBox() {
-        switch (direction) {
+        switch (horizontalDirection) {
             case LEFT: return getLeftHitBox();
             case RIGHT: return getRightHitBox();
-            case UP: return getUpperHitBox();
-            case DOWN: return getLowerHitBox();
+//            case UP: return getUpperHitBox();
+//            case DOWN: return getLowerHitBox();
             default : return getBounds();
         }
     }
 
-    public void setDirection(Direction direction) {
-        this.direction = direction;
+    public void setHorizontalDirection(Direction horizontalDirection) {
+        this.horizontalDirection = horizontalDirection;
     }
 
-    public Direction getDirection() {
-        return direction;
+    public Direction getHorizontalDirection() {
+        return horizontalDirection;
     }
+
+    public Direction getVerticalDirection() {
+        return verticalDirection;
+    }
+
 
     //Check if intersects with inner bound
     public boolean hitBoxIntersectsWith(StaticEntity other) {
@@ -100,11 +142,11 @@ public abstract class MovableEntity extends UpdatableEntity {
         return new Rectangle(x + width, y, speed, height);
     }
 
-    private Rectangle getUpperHitBox() {
+    public Rectangle getUpperHitBox() {
         return new Rectangle(x, y - speed, width, speed);
     }
 
-    private Rectangle getLowerHitBox() {
-        return new Rectangle(x, y + height, width, speed);
+    public Rectangle getLowerHitBox() {
+            return new Rectangle(x, y + height, width, Math.max(1, (int) Math.abs(verticalVelocity)));
     }
 }

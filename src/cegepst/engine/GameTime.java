@@ -17,6 +17,10 @@ public class GameTime {
         return System.currentTimeMillis();
     }
 
+    public static long getTimeSince(long pastTime) {
+        return getCurrentTime() - pastTime;
+    }
+
     public static int getCurrentFps() {
         return (currentFps > 0) ? currentFps : fpsCount;
     }

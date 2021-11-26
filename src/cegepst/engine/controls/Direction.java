@@ -2,10 +2,10 @@ package cegepst.engine.controls;
 
 public enum Direction {
 
-    DOWN(0,0, 1),
     LEFT(1,-1, 0),
     RIGHT(2,1, 0),
-    UP(3,0, -1);
+    UP(3,0, -1),
+    DOWN(4,0, 1);
 
     private final int animationID;
     private final int xMultiplier;
@@ -27,5 +27,9 @@ public enum Direction {
 
     public int getVelocityY(int speed) {
         return yMultiplier * speed;
+    }
+
+    public int getYMultiplier() {
+        return yMultiplier;
     }
 }

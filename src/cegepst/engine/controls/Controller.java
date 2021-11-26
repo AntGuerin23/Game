@@ -1,53 +1,49 @@
 package cegepst.engine.controls;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 
 public abstract class Controller implements KeyListener{
 
-    private final HashMap<Integer, Boolean> pressedKeys;
-    private final HashMap<Integer, Boolean> pushedKeys;
+    private static final int IDLE = 0;
+    private static final int PUSHED = 1;
+    private static final int HELD = 2;
+
+    private final HashMap<Integer, Integer> keys;
 
     public Controller() {
-        pressedKeys = new HashMap<>();
-        pushedKeys = new HashMap<>();
+        keys = new HashMap<>();
     }
 
-    protected void bindPressedKeys(int[] keys) {
+    protected void bindKeys(int[] keys) {
         for (int keycode : keys) {
-            pressedKeys.put(keycode, false);
+            this.keys.put(keycode, IDLE);
         }
     }
 
-    protected void bindPressedKey(int key) {
-        pressedKeys.put(key, false);
-    }
-
-    protected void bindPushedKey(int key) {
-        pushedKeys.put(key, false);
+    protected void bindKey(int key) {
+        keys.put(key, IDLE);
     }
 
     protected void clearKeys() {
-        pressedKeys.clear();
+        keys.clear();
     }
 
     protected void removeKey(int key) {
-        pressedKeys.remove(key);
+        keys.remove(key);
     }
 
     protected boolean isKeyPressed(int key) {
-        return pressedKeys.containsKey(key)
-                && pressedKeys.get(key);
+        return keys.containsKey(key)
+                && keys.get(key) == PUSHED;
     }
 
-    protected boolean isKeyPushed(int key) {
-        if (pushedKeys.containsKey(key)
-                && pushedKeys.get(key)) {
-            pushedKeys.put(key,false);
-            return true;
-        }
-        return false;
+    protected boolean isKeyHeld(int key) {
+        return (keys.containsKey(key)
+                && keys.get(key) == HELD || keys.get(key) == PUSHED);
     }
 
     @Override
@@ -58,19 +54,18 @@ public abstract class Controller implements KeyListener{
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         int keycode = keyEvent.getKeyCode();
-        if (pushedKeys.containsKey(keycode)) {
-            pushedKeys.put(keycode,true);
-        }
-        if (pressedKeys.containsKey(keycode)) {
-            pressedKeys.put(keycode, true);
+        if (keys.containsKey(keycode) && keys.get(keycode) == PUSHED) {
+            keys.put(keycode,HELD);
+        } else if (keys.containsKey(keycode) && keys.get(keycode) == IDLE) {
+            keys.put(keycode,PUSHED);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         int keycode = keyEvent.getKeyCode();
-        if (pressedKeys.containsKey(keycode)) {
-            pressedKeys.put(keycode, false);
+        if (keys.containsKey(keycode)) {
+            keys.put(keycode, IDLE);
         }
     }
 }

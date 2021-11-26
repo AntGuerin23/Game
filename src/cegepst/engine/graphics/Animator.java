@@ -36,7 +36,7 @@ public class Animator {
     }
 
     public void drawTopDownAnimation(Buffer buffer) {
-        buffer.drawImage(frames[entity.getDirection().getAnimationID()][currentAnimationFrame], entity.getX(), entity.getY());
+        buffer.drawImage(frames[entity.getHorizontalDirection().getAnimationID()][currentAnimationFrame], entity.getX(), entity.getY());
     }
 
     public void loadRPGMakerAnimationFrames() {

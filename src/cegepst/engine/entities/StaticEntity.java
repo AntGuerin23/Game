@@ -1,5 +1,6 @@
 package cegepst.engine.entities;
 
+import cegepst.engine.GameTime;
 import cegepst.engine.graphics.Buffer;
 
 import java.awt.*;
@@ -22,7 +23,6 @@ public abstract class StaticEntity {
         this.width = width;
         this.height = height;
     }
-
     public boolean intersectsWith(StaticEntity other) {
         return getBounds().intersects(other.getBounds());
     }

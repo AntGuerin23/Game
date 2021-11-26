@@ -11,11 +11,14 @@ public class Player extends ControllableEntity {
         super(controller);
         setSpeed(5);
         setDimension(20,20);
+        teleport(20,100);
+        setJumpForce(10);
     }
 
     @Override
     public void draw(Buffer buffer) {
-        buffer.drawRectangle(20,20,20,20, Color.ORANGE);
+        buffer.drawRectangle(x, y, width, height, Color.ORANGE);
+        drawHitBox(buffer);
     }
 
     @Override
