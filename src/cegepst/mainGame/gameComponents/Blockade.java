@@ -15,7 +15,7 @@ public class Blockade extends StaticEntity {
 
     @Override
     public void draw(Buffer buffer) {
-        if (GameSettings.DEBUG_COLLISION) {
+        if (GameSettings.debug) {
             buffer.drawRectangle(x,y,width,height,new Color(255, 0, 0, 100));
         }
     }

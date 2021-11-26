@@ -1,12 +1,15 @@
 package cegepst.mainGame;
 
 import cegepst.engine.Game;
+import cegepst.engine.GameTime;
 import cegepst.engine.entities.UpdatableEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.gameComponents.GamePad;
 import cegepst.mainGame.gameComponents.Player;
+import cegepst.mainGame.miscellaneous.GameSettings;
 import cegepst.mainGame.worlds.IntroWorld;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class MainGame extends Game {
@@ -32,6 +35,9 @@ public class MainGame extends Game {
     public void draw(Buffer buffer) {
         drawEntities(buffer);
         drawMiscellaneous(buffer);
+        if (GameSettings.debug) {
+            drawFPS(buffer);
+        }
     }
 
     @Override
@@ -54,10 +60,13 @@ public class MainGame extends Game {
         if (gamePad.isQuitPressed()) {
             stop();
         }
-
         if (gamePad.isJumpPressed()) {
             player.jump();
         }
+        if (gamePad.isDebugPressed()) {
+            GameSettings.debug = !GameSettings.debug;
+        }
+
     }
 
     private void updateEntities() {
@@ -72,5 +81,10 @@ public class MainGame extends Game {
 
     private void drawMiscellaneous(Buffer buffer) {
         introWorld.draw(buffer);
+    }
+
+    private void drawFPS(Buffer buffer) {
+        buffer.drawText("FPS: " + GameTime.getCurrentFps(), 10, 40, Color.WHITE);
+        buffer.drawText(GameTime.getElapsedFormattedTime(), 10, 60, Color.WHITE);
     }
 }

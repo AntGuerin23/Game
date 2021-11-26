@@ -10,11 +10,13 @@ public class GamePad extends MovementController {
     private int fireKey = KeyEvent.VK_X;
     private int fullScreenKey = KeyEvent.VK_F11;
     private int jumpKey = KeyEvent.VK_SPACE;
+    private int debugKey = KeyEvent.VK_F3;
 
     public GamePad() {
         bindKey(quitKey);
         bindKey(fullScreenKey);
         bindKey(jumpKey);
+        bindKey(debugKey);
     }
 
 
@@ -32,6 +34,10 @@ public class GamePad extends MovementController {
 
     public boolean isJumpPressed() {
         return isKeyPressed(jumpKey);
+    }
+
+    public boolean isDebugPressed() {
+        return isKeyPressed(debugKey);
     }
 
 

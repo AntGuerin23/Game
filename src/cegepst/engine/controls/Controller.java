@@ -37,8 +37,12 @@ public abstract class Controller implements KeyListener{
     }
 
     protected boolean isKeyPressed(int key) {
-        return keys.containsKey(key)
+        boolean isPressed = keys.containsKey(key)
                 && keys.get(key) == PUSHED;
+        if (isPressed) {
+            keys.put(key, HELD);
+        }
+        return isPressed;
     }
 
     protected boolean isKeyHeld(int key) {

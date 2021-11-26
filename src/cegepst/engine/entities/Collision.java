@@ -13,7 +13,7 @@ public class Collision {
         this.entity = entity;
     }
 
-    public double getAllowedSpeed(Direction direction) {
+    public double getHorizontalAllowedSpeed(Direction direction) {
         switch(direction) {
             case LEFT: return getAllowedLeftSpeed();
             case RIGHT: return getAllowedRightSpeed();
@@ -21,22 +21,30 @@ public class Collision {
         return 0;
     }
 
-    public boolean checkIfGrounded() {
-        Rectangle lowerHitBox = entity.getLowerHitBox();
+    public double getVerticalAllowedSpeed(Direction direction) {
+        switch(direction) {
+            case UP: return getAllowedUpSpeed();
+            case DOWN: return getAllowedDownSpeed();
+        }
+        return 0;
+    }
+
+    public boolean checkIfVerticallyStuck(boolean checkingFloor) {
+        Rectangle hitBox = (checkingFloor) ? entity.getLowerHitBox() : entity.getUpperHitBox();
         for (StaticEntity other : CollidableRepository.getInstance()) {
-            if (lowerHitBox.intersects(other.getBounds())) {
+            if (hitBox.intersects(other.getBounds())) {
                 return true;
             }
         }
         return false;
     }
 
-//    private int getAllowedUpSpeed() {
-//        return distance(other ->
-//                entity.y - (other.y + other.height));
-//    }
+    private double getAllowedUpSpeed() {
+        return getVerticalAllowedDistance(other ->
+                entity.y - (other.y + other.height));
+    }
 
-    public double getAllowedDownSpeed() {
+    private double getAllowedDownSpeed() {
         return getVerticalAllowedDistance(other ->
                 other.y - (entity.y + entity.height));
     }
@@ -52,13 +60,13 @@ public class Collision {
     }
 
     private double getHorizontalAllowedDistance(DistanceCalculator calculator) {
-        Rectangle collisionBound = entity.getHitBox();
+        Rectangle collisionBound = entity.getHorizontalHitBox();
         int allowedDistance = entity.getSpeed();
         return getAllowedDistance(collisionBound, allowedDistance, calculator);
     }
 
     private double getVerticalAllowedDistance(DistanceCalculator calculator) {
-        Rectangle collisionBound = entity.getLowerHitBox();
+        Rectangle collisionBound = entity.getVerticalHitBox();
         double allowedDistance = Math.abs(entity.getVerticalVelocity());
         return getAllowedDistance(collisionBound,allowedDistance, calculator) * entity.getVerticalDirection().getYMultiplier() * -1;
     }
