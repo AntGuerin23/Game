@@ -20,6 +20,11 @@ public class Buffer {
         graphics.fillOval(x, y, radius * 2, radius * 2);
     }
 
+    public void drawOval(int x, int y, int width, int height, Paint paint) {
+        graphics.setPaint(paint);
+        graphics.fillOval(x, y, width, height);
+    }
+
     public void drawText(String text, int x, int y, Paint paint) {
         graphics.setPaint(paint);
         graphics.drawString(text, x, y);

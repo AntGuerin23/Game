@@ -11,6 +11,7 @@ public abstract class StaticEntity {
     protected int y;
     protected int width;
     protected int height;
+    protected boolean isDead;
 
     public abstract void draw(Buffer buffer);
 
@@ -23,6 +24,15 @@ public abstract class StaticEntity {
         this.width = width;
         this.height = height;
     }
+
+    public void kill() {
+        isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
     public boolean intersectsWith(StaticEntity other) {
         return getBounds().intersects(other.getBounds());
     }

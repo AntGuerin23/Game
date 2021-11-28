@@ -1,4 +1,4 @@
-package cegepst.mainGame.miscellaneous;
+package cegepst.mainGame.miscellaneous.other;
 
 public class GameSettings {
 

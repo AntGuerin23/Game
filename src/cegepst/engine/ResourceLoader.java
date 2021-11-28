@@ -1,7 +1,7 @@
 package cegepst.engine;
 
 
-import cegepst.mainGame.miscellaneous.Resource;
+import cegepst.mainGame.miscellaneous.other.Resource;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,16 +1,16 @@
-package cegepst.mainGame.gameComponents;
+package cegepst.mainGame.entities;
 
-import cegepst.engine.CollidableRepository;
+import cegepst.engine.EntityRepository;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
-import cegepst.mainGame.miscellaneous.GameSettings;
+import cegepst.mainGame.miscellaneous.other.GameSettings;
 
 import java.awt.*;
 
 public class Blockade extends StaticEntity {
 
     public Blockade() {
-        CollidableRepository.getInstance().registerEntity(this);
+        EntityRepository.getInstance().registerEntity(this, true);
     }
 
     @Override

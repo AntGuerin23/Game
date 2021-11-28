@@ -2,7 +2,7 @@ package cegepst.engine.graphics;
 
 import cegepst.engine.ResourceLoader;
 import cegepst.engine.entities.MovableEntity;
-import cegepst.mainGame.miscellaneous.Resource;
+import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

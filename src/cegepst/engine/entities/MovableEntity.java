@@ -20,7 +20,7 @@ public abstract class MovableEntity extends UpdatableEntity {
     public MovableEntity() {
         collision = new Collision(this);
         speed = 1; //Default value
-        moved = false;
+        moved = true;
         verticalVelocity = 0;
     }
 
