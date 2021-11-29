@@ -32,8 +32,8 @@ public abstract class Enemy extends GravitatingEntity {
     }
 
     private void checkIfShot() {
-        StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, Bullet.class.toString());
-        if (intersectingEntity instanceof Bullet) {
+        StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Bullet");
+        if (intersectingEntity != null) {
             getHit(1);
             intersectingEntity.kill();
         }
@@ -47,5 +47,10 @@ public abstract class Enemy extends GravitatingEntity {
         if (hp == 0) {
             isDead = true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Enemy";
     }
 }

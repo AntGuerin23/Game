@@ -1,6 +1,7 @@
 package cegepst.mainGame.entities;
 
 import cegepst.engine.EntityRepository;
+import cegepst.engine.IntersectionChecker;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.entities.UpdatableEntity;
 import cegepst.engine.graphics.Buffer;
@@ -30,12 +31,11 @@ public class Coin extends UpdatableEntity {
     }
 
     private void checkIfPickedUp() {
-        for (StaticEntity entity : EntityRepository.getInstance()) {
-            if (entity.intersectsWith(this) && entity instanceof Player) {
-                //TODO : Sound effect and others
-                player.foundCoin(1);
-                super.isDead = true;
-            }
+        StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Player");
+        if (intersectingEntity != null) {
+            //TODO : Sound effect and others
+            player.foundCoin(1);
+            super.isDead = true;
         }
     }
 }

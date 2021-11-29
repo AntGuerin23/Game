@@ -32,6 +32,11 @@ public class Bullet extends MovableEntity {
         buffer.drawRectangle(x,y,width,height, Color.YELLOW);
     }
 
+    @Override
+    public String toString() {
+        return "Bullet";
+    }
+
     private void checkIfDead() {
         //TODO : Check if collided with enemy
         if (!hasMoved()) {
