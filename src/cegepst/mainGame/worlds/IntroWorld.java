@@ -5,21 +5,20 @@ import cegepst.mainGame.entities.Blockade;
 public class IntroWorld extends World {
 
     public IntroWorld() {
-        initializeBorders();
+        initializeBorderLocations();
+        instantiateBorders();
     }
 
-    private void initializeBorders() {
-        Blockade floor = new Blockade();
-        floor.teleport(0,570);
-        floor.setDimension(800,30);
+    private void initializeBorderLocations() {
+        super.startBorderX = 0;
+        super.startBorderY = 0;
+        super.endBorderX = 1000;
+        super.endBorderY = 600;
+    }
 
-        Blockade obstacle = new Blockade();
-        obstacle.teleport(150,430);
-        obstacle.setDimension(100,30);
+    private void instantiateBorders() {
+        super.createBorders();
 
-        Blockade wall = new Blockade();
-        wall.teleport(300,0);
-        wall.setDimension(20,600);
     }
 
 }

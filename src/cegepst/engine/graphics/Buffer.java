@@ -1,8 +1,12 @@
 package cegepst.engine.graphics;
 
+import cegepst.engine.Camera;
+
 import java.awt.*;
 
 public class Buffer {
+
+    private int currentOffset = 0;
 
     private final Graphics2D graphics;
 
@@ -13,6 +17,10 @@ public class Buffer {
     public void drawRectangle(int x, int y, int width, int height, Paint paint) {
         graphics.setPaint(paint);
         graphics.fillRect(x, y, width, height);
+    }
+
+    public void translate(Camera camera) {
+        graphics.translate(-camera.getX(), -camera.getY());
     }
 
     public void drawCircle(int x, int y, int radius, Paint paint) {

@@ -10,7 +10,9 @@ import java.awt.*;
 
 public class Player extends ControllableEntity {
 
+    private final static int MAX_HP = 3;
     private int coinCount;
+    private int hp;
 
     public Player(MovementController controller) {
         super(controller);
@@ -44,7 +46,7 @@ public class Player extends ControllableEntity {
         coinCount = 0;
         setSpeed(5);
         setDimension(20,20);
-        teleport(20,100);
+        teleport(20,580);
         setJumpForce(10);
     }
 }

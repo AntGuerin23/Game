@@ -1,19 +1,17 @@
 package cegepst.mainGame;
 
+import cegepst.engine.Camera;
 import cegepst.engine.EntityRepository;
 import cegepst.engine.Game;
 import cegepst.engine.GameTime;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.entities.UpdatableEntity;
 import cegepst.engine.graphics.Buffer;
-import cegepst.mainGame.entities.Bullet;
-import cegepst.mainGame.entities.Coin;
-import cegepst.mainGame.entities.Enemy;
+import cegepst.mainGame.entities.*;
 import cegepst.mainGame.miscellaneous.other.GamePad;
-import cegepst.mainGame.entities.Player;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
 import cegepst.mainGame.worlds.IntroWorld;
-import com.sun.imageio.stream.CloseableDisposerRecord;
+import cegepst.mainGame.worlds.World;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,8 +20,9 @@ public class MainGame extends Game {
 
     private GamePad gamePad;
     private Player player;
-    private IntroWorld introWorld;
-    private Enemy enemy;
+    private World currentWorld;
+    private Roamer enemy;
+    private Camera camera;
 
     @Override
     public void initialize() {
@@ -35,15 +34,17 @@ public class MainGame extends Game {
         manageInputs();
         updateEntities();
         unregisterCorpses();
+        camera.update(currentWorld);
     }
 
     @Override
     public void draw(Buffer buffer) {
-        drawEntities(buffer);
         drawMiscellaneous(buffer);
         if (GameSettings.debug) {
             drawFPS(buffer);
         }
+        buffer.translate(camera);
+        drawEntities(buffer);
     }
 
     @Override
@@ -54,8 +55,9 @@ public class MainGame extends Game {
     private void instantiate() {
         gamePad = new GamePad();
         player = new Player(gamePad);
-        introWorld = new IntroWorld();
-        enemy = new Enemy();
+        camera = new Camera(player);
+        currentWorld = new IntroWorld();
+        enemy = new Roamer(300);
         new Coin(155,410, player);
         new Coin(170,410, player);
         new Coin(185,410, player);
@@ -114,7 +116,7 @@ public class MainGame extends Game {
     }
 
     private void drawMiscellaneous(Buffer buffer) {
-        introWorld.draw(buffer);
+        currentWorld.draw(buffer);
         buffer.drawText("Coins : " + player.getCoinCount(),730,20, Color.WHITE);
     }
 
