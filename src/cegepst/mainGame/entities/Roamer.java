@@ -43,6 +43,7 @@ public class Roamer extends Enemy {
         setDimension(60, 60);
         teleport(100, 540);
         setSpeed(3);
+        setStoredCoins(10);
     }
 
     private void roam() {

@@ -11,7 +11,7 @@ public abstract class MovableEntity extends UpdatableEntity {
     protected Collision collision;
     protected Direction horizontalDirection = Direction.RIGHT;
     protected Direction verticalDirection = Direction.DOWN;
-    private int speed;
+    private double speed;
     protected double verticalVelocity;
     private boolean moved;
     private int lastX;
@@ -55,7 +55,7 @@ public abstract class MovableEntity extends UpdatableEntity {
         return collision.checkIfVerticallyStuck(false);
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
@@ -67,7 +67,7 @@ public abstract class MovableEntity extends UpdatableEntity {
         return moved;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -114,15 +114,15 @@ public abstract class MovableEntity extends UpdatableEntity {
     }
 
     public Rectangle getUpperHitBox() {
-        return new Rectangle(x, y - speed, width, (int) Math.abs(verticalVelocity));
+        return new Rectangle(x, (int) (y - speed), width, (int) Math.abs(verticalVelocity));
     }
 
     private Rectangle getLeftHitBox() {
-        return new Rectangle(x - speed, y, speed, height);
+        return new Rectangle (x - (int) speed, y, (int) speed, height);
     }
 
     private Rectangle getRightHitBox() {
-        return new Rectangle(x + width, y, speed, height);
+        return new Rectangle(x + width, y, (int) speed, height);
     }
 
     private void checkIfHasMoved() {

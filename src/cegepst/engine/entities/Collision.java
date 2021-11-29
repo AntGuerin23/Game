@@ -61,7 +61,7 @@ public class Collision {
 
     private double getHorizontalAllowedDistance(DistanceCalculator calculator) {
         Rectangle collisionBound = entity.getHorizontalHitBox();
-        int allowedDistance = entity.getSpeed();
+        double allowedDistance = entity.getSpeed();
         return getAllowedDistance(collisionBound, allowedDistance, calculator);
     }
 

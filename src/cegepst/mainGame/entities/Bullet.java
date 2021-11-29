@@ -2,7 +2,6 @@ package cegepst.mainGame.entities;
 
 import cegepst.engine.EntityRepository;
 import cegepst.engine.controls.Direction;
-import cegepst.engine.entities.GravitatingEntity;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
 

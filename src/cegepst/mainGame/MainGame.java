@@ -107,7 +107,16 @@ public class MainGame extends Game {
 
     private void unregisterCadavers(ArrayList<StaticEntity> deadEntities) {
         for (StaticEntity deadEntity : deadEntities) {
+            dropCoins(deadEntity);
             EntityRepository.getInstance().unregisterEntity(deadEntity);
+        }
+    }
+
+    private void dropCoins(StaticEntity deadEntity) {
+        if (deadEntity instanceof Enemy) {
+            for (int i = 0; i < ((Enemy) deadEntity).getStoredCoins(); i++) {
+                new DroppedCoin(deadEntity.getX(),deadEntity.getY(), player);
+            }
         }
     }
 

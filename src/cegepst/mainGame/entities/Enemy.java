@@ -11,6 +11,7 @@ import java.awt.*;
 public abstract class Enemy extends GravitatingEntity {
 
     protected int hp;
+    protected int storedCoins;
 
     @Override
     public abstract void draw(Buffer buffer);
@@ -26,9 +27,18 @@ public abstract class Enemy extends GravitatingEntity {
         checkIfShot();
     }
 
+    public int getStoredCoins() {
+        return storedCoins;
+    }
+
     protected void setMaxHp(int maxHp) {
         hp = maxHp;
     }
+
+    protected void setStoredCoins(int storedCoins) {
+        this.storedCoins = storedCoins;
+    }
+
 
     private void checkIfShot() {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Bullet");

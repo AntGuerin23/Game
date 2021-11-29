@@ -8,7 +8,6 @@ import cegepst.engine.entities.ControllableEntity;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.awt.*;
 
