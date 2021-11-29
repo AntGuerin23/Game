@@ -4,20 +4,24 @@ import cegepst.engine.controls.MovementController;
 
 public abstract class ControllableEntity extends GravitatingEntity {
 
-    private MovementController controller;
+    private final MovementController controller;
 
     public ControllableEntity(MovementController controller) {
         this.controller = controller;
     }
 
     public void moveAccordingToController() {
-        if (!controller.isMoving()) {
-            return;
+        checkJump();
+        moveLeftAndRight();
+    }
+
+    private void checkJump() {
+        if (controller.isJumpPressed()) {
+            jump();
         }
-//        if (controller.isUpPressed() && !controller.isDownPressed()) {
-//            moveUp();
-//        } else if (controller.isDownPressed() && !controller.isUpPressed()) {
-//            moveDown();
+    }
+
+    private void moveLeftAndRight() {
         if (controller.isLeftHeld() && !controller.isRightHeld()) {
             moveLeft();
         } else if (controller.isRightHeld() && !controller.isLeftHeld()) {

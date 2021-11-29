@@ -6,49 +6,31 @@ import java.awt.event.KeyEvent;
 
 public class MovementController extends Controller {
 
-    private int downKey = KeyEvent.VK_S; //TODO: Crouch
-    private int leftKey = KeyEvent.VK_A;
-    private int rightKey = KeyEvent.VK_D;
-    //TODO: Jump Key
+    private static final int DOWN_KEY = KeyEvent.VK_S; //TODO: Crouch
+    private static final int LEFT_KEY = KeyEvent.VK_A;
+    private static final int RIGHT_KEY = KeyEvent.VK_D;
+    private static final int JUMP_KEY = KeyEvent.VK_SPACE;
 
     public MovementController() {
-        int[] keys = {downKey, leftKey, rightKey};
+        int[] keys = {DOWN_KEY, LEFT_KEY, RIGHT_KEY, JUMP_KEY};
         bindKeys(keys);
         RenderingEngine.getInstance().addKeyListener(this);
     }
 
     public boolean isDownHeld() {
-        return isKeyHeld(downKey);
+        return isKeyHeld(DOWN_KEY);
     }
 
     public boolean isLeftHeld() {
-        return isKeyHeld(leftKey);
+        return isKeyHeld(LEFT_KEY);
     }
 
     public boolean isRightHeld() {
-        return isKeyHeld(rightKey);
+        return isKeyHeld(RIGHT_KEY);
     }
 
-    public boolean isMoving() {
-        return isLeftHeld() || isRightHeld() || isDownHeld(); //TOOD: Add jump
-    }
-
-    public void setDownKey(int downKey) {
-        removeKey(this.downKey);
-        bindKey(downKey);
-        this.downKey = downKey;
-    }
-
-    public void setLeftKey(int leftKey) {
-        removeKey(this.leftKey);
-        bindKey(leftKey);
-        this.leftKey = leftKey;
-    }
-
-    public void setRightKey(int rightKey) {
-        removeKey(this.rightKey);
-        this.rightKey = rightKey;
-        bindKey(rightKey);
+    public boolean isJumpPressed() {
+        return isKeyPressed(JUMP_KEY);
     }
 
 }

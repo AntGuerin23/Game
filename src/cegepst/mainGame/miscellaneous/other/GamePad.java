@@ -6,39 +6,32 @@ import java.awt.event.KeyEvent;
 
 public class GamePad extends MovementController {
 
-    private int quitKey = KeyEvent.VK_ESCAPE;
-    private int fireKey = KeyEvent.VK_SHIFT;
-    private int fullScreenKey = KeyEvent.VK_F11;
-    private int jumpKey = KeyEvent.VK_SPACE;
-    private int debugKey = KeyEvent.VK_F3;
+    private static final int QUIT_KEY = KeyEvent.VK_ESCAPE;
+    private static final int FIRE_KEY = KeyEvent.VK_SHIFT;
+    private static final int FULL_SCREEN_KEY = KeyEvent.VK_F11;
+    private static final int DEBUG_KEY = KeyEvent.VK_F3;
 
     public GamePad() {
-        bindKey(quitKey);
-        bindKey(fullScreenKey);
-        bindKey(jumpKey);
-        bindKey(debugKey);
-        bindKey(fireKey);
+        bindKey(QUIT_KEY);
+        bindKey(FULL_SCREEN_KEY);
+        bindKey(DEBUG_KEY);
+        bindKey(FIRE_KEY);
     }
 
-
     public boolean isQuitPressed() {
-        return isKeyPressed(quitKey);
+        return isKeyPressed(QUIT_KEY);
     }
 
     public boolean isFirePressed() {
-        return isKeyPressed(fireKey);
+        return isKeyPressed(FIRE_KEY);
     }
 
     public boolean isFullScreenHeld() {
-        return isKeyPressed(fullScreenKey);
-    }
-
-    public boolean isJumpPressed() {
-        return isKeyPressed(jumpKey);
+        return isKeyPressed(FULL_SCREEN_KEY);
     }
 
     public boolean isDebugPressed() {
-        return isKeyPressed(debugKey);
+        return isKeyPressed(DEBUG_KEY);
     }
 
 

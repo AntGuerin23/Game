@@ -70,9 +70,6 @@ public class MainGame extends Game {
         if (gamePad.isQuitPressed()) {
             stop();
         }
-        if (gamePad.isJumpPressed()) {
-            player.jump();
-        }
         if (gamePad.isDebugPressed()) {
             GameSettings.debug = !GameSettings.debug;
         }

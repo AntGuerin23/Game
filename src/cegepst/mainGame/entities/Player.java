@@ -2,19 +2,25 @@ package cegepst.mainGame.entities;
 
 import cegepst.engine.EntityRepository;
 import cegepst.engine.IntersectionChecker;
+import cegepst.engine.controls.Direction;
 import cegepst.engine.controls.MovementController;
 import cegepst.engine.entities.ControllableEntity;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.awt.*;
 
 public class Player extends ControllableEntity {
 
     private final static int MAX_HP = 3;
+    private final static int STUN_DURATION = 30;
     private int coinCount;
     private int hp;
+    private boolean stunned;
+    private int stunStatus;
+    private Direction stunDirection;
 
     public Player(MovementController controller) {
         super(controller);
@@ -33,7 +39,7 @@ public class Player extends ControllableEntity {
     @Override
     public void update() {
         super.update();
-        moveAccordingToController();
+        move();
         checkIfDamaged();
         checkIfDead();
     }
@@ -46,15 +52,31 @@ public class Player extends ControllableEntity {
         return coinCount;
     }
 
+    public boolean isStunned() {
+        return stunned;
+    }
+
     @Override
     public String toString() {
         return "Player";
     }
 
+    private void initializeValues() {
+        coinCount = 0;
+        hp = MAX_HP;
+        setSpeed(5);
+        setDimension(20,20);
+        teleport(20,580);
+        setJumpForce(10);
+    }
+
     private void checkIfDamaged() {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Enemy");
-        if (intersectingEntity != null) {
+        if (intersectingEntity != null && !stunned) {
             getHit(1);
+            stunned = true;
+            stunStatus = STUN_DURATION;
+            stunDirection = getHorizontalDirection().revert();
         }
     }
 
@@ -68,12 +90,16 @@ public class Player extends ControllableEntity {
         }
     }
 
-    private void initializeValues() {
-        coinCount = 0;
-        hp = MAX_HP;
-        setSpeed(5);
-        setDimension(20,20);
-        teleport(20,580);
-        setJumpForce(10);
+    private void move() {
+        if (!stunned) {
+            moveAccordingToController();
+            return;
+        }
+        if (stunStatus > 0) {
+            stunStatus--;
+            moveHorizontally(stunDirection);
+            return;
+        }
+        stunned = false;
     }
 }
