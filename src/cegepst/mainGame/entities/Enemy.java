@@ -28,7 +28,6 @@ public abstract class Enemy extends GravitatingEntity {
 
     protected void setMaxHp(int maxHp) {
         hp = maxHp;
-
     }
 
     private void checkIfShot() {

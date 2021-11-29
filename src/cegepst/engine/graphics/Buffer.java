@@ -6,8 +6,6 @@ import java.awt.*;
 
 public class Buffer {
 
-    private int currentOffset = 0;
-
     private final Graphics2D graphics;
 
     public Buffer(Graphics2D graphics) {

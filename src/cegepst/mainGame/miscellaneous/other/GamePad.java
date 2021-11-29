@@ -26,7 +26,7 @@ public class GamePad extends MovementController {
         return isKeyPressed(FIRE_KEY);
     }
 
-    public boolean isFullScreenHeld() {
+    public boolean isFullScreenPressed() {
         return isKeyPressed(FULL_SCREEN_KEY);
     }
 

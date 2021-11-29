@@ -2,6 +2,7 @@ package cegepst.engine.entities;
 
 import cegepst.engine.GameTime;
 import cegepst.engine.controls.Direction;
+import sun.reflect.CallerSensitive;
 
 public abstract class GravitatingEntity extends MovableEntity {
 

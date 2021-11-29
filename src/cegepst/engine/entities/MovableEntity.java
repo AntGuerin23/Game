@@ -19,7 +19,6 @@ public abstract class MovableEntity extends UpdatableEntity {
 
     public MovableEntity() {
         collision = new Collision(this);
-        speed = 1; //Default value
         moved = true;
         verticalVelocity = 0;
     }
@@ -42,11 +41,10 @@ public abstract class MovableEntity extends UpdatableEntity {
         this.horizontalDirection = direction;
         double allowedSpeed = collision.getHorizontalAllowedSpeed(direction);
         x += direction.getVelocityX((int) allowedSpeed);
-        y += direction.getVelocityY((int) allowedSpeed);
     }
 
     public void moveVertically() {
-
+        //TODO : Add ability for non-gravitating enemies to fly
     }
 
     protected boolean isGrounded() {

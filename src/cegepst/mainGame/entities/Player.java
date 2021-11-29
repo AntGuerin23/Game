@@ -52,6 +52,10 @@ public class Player extends ControllableEntity {
         return coinCount;
     }
 
+    public int getHp() {
+        return hp;
+    }
+
     public boolean isStunned() {
         return stunned;
     }

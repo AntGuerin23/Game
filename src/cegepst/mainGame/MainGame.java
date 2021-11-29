@@ -7,6 +7,8 @@ import cegepst.engine.GameTime;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.entities.UpdatableEntity;
 import cegepst.engine.graphics.Buffer;
+import cegepst.engine.graphics.RenderingEngine;
+import cegepst.engine.graphics.Screen;
 import cegepst.mainGame.entities.*;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
@@ -76,6 +78,9 @@ public class MainGame extends Game {
         if (gamePad.isFirePressed()) {
             new Bullet(player);
         }
+        if (gamePad.isFullScreenPressed()) {
+            RenderingEngine.getInstance().getScreen().toggleFullscreen();
+        }
     }
 
     private void updateEntities() {
@@ -115,6 +120,7 @@ public class MainGame extends Game {
     private void drawMiscellaneous(Buffer buffer) {
         currentWorld.draw(buffer);
         buffer.drawText("Coins : " + player.getCoinCount(),730,20, Color.WHITE);
+        buffer.drawText("HP : " + player.getHp(),730,40, Color.WHITE);
     }
 
     private void drawFPS(Buffer buffer) {
