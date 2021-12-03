@@ -16,6 +16,7 @@ public class Bullet extends MovableEntity {
         setDimension(10,6);
         teleport(player.getX() + player.getWidth() / 2,player.getY() + (player.getHeight() / 2) - height / 2);
         playerDirection = player.getHorizontalDirection();
+        setGravitating(false);
         EntityRepository.getInstance().registerEntity(this, false);
     }
 

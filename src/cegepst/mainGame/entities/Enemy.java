@@ -2,13 +2,13 @@ package cegepst.mainGame.entities;
 
 import cegepst.engine.EntityRepository;
 import cegepst.engine.IntersectionChecker;
-import cegepst.engine.entities.GravitatingEntity;
+import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
 
 import java.awt.*;
 
-public abstract class Enemy extends GravitatingEntity {
+public abstract class Enemy extends MovableEntity {
 
     protected int hp;
     protected int storedCoins;

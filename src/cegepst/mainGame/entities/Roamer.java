@@ -16,6 +16,7 @@ public class Roamer extends Enemy {
         this.roamDistance = roamDistance;
         initializeSuperValues();
         initializeVariables();
+        setGravitating(true);
     }
 
     @Override

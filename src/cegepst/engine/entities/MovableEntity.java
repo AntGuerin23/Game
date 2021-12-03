@@ -1,6 +1,7 @@
 package cegepst.engine.entities;
 
 
+import cegepst.engine.GameTime;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.graphics.Buffer;
 
@@ -16,11 +17,19 @@ public abstract class MovableEntity extends UpdatableEntity {
     private boolean moved;
     private int lastX;
     private int lastY;
+    private static final double gravityForce = 1.5;
+    private long firstAirFrameTime;
+    private boolean wasGroundedLastFrame;
+    private boolean firstJumpingFrame;
+    private double jumpForce;
+    private boolean isGravitating = true;
 
     public MovableEntity() {
         collision = new Collision(this);
         moved = true;
         verticalVelocity = 0;
+        firstAirFrameTime = GameTime.getCurrentTime();
+        jumpForce = 5; //Default value
     }
 
     @Override
@@ -44,9 +53,25 @@ public abstract class MovableEntity extends UpdatableEntity {
     }
 
     public void moveVertically() {
-        //TODO : Add ability for non-gravitating enemies to fly
+        if (isGravitating) {
+            jumpOrFall();
+            undergoGravity();
+        }
     }
 
+    public void jump() {
+        if (isGrounded()) {
+            startJumping();
+        }
+    }
+
+    public void setJumpForce(double jumpForce) {
+        this.jumpForce = jumpForce;
+    }
+
+    public void setGravitating(boolean gravitating) {
+        isGravitating = gravitating;
+    }
     protected boolean isGrounded() {
         return collision.checkIfVerticallyStuck(true);
     }
@@ -141,5 +166,71 @@ public abstract class MovableEntity extends UpdatableEntity {
         Color color = new Color (255, 0, 0, 200);
         Rectangle verticalHitBox = getVerticalHitBox();
         buffer.drawRectangle(verticalHitBox.x, verticalHitBox.y, verticalHitBox.width, verticalHitBox.height, color);
+    }
+
+    private void undergoGravity() {
+        if (!isGrounded()) {
+            checkIfIsFirstGroundedFrame();
+            updateValues();
+            capSpeed();
+            return;
+        }
+        updateLastGroundedFrame();
+    }
+
+    private void jumpOrFall() {
+        if (isGrounded() && firstJumpingFrame) {
+            leaveGround();
+        } else {
+            succumbToForces();
+        }
+    }
+
+    private void startJumping() {
+        verticalVelocity = jumpForce;
+        firstJumpingFrame = true;
+        verticalDirection = Direction.UP;
+    }
+
+    private void leaveGround() {
+        y -= (int) verticalVelocity;
+        firstJumpingFrame = false;
+    }
+
+    private void succumbToForces() {
+        if (verticalVelocity < 0) {
+            verticalDirection = Direction.DOWN;
+        }
+        int allowedSpeed = (int) collision.getVerticalAllowedSpeed(verticalDirection);
+        y -= allowedSpeed;
+        if (isStuckToCeiling()) {
+            verticalVelocity = 0;
+        }
+    }
+
+    private void checkIfIsFirstGroundedFrame() {
+        if (wasGroundedLastFrame) {
+            firstAirFrameTime = GameTime.getCurrentTime();
+            if (verticalDirection == Direction.DOWN) {
+                firstAirFrameTime -= 100;
+                verticalVelocity = -8;
+            }
+        }
+    }
+
+    private void updateValues() {
+        long timeInAir = GameTime.getTimeSince(firstAirFrameTime);
+        verticalVelocity -= gravityForce * (timeInAir / (double) 1000);
+        wasGroundedLastFrame = false;
+    }
+
+    private void capSpeed() {
+        if (verticalVelocity < -15) {
+            verticalVelocity = -15;
+        }
+    }
+
+    private void updateLastGroundedFrame() {
+        wasGroundedLastFrame = true;
     }
 }

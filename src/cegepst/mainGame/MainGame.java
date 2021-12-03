@@ -23,7 +23,7 @@ public class MainGame extends Game {
     private GamePad gamePad;
     private Player player;
     private World currentWorld;
-    private Roamer enemy;
+    private Bouncer enemy;
     private Camera camera;
 
     @Override
@@ -59,7 +59,8 @@ public class MainGame extends Game {
         player = new Player(gamePad);
         camera = new Camera(player);
         currentWorld = new IntroWorld();
-        enemy = new Roamer(300);
+        enemy = new Bouncer(300);
+        enemy.teleport(100, 540);
         new Coin(155,410, player);
         new Coin(170,410, player);
         new Coin(185,410, player);
