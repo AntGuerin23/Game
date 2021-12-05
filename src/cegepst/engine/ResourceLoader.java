@@ -23,4 +23,12 @@ public class ResourceLoader {
     public static BufferedImage loadSpriteSheet(Resource resource) {
         return (BufferedImage) loadSprite(resource);
     }
+
+//    public static String loadFilePath(Resource resource) {
+//
+//    }
+//
+//    private void loadResource() {
+//
+//    }
 }

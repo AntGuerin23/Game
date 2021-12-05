@@ -68,8 +68,7 @@ public class Player extends ControllableEntity {
         coinCount = 0;
         hp = MAX_HP;
         setSpeed(5);
-        setDimension(20,20);
-        teleport(20,580);
+        setDimension(30,30);
         setJumpForce(10);
     }
 

@@ -1,5 +1,6 @@
 package cegepst.mainGame.worlds;
 
+import cegepst.engine.Camera;
 import cegepst.engine.ResourceLoader;
 import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.entities.Blockade;
@@ -17,10 +18,14 @@ public abstract class World {
     protected int endBorderX;
     protected int endBorderY;
 
-    public void draw(Buffer buffer) {
+    protected abstract void drawEntities(Buffer buffer);
+
+    public void draw(Buffer buffer, Camera camera) {
+        buffer.translate(camera);
         if (background != null) {
-            buffer.drawImage(background,0,-64);
+            buffer.drawImage(background,0,0);
         }
+        drawEntities(buffer);
     }
 
     public int getStartBorderX() {
@@ -61,4 +66,5 @@ public abstract class World {
         wall.teleport(wallLocation - ((isStartBorder) ? BORDER_X_WIDTH : 0),0);
         wall.setDimension(BORDER_X_WIDTH,10000);
     }
+
 }

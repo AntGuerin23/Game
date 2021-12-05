@@ -8,11 +8,10 @@ import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.entities.UpdatableEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.graphics.RenderingEngine;
-import cegepst.engine.graphics.Screen;
 import cegepst.mainGame.entities.*;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
-import cegepst.mainGame.worlds.IntroWorld;
+import cegepst.mainGame.worlds.TestWorld;
 import cegepst.mainGame.worlds.World;
 
 import java.awt.*;
@@ -35,18 +34,12 @@ public class MainGame extends Game {
     public void update() {
         manageInputs();
         updateEntities();
-        unregisterCorpses();
-        camera.update(currentWorld);
+        removeCorpses();
     }
 
     @Override
     public void draw(Buffer buffer) {
-        drawMiscellaneous(buffer);
-        if (GameSettings.debug) {
-            drawFPS(buffer);
-        }
-        buffer.translate(camera);
-        drawEntities(buffer);
+        drawWorld(buffer, camera);
     }
 
     @Override
@@ -57,16 +50,11 @@ public class MainGame extends Game {
     private void instantiate() {
         gamePad = new GamePad();
         player = new Player(gamePad);
-        camera = new Camera(player);
-        currentWorld = new IntroWorld();
+        player.teleport(800,0);
+        currentWorld = new TestWorld(player);
+        camera = new Camera(player, currentWorld);
         //enemy = new Bouncer(300);
         //enemy.teleport(100, 540);
-        new Coin(155,410, player);
-        new Coin(170,410, player);
-        new Coin(185,410, player);
-        new Coin(200,410, player);
-        new Coin(215,410, player);
-        new Coin(230,410, player);
     }
 
     private void manageInputs() {
@@ -92,7 +80,7 @@ public class MainGame extends Game {
         }
     }
 
-    private void unregisterCorpses() {
+    private void removeCorpses() {
         ArrayList<StaticEntity> deadEntities = new ArrayList<>();
         tallyRemains(deadEntities);
         unregisterCadavers(deadEntities);
@@ -121,20 +109,9 @@ public class MainGame extends Game {
         }
     }
 
-    private void drawEntities(Buffer buffer) {
-        for (StaticEntity entity : EntityRepository.getInstance()) {
-            entity.draw(buffer);
-        }
+    private void drawWorld(Buffer buffer, Camera camera) {
+        currentWorld.draw(buffer, camera);
     }
 
-    private void drawMiscellaneous(Buffer buffer) {
-        currentWorld.draw(buffer);
-        buffer.drawText("Coins : " + player.getCoinCount(),730,20, Color.WHITE);
-        buffer.drawText("HP : " + player.getHp(),730,40, Color.WHITE);
-    }
 
-    private void drawFPS(Buffer buffer) {
-        buffer.drawText("FPS: " + GameTime.getCurrentFps(), 10, 20, Color.WHITE);
-        buffer.drawText(GameTime.getElapsedFormattedTime(), 10, 40, Color.WHITE);
-    }
 }
