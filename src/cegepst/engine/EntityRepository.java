@@ -38,6 +38,11 @@ public class EntityRepository implements Iterable<StaticEntity> {
         CollidableRepository.getInstance().unregisterEntity(entity);
     }
 
+    public void unregisterEntities(Collection<StaticEntity> entities) {
+        registeredEntities.removeAll(entities);
+        CollidableRepository.getInstance().unregisterEntities(entities);
+    }
+
     public int count() {
         return registeredEntities.size();
     }
