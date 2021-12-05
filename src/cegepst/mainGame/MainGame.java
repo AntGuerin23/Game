@@ -59,8 +59,8 @@ public class MainGame extends Game {
         player = new Player(gamePad);
         camera = new Camera(player);
         currentWorld = new IntroWorld();
-        enemy = new Bouncer(300);
-        enemy.teleport(100, 540);
+        //enemy = new Bouncer(300);
+        //enemy.teleport(100, 540);
         new Coin(155,410, player);
         new Coin(170,410, player);
         new Coin(185,410, player);

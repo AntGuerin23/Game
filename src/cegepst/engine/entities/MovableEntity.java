@@ -139,7 +139,7 @@ public abstract class MovableEntity extends UpdatableEntity {
     }
 
     public Rectangle getUpperHitBox() {
-        return new Rectangle(x, (int) (y - speed), width, (int) Math.abs(verticalVelocity));
+        return new Rectangle(x, (int) (y - (int) Math.abs(verticalVelocity)), width, (int) Math.abs(verticalVelocity));
     }
 
     private Rectangle getLeftHitBox() {

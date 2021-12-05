@@ -8,7 +8,6 @@ public class IntroWorld extends World {
         initializeBorderLocations();
         instantiateBorders();
         initializeCustomBlockades();
-
     }
 
     private void initializeBorderLocations() {
@@ -25,7 +24,7 @@ public class IntroWorld extends World {
     private void initializeCustomBlockades() {
         Blockade blockade = new Blockade();
         blockade.setDimension(650,30);
-        blockade.teleport(400,450);
+        blockade.teleport(100,470);
     }
 
 }
