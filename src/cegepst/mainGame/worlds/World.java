@@ -45,7 +45,7 @@ public abstract class World {
     }
 
     protected void setBackground(Resource resource) {
-        background = ResourceLoader.loadSprite(resource);
+        background = ResourceLoader.loadSprite(resource.getPath());
     }
 
     protected void createBorders() {

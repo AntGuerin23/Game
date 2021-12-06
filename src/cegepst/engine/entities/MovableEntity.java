@@ -17,6 +17,9 @@ public abstract class MovableEntity extends UpdatableEntity {
     private boolean moved;
     private int lastX;
     private int lastY;
+    protected boolean stunned;
+    protected int stunStatus;
+    protected Direction stunDirection;
     private static final double gravityForce = 1.5;
     private long firstAirFrameTime;
     private boolean wasGroundedLastFrame;
@@ -72,9 +75,16 @@ public abstract class MovableEntity extends UpdatableEntity {
     public void setGravitating(boolean gravitating) {
         isGravitating = gravitating;
     }
-    protected boolean isGrounded() {
+
+    public boolean isStunned() {
+        return stunned;
+    }
+
+    public boolean isGrounded() {
         return collision.checkIfVerticallyStuck(true);
     }
+
+
 
     protected boolean isStuckToCeiling() {
         return collision.checkIfVerticallyStuck(false);
@@ -151,7 +161,7 @@ public abstract class MovableEntity extends UpdatableEntity {
     }
 
     private void checkIfHasMoved() {
-        moved = (x != lastX || y != lastY);
+        moved = (x != lastX || !isGrounded());
         lastX = x;
         lastY = y;
     }

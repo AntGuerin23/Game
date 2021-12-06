@@ -1,6 +1,8 @@
 package cegepst.engine.graphics;
 
 import cegepst.engine.Camera;
+import cegepst.engine.controls.Direction;
+import cegepst.engine.entities.MovableEntity;
 
 import java.awt.*;
 
@@ -36,7 +38,16 @@ public class Buffer {
         graphics.drawString(text, x, y);
     }
 
+    public void drawImage(Image image, MovableEntity entity) {
+        if (entity.getHorizontalDirection() == Direction.RIGHT) {
+            graphics.drawImage(image, entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight(), null);
+            return;
+        }
+        graphics.drawImage(image, entity.getX() + entity.getWidth(), entity.getY(), -entity.getWidth(), entity.getHeight(), null);
+    }
+
     public void drawImage(Image image, int x, int y) {
         graphics.drawImage(image, x, y, null);
     }
+
 }

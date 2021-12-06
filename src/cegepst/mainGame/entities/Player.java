@@ -6,10 +6,10 @@ import cegepst.engine.controls.Direction;
 import cegepst.engine.controls.MovementController;
 import cegepst.engine.entities.ControllableEntity;
 import cegepst.engine.entities.StaticEntity;
+import cegepst.engine.graphics.Animator;
 import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
-
-import java.awt.*;
+import cegepst.mainGame.miscellaneous.other.Resource;
 
 public class Player extends ControllableEntity {
 
@@ -17,22 +17,24 @@ public class Player extends ControllableEntity {
     private final static int STUN_DURATION = 30;
     private int coinCount;
     private int hp;
-    private boolean stunned;
-    private int stunStatus;
-    private Direction stunDirection;
+    private Animator animator;
 
     public Player(MovementController controller) {
         super(controller);
         EntityRepository.getInstance().registerEntity(this,false);
         initializeValues();
+        animator = new Animator( this, false);
+        animator.load2DAnimationFrames(Resource.PLAYER_SPRITE_SHEET);
     }
 
     @Override
     public void draw(Buffer buffer) {
-        buffer.drawRectangle(x, y, width, height, Color.ORANGE);
+        animator.draw2DAnimation(buffer);
+//        buffer.drawRectangle(x, y, width, height, Color.ORANGE);
         if (hasMoved() && GameSettings.debug) {
             drawHitBox(buffer);
         }
+
     }
 
     @Override
@@ -41,6 +43,7 @@ public class Player extends ControllableEntity {
         move();
         checkIfDamaged();
         checkIfDead();
+        animator.animate();
     }
 
     public void foundCoin(int nbOfCoins) {
@@ -55,10 +58,6 @@ public class Player extends ControllableEntity {
         return hp;
     }
 
-    public boolean isStunned() {
-        return stunned;
-    }
-
     @Override
     public String toString() {
         return "Player";
@@ -68,7 +67,7 @@ public class Player extends ControllableEntity {
         coinCount = 0;
         hp = MAX_HP;
         setSpeed(5);
-        setDimension(30,30);
+        setDimension(42,48);
         setJumpForce(10);
     }
 

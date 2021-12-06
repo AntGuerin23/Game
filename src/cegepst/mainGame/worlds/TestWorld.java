@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class TestWorld extends World {
 
     private Player player;
-    private static final int PIXEL_PER_TILE = 48;
     private ArrayList<Blockade> blockades;
 
     public TestWorld(Player player) {
