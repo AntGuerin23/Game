@@ -53,8 +53,6 @@ public class MainGame extends Game {
         player.teleport(800,0);
         currentWorld = new TestWorld(player);
         camera = new Camera(player, currentWorld);
-        //enemy = new Bouncer(300);
-        //enemy.teleport(100, 540);
     }
 
     private void manageInputs() {

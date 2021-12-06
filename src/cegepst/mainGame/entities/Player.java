@@ -13,8 +13,8 @@ import cegepst.mainGame.miscellaneous.other.Resource;
 
 public class Player extends ControllableEntity {
 
-    private final static int MAX_HP = 3;
-    private final static int STUN_DURATION = 30;
+    private final static int MAX_HP = 5;
+    private final static int STUN_DURATION = 60;
     private int coinCount;
     private int hp;
     private Animator animator;
@@ -30,17 +30,16 @@ public class Player extends ControllableEntity {
     @Override
     public void draw(Buffer buffer) {
         animator.draw2DAnimation(buffer);
-//        buffer.drawRectangle(x, y, width, height, Color.ORANGE);
         if (hasMoved() && GameSettings.debug) {
             drawHitBox(buffer);
         }
-
     }
 
     @Override
     public void update() {
         super.update();
-        move();
+        moveAccordingToController();
+        updateStun();
         checkIfDamaged();
         checkIfDead();
         animator.animate();
@@ -71,13 +70,19 @@ public class Player extends ControllableEntity {
         setJumpForce(10);
     }
 
+    private void updateStun() {
+        stunStatus--;
+        if (stunStatus <= 0) {
+            stunned = false;
+        }
+    }
+
     private void checkIfDamaged() {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Enemy");
         if (intersectingEntity != null && !stunned) {
             getHit(1);
             stunned = true;
             stunStatus = STUN_DURATION;
-            stunDirection = getHorizontalDirection().revert();
         }
     }
 
@@ -89,18 +94,5 @@ public class Player extends ControllableEntity {
         if (hp == 0) {
             isDead = true;
         }
-    }
-
-    private void move() {
-        if (!stunned) {
-            moveAccordingToController();
-            return;
-        }
-        if (stunStatus > 0) {
-            stunStatus--;
-            moveHorizontally(stunDirection);
-            return;
-        }
-        stunned = false;
     }
 }

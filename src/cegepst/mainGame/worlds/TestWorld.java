@@ -5,6 +5,7 @@ import cegepst.engine.CollisionParser;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.entities.Blockade;
+import cegepst.mainGame.entities.Bouncer;
 import cegepst.mainGame.entities.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
@@ -15,6 +16,7 @@ public class TestWorld extends World {
 
     private Player player;
     private ArrayList<Blockade> blockades;
+    private Bouncer enemy;
 
     public TestWorld(Player player) {
         this.player = player;
@@ -22,6 +24,8 @@ public class TestWorld extends World {
         instantiateBorders();
         blockades = (new CollisionParser()).createBlockades(Resource.TEST_WORLD_JSON_PATH);
         setBackground(Resource.TEST_WORLD_IMG_PATH);
+        enemy = new Bouncer(300);
+        enemy.teleport(100, 540);
     }
 
     @Override

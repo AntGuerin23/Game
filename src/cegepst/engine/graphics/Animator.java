@@ -32,7 +32,7 @@ public class Animator {
     }
 
     public void animate() {
-        if (entity.hasMoved()) {
+        if (entity.hasMoved() || currentAction == Action.STUNNED) {
             setCurrentAction();
             continueAnimation();
             return;
