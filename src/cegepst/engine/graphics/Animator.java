@@ -32,7 +32,7 @@ public class Animator {
     }
 
     public void animate() {
-        if (entity.hasMoved() || currentAction == Action.STUNNED) {
+        if (entity.hasMoved() || currentAction == Action.STUNNED || currentAction == Action.PUSH) {
             setCurrentAction();
             continueAnimation();
             return;
@@ -42,23 +42,22 @@ public class Animator {
 
     private void setCurrentAction() {
         Action lastAction = currentAction;
+        updateAction();
+        if (lastAction != currentAction) {
+            currentAnimationFrame = 0;
+        }
+    }
+
+    private void updateAction() {
         if (entity.isStunned()) {
             currentAction = Action.STUNNED;
         } else if (!entity.isGrounded()) {
             currentAction = Action.JUMP;
+        } else if (entity.isTouchingWall()) {
+            currentAction = Action.PUSH;
         } else {
             currentAction = Action.RUN;
         }
-        //todo: add push condition
-
-        if (lastAction != currentAction) {
-            currentAnimationFrame = 0;
-        }
-
-    }
-
-    public void drawTopDownAnimation(Buffer buffer) {
-        buffer.drawImage(frames[entity.getHorizontalDirection().getAnimationID()][currentAnimationFrame], entity);
     }
 
     public void draw2DAnimation(Buffer buffer) {
@@ -75,6 +74,10 @@ public class Animator {
             } while (loopFrameNb < frames[i].length);
             loopFrameNb = 0;
         }
+    }
+
+    public void drawTopDownAnimation(Buffer buffer) {
+        buffer.drawImage(frames[entity.getHorizontalDirection().getAnimationID()][currentAnimationFrame], entity);
     }
 
     private Image get2DFrame(int frameNb) {
@@ -120,7 +123,6 @@ public class Animator {
             frames[action.getId()] = new Image[action.getNbOfFrames()];
         }
     }
-
 
     private void initializeTopDownArray() {
         frames = new Image[4][];

@@ -84,7 +84,9 @@ public abstract class MovableEntity extends UpdatableEntity {
         return collision.checkIfVerticallyStuck(true);
     }
 
-
+    public boolean isTouchingWall() {
+        return collision.getHorizontalAllowedSpeed(horizontalDirection) == 0;
+    }
 
     protected boolean isStuckToCeiling() {
         return collision.checkIfVerticallyStuck(false);
