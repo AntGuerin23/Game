@@ -1,10 +1,10 @@
 package cegepst.engine.graphics;
 
-import cegepst.engine.Camera;
+import cegepst.engine.other.Camera;
 import cegepst.engine.controls.Direction;
-import cegepst.engine.entities.MovableEntity;
 
 import java.awt.*;
+import java.awt.font.TextLayout;
 
 public class Buffer {
 
@@ -12,6 +12,7 @@ public class Buffer {
 
     public Buffer(Graphics2D graphics) {
         this.graphics = graphics;
+        graphics.setFont(new Font("SansSerif", Font.PLAIN, 22));
     }
 
     public void drawRectangle(int x, int y, int width, int height, Paint paint) {
@@ -36,18 +37,22 @@ public class Buffer {
     public void drawText(String text, int x, int y, Paint paint) {
         graphics.setPaint(paint);
         graphics.drawString(text, x, y);
+        TextLayout textLayout = new TextLayout(text, (new Font("SansSerif", Font.PLAIN, 22)), graphics.getFontRenderContext());
+        graphics.setPaint(Color.BLACK);
+        textLayout.draw(graphics, x, y);
+        graphics.setPaint(new Color(150, 150, 150));
+        textLayout.draw(graphics, x + 1, y + 1);
     }
 
-    public void drawImage(Image image, MovableEntity entity) {
-        if (entity.getHorizontalDirection() == Direction.RIGHT) {
-            graphics.drawImage(image, entity.getX(), entity.getY(), entity.getWidth(), entity.getHeight(), null);
+    public void drawFlippableImage(Image image, int x, int flippedX, int y, int width, int height, Direction direction) {
+        if (direction == Direction.RIGHT) {
+            graphics.drawImage(image, x, y, width, height, null);
             return;
         }
-        graphics.drawImage(image, entity.getX() + entity.getWidth(), entity.getY(), -entity.getWidth(), entity.getHeight(), null);
+        graphics.drawImage(image, flippedX + width, y, -width, height, null);
     }
 
     public void drawImage(Image image, int x, int y) {
         graphics.drawImage(image, x, y, null);
     }
-
 }

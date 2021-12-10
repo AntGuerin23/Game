@@ -1,20 +1,18 @@
 package cegepst.mainGame;
 
-import cegepst.engine.Camera;
-import cegepst.engine.EntityRepository;
-import cegepst.engine.Game;
-import cegepst.engine.GameTime;
+import cegepst.engine.other.Camera;
+import cegepst.engine.repositories.EntityRepository;
+import cegepst.engine.other.Game;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.entities.UpdatableEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.graphics.RenderingEngine;
-import cegepst.mainGame.entities.*;
+import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
-import cegepst.mainGame.worlds.TestWorld;
+import cegepst.mainGame.worlds.MainWorld;
 import cegepst.mainGame.worlds.World;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class MainGame extends Game {
@@ -22,12 +20,14 @@ public class MainGame extends Game {
     private GamePad gamePad;
     private Player player;
     private World currentWorld;
-    private Bouncer enemy;
     private Camera camera;
 
     @Override
     public void initialize() {
         instantiate();
+        player.pickupJetpack();
+        player.pickupShotgun();
+        player.pickupClimbingGloves();
     }
 
     @Override
@@ -49,9 +49,9 @@ public class MainGame extends Game {
 
     private void instantiate() {
         gamePad = new GamePad();
-        player = new Player(gamePad);
-        player.teleport(800,0);
-        currentWorld = new TestWorld(player);
+        player = Player.getInstance(gamePad);
+        currentWorld = new MainWorld(player);
+        player.teleport(currentWorld.getSpawnPointX(), currentWorld.getSpawnPointY());
         camera = new Camera(player, currentWorld);
     }
 
@@ -62,15 +62,17 @@ public class MainGame extends Game {
         if (gamePad.isDebugPressed()) {
             GameSettings.debug = !GameSettings.debug;
         }
-        if (gamePad.isFirePressed()) {
-            new Bullet(player);
-        }
         if (gamePad.isFullScreenPressed()) {
             RenderingEngine.getInstance().getScreen().toggleFullscreen();
+        }
+        if (gamePad.isRespawnPressed() && player.isDead()) {
+            player.respawn();
+            player.teleport(currentWorld.getSpawnPointX(),currentWorld.getSpawnPointY());
         }
     }
 
     private void updateEntities() {
+        EntityRepository.getInstance().emptyCreationBuffer();
         for (StaticEntity entity : EntityRepository.getInstance()) {
             if (entity instanceof UpdatableEntity) {
                 ((UpdatableEntity) entity).update();
@@ -94,16 +96,8 @@ public class MainGame extends Game {
 
     private void unregisterCadavers(ArrayList<StaticEntity> deadEntities) {
         for (StaticEntity deadEntity : deadEntities) {
-            dropCoins(deadEntity);
+            deadEntity.onDeath();
             EntityRepository.getInstance().unregisterEntity(deadEntity);
-        }
-    }
-
-    private void dropCoins(StaticEntity deadEntity) {
-        if (deadEntity instanceof Enemy) {
-            for (int i = 0; i < ((Enemy) deadEntity).getStoredCoins(); i++) {
-                new DroppedCoin(deadEntity.getX(),deadEntity.getY(), player);
-            }
         }
     }
 

@@ -10,12 +10,14 @@ public class GamePad extends MovementController {
     private static final int FIRE_KEY = KeyEvent.VK_SHIFT;
     private static final int FULL_SCREEN_KEY = KeyEvent.VK_F11;
     private static final int DEBUG_KEY = KeyEvent.VK_F3;
+    private static final int RESPAWN_KEY = KeyEvent.VK_R;
 
     public GamePad() {
         bindKey(QUIT_KEY);
         bindKey(FULL_SCREEN_KEY);
         bindKey(DEBUG_KEY);
         bindKey(FIRE_KEY);
+        bindKey(RESPAWN_KEY);
     }
 
     public boolean isQuitPressed() {
@@ -32,6 +34,10 @@ public class GamePad extends MovementController {
 
     public boolean isDebugPressed() {
         return isKeyPressed(DEBUG_KEY);
+    }
+
+    public boolean isRespawnPressed() {
+        return isKeyPressed(RESPAWN_KEY);
     }
 
 

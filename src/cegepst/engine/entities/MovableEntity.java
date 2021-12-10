@@ -1,9 +1,10 @@
 package cegepst.engine.entities;
 
 
-import cegepst.engine.GameTime;
+import cegepst.engine.other.GameTime;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.graphics.Buffer;
+import cegepst.engine.resources.Action;
 
 import java.awt.*;
 
@@ -14,25 +15,27 @@ public abstract class MovableEntity extends UpdatableEntity {
     protected Direction verticalDirection = Direction.DOWN;
     private double speed;
     protected double verticalVelocity;
-    private boolean moved;
-    private int lastX;
-    private int lastY;
-    protected boolean stunned;
+    protected boolean moved;
+    protected int lastX;
+    protected int lastY;
     protected int stunStatus;
-    protected Direction stunDirection;
     private static final double gravityForce = 1.5;
-    private long firstAirFrameTime;
+    protected long firstAirFrameTime;
     private boolean wasGroundedLastFrame;
-    private boolean firstJumpingFrame;
+    protected boolean hasJustJumped;
     private double jumpForce;
     private boolean isGravitating = true;
+    protected boolean isWallJumping;
+    protected boolean isStuckToWall = false;
+    protected boolean isStuckToWallReady = true;
+
 
     public MovableEntity() {
         collision = new Collision(this);
         moved = true;
         verticalVelocity = 0;
         firstAirFrameTime = GameTime.getCurrentTime();
-        jumpForce = 5; //Default value
+        jumpForce = 5;
     }
 
     @Override
@@ -56,16 +59,24 @@ public abstract class MovableEntity extends UpdatableEntity {
     }
 
     public void moveVertically() {
-        if (isGravitating) {
+        if (isGravitating && !isStuckToWall) {
             jumpOrFall();
             undergoGravity();
+            return;
         }
+        hasJustJumped = false;
     }
 
     public void jump() {
-        if (isGrounded()) {
+        if (isGrounded() || isWallJumping) {
             startJumping();
+            return;
         }
+        hasJustJumped = false;
+    }
+
+    public Action getNextAction(Action currentAction) {
+        return currentAction.getEveryAction()[0];
     }
 
     public void setJumpForce(double jumpForce) {
@@ -76,20 +87,19 @@ public abstract class MovableEntity extends UpdatableEntity {
         isGravitating = gravitating;
     }
 
-    public boolean isStunned() {
-        return stunned;
-    }
-
     public boolean isGrounded() {
         return collision.checkIfVerticallyStuck(true);
     }
 
     public boolean isTouchingWall() {
-        return collision.getHorizontalAllowedSpeed(horizontalDirection) == 0;
+        if (collision.getHorizontalAllowedSpeed(horizontalDirection) == 0) {
+            return true;
+        }
+        return false;
     }
 
-    protected boolean isStuckToCeiling() {
-        return collision.checkIfVerticallyStuck(false);
+    public boolean isPressingLeftAndRightButtons() {
+        return false;
     }
 
     public double getSpeed() {
@@ -154,18 +164,21 @@ public abstract class MovableEntity extends UpdatableEntity {
         return new Rectangle(x, (int) (y - (int) Math.abs(verticalVelocity)), width, (int) Math.abs(verticalVelocity));
     }
 
+    protected boolean isStuckToCeiling() {
+        return collision.checkIfVerticallyStuck(false);
+    }
+
+    protected void checkIfHasMoved() {
+        moved = (x != lastX || !isGrounded());
+        lastX = x;
+    }
+
     private Rectangle getLeftHitBox() {
         return new Rectangle (x - (int) speed, y, (int) speed, height);
     }
 
     private Rectangle getRightHitBox() {
         return new Rectangle(x + width, y, (int) speed, height);
-    }
-
-    private void checkIfHasMoved() {
-        moved = (x != lastX || !isGrounded());
-        lastX = x;
-        lastY = y;
     }
 
     private void drawHorizontalHitBox(Buffer buffer) {
@@ -191,7 +204,7 @@ public abstract class MovableEntity extends UpdatableEntity {
     }
 
     private void jumpOrFall() {
-        if (isGrounded() && firstJumpingFrame) {
+        if (isGrounded() && hasJustJumped) {
             leaveGround();
         } else {
             succumbToForces();
@@ -200,13 +213,13 @@ public abstract class MovableEntity extends UpdatableEntity {
 
     private void startJumping() {
         verticalVelocity = jumpForce;
-        firstJumpingFrame = true;
+        hasJustJumped = true;
         verticalDirection = Direction.UP;
     }
 
     private void leaveGround() {
         y -= (int) verticalVelocity;
-        firstJumpingFrame = false;
+        hasJustJumped = false;
     }
 
     private void succumbToForces() {

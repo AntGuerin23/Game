@@ -1,9 +1,9 @@
 package cegepst.mainGame.worlds;
 
 import cegepst.engine.graphics.Buffer;
-import cegepst.mainGame.entities.Blockade;
-import cegepst.mainGame.entities.Coin;
-import cegepst.mainGame.entities.Player;
+import cegepst.engine.mapCollisions.Blockade;
+import cegepst.mainGame.entities.items.Coin;
+import cegepst.mainGame.entities.player.Player;
 
 public class IntroWorld extends World {
 
@@ -19,6 +19,16 @@ public class IntroWorld extends World {
     @Override
     protected void drawEntities(Buffer buffer) {
 
+    }
+
+    @Override
+    public int getSpawnPointX() {
+        return 0;
+    }
+
+    @Override
+    public int getSpawnPointY() {
+        return 0;
     }
 
     private void initializeBorderLocations() {

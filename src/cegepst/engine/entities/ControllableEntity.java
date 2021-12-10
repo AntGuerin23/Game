@@ -4,7 +4,7 @@ import cegepst.engine.controls.MovementController;
 
 public abstract class ControllableEntity extends MovableEntity {
 
-    private final MovementController controller;
+    protected final MovementController controller;
 
     public ControllableEntity(MovementController controller) {
         this.controller = controller;
@@ -15,9 +15,22 @@ public abstract class ControllableEntity extends MovableEntity {
         moveLeftAndRight();
     }
 
+    @Override
+    public boolean isPressingLeftAndRightButtons() {
+        return controller.isLeftHeld() || controller.isRightHeld();
+    }
+
     private void checkJump() {
         if (controller.isJumpPressed()) {
+            if (isStuckToWall) {
+                isWallJumping = true;
+                isStuckToWall = false;
+                isStuckToWallReady = false;
+                verticalVelocity = 0;
+            }
             jump();
+        } else {
+            isWallJumping = false;
         }
     }
 

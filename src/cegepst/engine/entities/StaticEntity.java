@@ -1,6 +1,5 @@
 package cegepst.engine.entities;
 
-import cegepst.engine.GameTime;
 import cegepst.engine.graphics.Buffer;
 
 import java.awt.*;
@@ -23,6 +22,10 @@ public abstract class StaticEntity {
     public void setDimension (int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public void onDeath() {
+
     }
 
     public void kill() {
@@ -56,4 +59,5 @@ public abstract class StaticEntity {
     public int getHeight() {
         return height;
     }
+
 }
