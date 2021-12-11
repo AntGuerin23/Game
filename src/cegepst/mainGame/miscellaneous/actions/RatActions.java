@@ -7,7 +7,7 @@ public enum RatActions implements Action {
 
     RUN(0, 8, 9, true),
     JUMP(1, 6, 8, false),
-    STUNNED(2, 1, 5, false);
+    STUNNED(2, 2, 5, true);
 
     private final int id;
     private final int nbOfFrames;

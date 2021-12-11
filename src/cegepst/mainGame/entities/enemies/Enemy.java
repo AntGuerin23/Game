@@ -1,22 +1,21 @@
 package cegepst.mainGame.entities.enemies;
 
-import cegepst.engine.repositories.EntityRepository;
-import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
-import cegepst.engine.resources.ResourceLoader;
-import cegepst.engine.resources.Sound;
+import cegepst.engine.other.IntersectionChecker;
+import cegepst.engine.repositories.EntityRepository;
 import cegepst.mainGame.entities.items.DroppedCoin;
 import cegepst.mainGame.entities.player.Player;
-import cegepst.mainGame.miscellaneous.other.Resource;
 
 public abstract class Enemy extends MovableEntity {
 
+    private static final int STUN_DURATION = 60;
     protected int hp;
     protected int maxHp;
     protected int storedCoins;
     private Player player;
+    protected boolean stunned;
 
     @Override
     public abstract void draw(Buffer buffer);
@@ -53,13 +52,15 @@ public abstract class Enemy extends MovableEntity {
     private void checkIfShot() {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Bullet");
         if (intersectingEntity != null) {
-            getHit(1);
+            getHit();
+            stunned = true;
+            stunStatus = STUN_DURATION;
             intersectingEntity.kill();
         }
     }
 
-    private void getHit(int damage) {
-        hp -= damage;
+    private void getHit() {
+        hp--;
     }
 
     private void checkIfDead() {

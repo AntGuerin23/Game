@@ -1,10 +1,7 @@
 package cegepst.mainGame.entities.enemies;
 
 import cegepst.engine.controls.Direction;
-import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.entities.player.Player;
-
-import java.awt.*;
 
 public abstract class Roamer extends Enemy {
 
@@ -23,14 +20,6 @@ public abstract class Roamer extends Enemy {
     public void update() {
         super.update();
         roam();
-    }
-
-    @Override
-    public void draw(Buffer buffer) {
-        buffer.drawRectangle(x - 2, y - 22, width + 4, 14, Color.DARK_GRAY);
-        buffer.drawRectangle(x, y - 20, width, 10, Color.RED);
-        buffer.drawRectangle(x, y - 20, width / 3 * super.hp, 10, Color.GREEN);
-        buffer.drawRectangle(x, y, width, height, Color.BLUE);
     }
 
     private void initializeVariables(int x, int y, int roamDistance) {

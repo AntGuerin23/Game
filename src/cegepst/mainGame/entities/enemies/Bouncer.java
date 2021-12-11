@@ -1,9 +1,6 @@
 package cegepst.mainGame.entities.enemies;
 
-import cegepst.engine.graphics.Buffer;
 import cegepst.mainGame.entities.player.Player;
-
-import java.awt.*;
 
 public abstract class Bouncer extends Roamer {
 
@@ -27,14 +24,6 @@ public abstract class Bouncer extends Roamer {
             }
             jumpCooldown--;
         }
-    }
-
-    @Override
-    public void draw(Buffer buffer) {
-        buffer.drawRectangle(x - 2, y - 22, width + 4, 14, Color.DARK_GRAY);
-        buffer.drawRectangle(x, y - 20, width, 10, Color.RED);
-        buffer.drawRectangle(x, y - 20, width / maxHp * super.hp, 10, Color.GREEN);
-        buffer.drawRectangle(x, y, width, height, Color.BLUE);
     }
 
     private void initializeValues(boolean canBounce) {
