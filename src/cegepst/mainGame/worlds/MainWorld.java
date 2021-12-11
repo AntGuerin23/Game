@@ -62,7 +62,7 @@ public class MainWorld extends World {
     }
 
     private void initializeEntities() {
-        enemy = new Rat(1000, 1200, 350, player, true);
+        enemy = new Rat(600, 1200, 600, player, true);
         new Coin(0,1008,player);
         //new Coin(50,1008,player);
         new Coin(100,1008,player);

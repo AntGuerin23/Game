@@ -41,21 +41,21 @@ public class CollisionParser {
         return blockades;
     }
 
-    private Blockade createBlockade(Object tileId, int index, JSONObject globalInfo) { //Trop de paramètres
+    private Blockade createBlockade(Object tileId, int index, JSONObject globalInfo) {
         Blockade blockade = new Blockade();
         int worldWidth = getWidth(globalInfo);
         JSONArray tileset = getTileset(globalInfo);
-        if (tileIdExists((getRealTileId(tileId)), tileset)) { //Différents niveaux d'abstractions
-            int locationX = index % worldWidth; //Très bas niveau, les calculs pourraient être isolés dans une classe "calculatrice"
+        if (tileIdExists((getRealTileId(tileId)), tileset)) {
+            int locationX = index % worldWidth;
             int locationY = index / worldWidth;
             int offsetY = (int) Math.round(getTileOffsetY(getRealTileId(tileId), tileset));
             int height = (int) Math.round(getTileHeight(getRealTileId(tileId), tileset));
             blockade.teleport(locationX * PIXEL_PER_TILE,
-                    locationY * PIXEL_PER_TILE + offsetY); //Niveau d'abstraction différent que les calculs
+                    locationY * PIXEL_PER_TILE + offsetY);
             blockade.setDimension(PIXEL_PER_TILE,height);
         }
         return blockade;
-    } //Méthode trop longue, difficile à lire
+    }
 
     private JSONArray getTileData(JSONObject globalInfo) {
         JSONArray array = ((JSONArray) globalInfo.get("layers"));

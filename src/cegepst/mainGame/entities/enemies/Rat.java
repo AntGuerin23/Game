@@ -1,7 +1,6 @@
 package cegepst.mainGame.entities.enemies;
 
 import cegepst.engine.graphics.Buffer;
-import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.Action;
 import cegepst.engine.resources.Animatable;
 import cegepst.engine.resources.Animator;
@@ -19,7 +18,6 @@ public class Rat extends Bouncer implements Animatable {
     public Rat(int x, int y, int roamDistance, Player player, boolean canBounce) {
         super(x, y, roamDistance, player, canBounce);
         initializeValues();
-        EntityRepository.getInstance().registerEntity(this,false);
     }
 
     @Override
@@ -68,8 +66,8 @@ public class Rat extends Bouncer implements Animatable {
     private void initializeValues() {
         setMaxHp(10);
         setDimension(74,76);
-        setSpeed(canBounce ? 2 : 3);
-        storedCoins = canBounce ? 8 : 5;
+        setSpeed(canBounce ? 4 : 6);
+        storedCoins = canBounce ? 15 : 10;
         animator = new Animator(this, Resource.RAT_SPRITE_SHEET, 3, RatActions.RUN,width);
     }
 
