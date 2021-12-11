@@ -16,6 +16,7 @@ public class CoinBag extends Coin {
         this.value = value;
         sprite = ResourceLoader.loadSprite(Resource.COIN_BAG_SPRITE.getPath());
         setDimension(32,32);
+        setGravitating(true);
     }
 
     @Override

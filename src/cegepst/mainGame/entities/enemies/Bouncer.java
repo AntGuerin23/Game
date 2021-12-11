@@ -5,13 +5,14 @@ import cegepst.mainGame.entities.player.Player;
 
 import java.awt.*;
 
-public class Bouncer extends Roamer {
+public abstract class Bouncer extends Roamer {
 
     private int jumpCooldown = 50;
+    protected boolean canBounce;
 
-    public Bouncer(int roamDistance, Player player) {
-        super(roamDistance, player);
-        initializeDefaultValues();
+    public Bouncer(int x, int y, int roamDistance, Player player, boolean canBounce) {
+        super(x, y, roamDistance, player);
+        initializeValues(canBounce);
         setGravitating(true);
         setJumpForce(10);
     }
@@ -19,11 +20,13 @@ public class Bouncer extends Roamer {
     @Override
     public void update() {
         super.update();
-        if (jumpCooldown == 0) {
-            jump();
-            jumpCooldown = 50;
+        if (canBounce) {
+            if (jumpCooldown == 0) {
+                jump();
+                jumpCooldown = 120;
+            }
+            jumpCooldown--;
         }
-        jumpCooldown--;
     }
 
     @Override
@@ -34,10 +37,7 @@ public class Bouncer extends Roamer {
         buffer.drawRectangle(x, y, width, height, Color.BLUE);
     }
 
-    private void initializeDefaultValues() {
-        setMaxHp(5);
-        setDimension(60, 60);
-        setSpeed(3);
-        setStoredCoins(10);
+    private void initializeValues(boolean canBounce) {
+        this.canBounce = canBounce;
     }
 }

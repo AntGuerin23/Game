@@ -2,25 +2,20 @@ package cegepst.mainGame.entities.enemies;
 
 import cegepst.engine.controls.Direction;
 import cegepst.engine.graphics.Buffer;
-import cegepst.engine.resources.ResourceLoader;
-import cegepst.engine.resources.Sound;
 import cegepst.mainGame.entities.player.Player;
-import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.awt.*;
 
-public class Roamer extends Enemy {
+public abstract class Roamer extends Enemy {
 
-    private final int roamDistance;
+    private int roamDistance;
     private int startingX;
     private int endingX;
     private Direction direction;
 
-    public Roamer(int roamDistance, Player player) {
+    public Roamer(int x, int y, int roamDistance, Player player) {
         super(player);
-        this.roamDistance = roamDistance;
-        initializeSuperValues();
-        initializeVariables();
+        initializeVariables(x, y, roamDistance);
         setGravitating(true);
     }
 
@@ -38,18 +33,13 @@ public class Roamer extends Enemy {
         buffer.drawRectangle(x, y, width, height, Color.BLUE);
     }
 
-    private void initializeVariables() {
-        startingX = super.x;
-        endingX = super.x + roamDistance;
+    private void initializeVariables(int x, int y, int roamDistance) {
+        this.x = x;
+        this.y = y;
+        this.roamDistance = roamDistance;
+        startingX = x;
+        endingX = x + roamDistance;
         direction = Direction.RIGHT;
-    }
-
-    private void initializeSuperValues() {
-        setMaxHp(3);
-        setDimension(60, 60);
-        teleport(100, 540);
-        setSpeed(3);
-        setStoredCoins(10);
     }
 
     private void roam() {

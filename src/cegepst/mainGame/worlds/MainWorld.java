@@ -1,13 +1,14 @@
 package cegepst.mainGame.worlds;
 
-import cegepst.engine.repositories.EntityRepository;
-import cegepst.engine.mapCollisions.CollisionParser;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.mapCollisions.Blockade;
+import cegepst.engine.mapCollisions.CollisionParser;
+import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
 import cegepst.mainGame.entities.enemies.Bouncer;
+import cegepst.mainGame.entities.enemies.Rat;
 import cegepst.mainGame.entities.items.Coin;
 import cegepst.mainGame.entities.items.CoinBag;
 import cegepst.mainGame.entities.player.Player;
@@ -61,14 +62,13 @@ public class MainWorld extends World {
     }
 
     private void initializeEntities() {
-        enemy = new Bouncer(300, player);
-        enemy.teleport(100, 540);
+        enemy = new Rat(1000, 1200, 350, player, true);
         new Coin(0,1008,player);
-        new Coin(50,1008,player);
+        //new Coin(50,1008,player);
         new Coin(100,1008,player);
-        new Coin(150,1008,player);
+        //new Coin(150,1008,player);
         new Coin(200,1008,player);
         new Coin(250,1008,player);
-        new CoinBag(250,1008,player,5);
+        new CoinBag(150,1000,player,5);
     }
 }
