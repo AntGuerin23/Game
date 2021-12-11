@@ -1,4 +1,4 @@
-package cegepst.mainGame.entities.items;
+package cegepst.mainGame.entities.items.coin;
 
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.other.IntersectionChecker;
@@ -41,12 +41,12 @@ public class Coin extends MovableEntity implements Animatable {
     @Override
     public void onDeath() {
         new CoinEffect(x, y);
-        Sound.playOnce(ResourceLoader.loadSound(Resource.COIN_SOUND_EFFECT.getPath()), -10);
     }
 
     private void checkIfPickedUp() {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Player");
         if (intersectingEntity != null) {
+            Sound.playOnce(ResourceLoader.loadSound(Resource.COIN_SOUND_EFFECT.getPath()), -10);
             player.foundCoin(value);
             super.isDead = true;
         }

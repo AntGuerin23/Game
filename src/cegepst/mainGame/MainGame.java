@@ -1,12 +1,13 @@
 package cegepst.mainGame;
 
-import cegepst.engine.other.Camera;
-import cegepst.engine.repositories.EntityRepository;
-import cegepst.engine.other.Game;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.entities.UpdatableEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.graphics.RenderingEngine;
+import cegepst.engine.other.Camera;
+import cegepst.engine.other.Game;
+import cegepst.engine.repositories.EntityRepository;
+import cegepst.mainGame.entities.items.coin.CoinRespawner;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
@@ -43,9 +44,7 @@ public class MainGame extends Game {
     }
 
     @Override
-    public void conclude() {
-
-    }
+    public void conclude() {}
 
     private void instantiate() {
         gamePad = new GamePad();
@@ -72,6 +71,7 @@ public class MainGame extends Game {
     }
 
     private void updateEntities() {
+        CoinRespawner.getInstance().update();
         EntityRepository.getInstance().emptyCreationBuffer();
         for (StaticEntity entity : EntityRepository.getInstance()) {
             if (entity instanceof UpdatableEntity) {

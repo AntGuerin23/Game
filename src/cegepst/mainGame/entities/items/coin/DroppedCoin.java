@@ -1,6 +1,8 @@
-package cegepst.mainGame.entities.items;
+package cegepst.mainGame.entities.items.coin;
 
 import cegepst.engine.controls.Direction;
+import cegepst.engine.entities.StaticEntity;
+import cegepst.engine.other.IntersectionChecker;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Randomizer;
 
@@ -20,6 +22,8 @@ public class DroppedCoin extends Coin {
     public void update() {
         super.update();
         scatter();
+        checkForSpikeHit();
+
     }
 
     private void initializeValues() {
@@ -32,6 +36,14 @@ public class DroppedCoin extends Coin {
         moveHorizontally(direction);
         if (getSpeed() > 0) {
             setSpeed(getSpeed() - 0.08);
+        }
+    }
+
+    private void checkForSpikeHit() {
+        StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Spike");
+        if (intersectingEntity != null) {
+            CoinRespawner.getInstance().notifyAboutCoinDeath();
+            isDead = true;
         }
     }
 }

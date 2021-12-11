@@ -5,12 +5,12 @@ import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.repositories.EntityRepository;
-import cegepst.mainGame.entities.items.DroppedCoin;
+import cegepst.mainGame.entities.items.coin.DroppedCoin;
 import cegepst.mainGame.entities.player.Player;
 
 public abstract class Enemy extends MovableEntity {
 
-    private static final int STUN_DURATION = 60;
+    private static final int STUN_DURATION = 20;
     protected int hp;
     protected int maxHp;
     protected int storedCoins;

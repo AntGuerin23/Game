@@ -1,4 +1,4 @@
-package cegepst.mainGame.entities.items;
+package cegepst.mainGame.entities.items.coin;
 
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;

@@ -19,7 +19,8 @@ public enum Resource {
     SHOP_MUSIC("sounds/shop-music.wav"),
     DAMAGE_SOUND_EFFECT("sounds/damage.wav"),
     COIN_BAG_SPRITE("images/coin-bag.png"),
-    RAT_SPRITE_SHEET("images/rat-sheet.png");
+    RAT_SPRITE_SHEET("images/rat-sheet.png"),
+    SPIKE_UP("images/spike-up.png");
 
     private final String path;
 

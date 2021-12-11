@@ -9,7 +9,8 @@ import cegepst.engine.entities.ControllableEntity;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.resources.*;
 import cegepst.engine.graphics.Buffer;
-import cegepst.mainGame.entities.items.DroppedCoin;
+import cegepst.mainGame.entities.items.coin.CoinRespawner;
+import cegepst.mainGame.entities.items.coin.DroppedCoin;
 import cegepst.mainGame.entities.player.equipment.Inventory;
 import cegepst.mainGame.miscellaneous.actions.PlayerActions;
 import cegepst.mainGame.miscellaneous.other.GamePad;
@@ -31,6 +32,7 @@ public class Player extends ControllableEntity implements Animatable {
     private boolean stunned;
     private double lastVerticalVelocity;
     private static Player instance;
+    private Point lastGroundedLocation;
 
     public static Player getInstance(GamePad controller) {
         if (instance == null) {
@@ -50,11 +52,8 @@ public class Player extends ControllableEntity implements Animatable {
     public void update() {
         super.update();
         super.moveAccordingToController();
-        playSoundEffects();
-        manageDamage();
-        animator.animate();
-        inventory.update();
-        saveVelocity();
+        updateValues();
+        updateResources();
     }
 
     @Override
@@ -155,10 +154,28 @@ public class Player extends ControllableEntity implements Animatable {
     @Override
     public void onAnimationEnd(Action action) {}
 
+    private void updateValues() {
+        manageDamage();
+        inventory.update();
+        saveVelocity();
+        updateLastGroundedLocation();
+    }
+
+    private void updateResources() {
+        playSoundEffects();
+        animator.animate();
+    }
+
     private void manageDamage() {
         updateStun();
         checkIfDamaged();
         checkIfDead();
+    }
+
+    private void updateLastGroundedLocation() {
+        if (isGrounded()) {
+            CoinRespawner.getInstance().updatePlayerLocation(new Point(x, y), this);
+        }
     }
 
     private void drawPlayer(Buffer buffer) {
@@ -232,11 +249,23 @@ public class Player extends ControllableEntity implements Animatable {
     }
 
     private void checkIfDamaged() {
+        checkForEnemyHit();
+        checkForSpikeHit();
+    }
+
+    private void checkForEnemyHit() {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Enemy");
         if (intersectingEntity != null && !stunned) {
             getHit(1);
             stunned = true;
             stunStatus = STUN_DURATION;
+        }
+    }
+
+    private void checkForSpikeHit() {
+        StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Spike");
+        if (intersectingEntity != null) {
+            getHit(999);
         }
     }
 
@@ -252,7 +281,7 @@ public class Player extends ControllableEntity implements Animatable {
     }
 
     private void checkIfDead() {
-        if (hp == 0) {
+        if (hp <= 0) {
             isDead = true;
         }
     }

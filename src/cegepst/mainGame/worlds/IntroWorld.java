@@ -2,7 +2,7 @@ package cegepst.mainGame.worlds;
 
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.mapCollisions.Blockade;
-import cegepst.mainGame.entities.items.Coin;
+import cegepst.mainGame.entities.items.coin.Coin;
 import cegepst.mainGame.entities.player.Player;
 
 public class IntroWorld extends World {
