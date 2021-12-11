@@ -14,6 +14,7 @@ public class Coin extends MovableEntity implements Animatable {
 
     private Player player;
     private Animator animator;
+    protected int value;
 
     public Coin(int x, int y, Player player) {
         this.player = player;
@@ -22,6 +23,7 @@ public class Coin extends MovableEntity implements Animatable {
         setGravitating(false);
         EntityRepository.getInstance().registerEntity(this,false);
         animator = new Animator(this, Resource.COIN_SPRITE_SHEET, 1, CoinActions.IDLE, 32);
+        value = 1;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class Coin extends MovableEntity implements Animatable {
     private void checkIfPickedUp() {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Player");
         if (intersectingEntity != null) {
-            player.foundCoin(1);
+            player.foundCoin(value);
             super.isDead = true;
         }
     }

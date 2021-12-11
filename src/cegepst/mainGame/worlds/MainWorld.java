@@ -9,6 +9,7 @@ import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
 import cegepst.mainGame.entities.enemies.Bouncer;
 import cegepst.mainGame.entities.items.Coin;
+import cegepst.mainGame.entities.items.CoinBag;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
@@ -68,5 +69,6 @@ public class MainWorld extends World {
         new Coin(150,1008,player);
         new Coin(200,1008,player);
         new Coin(250,1008,player);
+        new CoinBag(250,1008,player,5);
     }
 }
