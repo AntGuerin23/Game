@@ -14,7 +14,6 @@ public class CoinRespawner {
     private boolean timerHasStarted;
     private Player player;
 
-
     public static CoinRespawner getInstance() {
         if (instance == null) {
             instance = new CoinRespawner();

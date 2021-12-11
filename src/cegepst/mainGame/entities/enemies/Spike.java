@@ -34,13 +34,12 @@ public class Spike extends StaticEntity {
         if (spikeDirection == Direction.UP) {
             return Resource.SPIKE_UP.getPath();
         }
-//        if (spikeDirection == Direction.RIGHT) {
-//            return Resource.SPIKE_RIGHT.getPath();
-//        }
-//        if (spikeDirection == Direction.DOWN) {
-//            return Resource.SPIKE_DOWN.getPath();
-//        }
-//        return SPIKE_LEFT.getPath();
-        return null;
+        if (spikeDirection == Direction.RIGHT) {
+            return Resource.SPIKE_RIGHT.getPath();
+        }
+        if (spikeDirection == Direction.DOWN) {
+            return Resource.SPIKE_DOWN.getPath();
+        }
+        return Resource.SPIKE_LEFT.getPath();
     }
 }
