@@ -14,7 +14,7 @@ import java.awt.*;
 
 public class Jetpack extends MovableEntity implements Equipable, SoundStopper, Animatable {
 
-    private static final int MAX_FUEL = 100;
+    private static final int MAX_FUEL = 10000;
     private int fuel;
     private final Player player;
     private final Image sprite;
