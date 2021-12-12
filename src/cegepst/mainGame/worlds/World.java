@@ -71,13 +71,13 @@ public abstract class World {
 
     private void createFloor(int floorLocation, boolean isStartBorder) {
         Blockade floor = new Blockade();
-        floor.teleport(0,floorLocation - ((isStartBorder) ? BORDER_Y_HEIGHT : 60));
+        floor.teleport(0,floorLocation - ((isStartBorder) ? BORDER_Y_HEIGHT : 0));
         floor.setDimension(10000,BORDER_Y_HEIGHT);
     }
 
     private void createWall(int wallLocation, boolean isStartBorder) {
         Blockade wall = new Blockade();
-        wall.teleport(wallLocation - ((isStartBorder) ? BORDER_X_WIDTH : 60),0);
+        wall.teleport(wallLocation - ((isStartBorder) ? BORDER_X_WIDTH : 0),0);
         wall.setDimension(BORDER_X_WIDTH,10000);
     }
 }

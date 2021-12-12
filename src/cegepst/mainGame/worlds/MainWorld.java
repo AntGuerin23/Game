@@ -34,6 +34,7 @@ public class MainWorld extends World {
         }
         EntityRepository.getInstance().registerEntity(player, false);
         EntityRepository.getInstance().registerEntity(camera, false);
+        player.teleport(getSpawnPointX(), getSpawnPointY());
     }
 
     private void instantiateBorders() {

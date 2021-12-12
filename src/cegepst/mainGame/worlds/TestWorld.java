@@ -25,16 +25,17 @@ public class TestWorld extends World {
         }
         EntityRepository.getInstance().registerEntity(player, false);
         EntityRepository.getInstance().registerEntity(camera, false);
+        player.teleport(getSpawnPointX(),getSpawnPointY());
     }
 
     @Override
     public int getSpawnPointX() {
-        return 50;
+        return 200;
     }
 
     @Override
     public int getSpawnPointY() {
-        return 50;
+        return 200;
     }
 
     private void initializeContent(Player player) {
@@ -42,14 +43,14 @@ public class TestWorld extends World {
         initializeBorderLocations();
         instantiateBorders();
         this.player = player;
-        player.teleport(500,500);
+        player.teleport(getSpawnPointX(),getSpawnPointY());
         hasBeenInitialized = true;
     }
 
     private void initializeBorderLocations() {
         super.startBorderX = 0;
         super.startBorderY = 0;
-        super.endBorderX = 1500;
+        super.endBorderX = 1440;
         super.endBorderY = 1500;
     }
 
