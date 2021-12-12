@@ -1,4 +1,4 @@
-package cegepst.mainGame.entities;
+package cegepst.mainGame.entities.objects;
 
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;

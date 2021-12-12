@@ -5,7 +5,8 @@ import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
-import cegepst.mainGame.entities.Door;
+import cegepst.mainGame.entities.objects.Crate;
+import cegepst.mainGame.entities.objects.Door;
 import cegepst.mainGame.entities.enemies.Bouncer;
 import cegepst.mainGame.entities.enemies.Rat;
 import cegepst.mainGame.entities.items.coin.Coin;
@@ -83,6 +84,7 @@ public class MainWorld extends World {
         new Coin(200,1008,player);
         new Coin(250,1008,player);
         new CoinBag(150,1000,player,5);
+        new Crate(390,1200,player);
     }
 
     private MainWorld() {}

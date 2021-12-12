@@ -19,6 +19,7 @@ public enum Resource {
     SPIKE_DOWN("images/spike-down.png"),
     SPIKE_LEFT("images/spike-left.png"),
     DOOR("images/door.png"),
+    CRATE("images/crate.png"),
     TEST_WORLD_100("images/48100.png"),
 
     COIN_SOUND_EFFECT("sounds/coin.wav"),

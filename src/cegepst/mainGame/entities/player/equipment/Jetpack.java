@@ -14,7 +14,7 @@ import java.awt.*;
 
 public class Jetpack extends MovableEntity implements Equipable, SoundStopper, Animatable {
 
-    private static final int MAX_FUEL = 10000;
+    private static final int MAX_FUEL = 100;
     private int fuel;
     private final Player player;
     private final Image sprite;
@@ -22,7 +22,6 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
     private boolean isFlying;
     private final Animator animator;
     private boolean isPlaySoundReady = true;
-
 
     public Jetpack(Player player, MovementController controller) {
         sprite = ResourceLoader.loadSprite(Resource.JETPACK_SPRITE.getPath());
@@ -92,8 +91,7 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
     }
 
     @Override
-    public void onAnimationEnd(Action action) {
-    }
+    public void onAnimationEnd(Action action) {}
 
     private void playSoundEffect() {
         if (isFlying() && isPlaySoundReady) {

@@ -5,7 +5,7 @@ import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
-import cegepst.mainGame.entities.Door;
+import cegepst.mainGame.entities.objects.Door;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 

@@ -9,7 +9,7 @@ import cegepst.engine.other.GameTime;
 import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.*;
-import cegepst.mainGame.entities.Door;
+import cegepst.mainGame.entities.objects.Door;
 import cegepst.mainGame.entities.items.coin.CoinRespawner;
 import cegepst.mainGame.entities.items.coin.DroppedCoin;
 import cegepst.mainGame.entities.player.equipment.Inventory;
