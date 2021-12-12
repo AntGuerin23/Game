@@ -6,13 +6,15 @@ import cegepst.engine.mapCollisions.Blockade;
 import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
+import cegepst.engine.resources.SoundStopper;
+import cegepst.mainGame.MainGame;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-public abstract class World {
+public abstract class World implements SoundStopper {
 
     private static final int BORDER_Y_HEIGHT = 30;
     private static final int BORDER_X_WIDTH = 30;
@@ -48,6 +50,10 @@ public abstract class World {
 
     public int getEndBorderY() {
         return endBorderY;
+    }
+
+    public boolean stopSound() {
+        return MainGame.getInstance().getCurrentWorld() != this;
     }
 
     protected void setBackground(Resource resource) {

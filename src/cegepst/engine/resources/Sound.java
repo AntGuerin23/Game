@@ -1,9 +1,6 @@
 package cegepst.engine.resources;
 
 
-import cegepst.engine.entities.StaticEntity;
-import cegepst.mainGame.miscellaneous.other.Resource;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;

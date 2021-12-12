@@ -3,6 +3,8 @@ package cegepst.mainGame.worlds;
 import cegepst.engine.WorldBuilder;
 import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
+import cegepst.engine.resources.ResourceLoader;
+import cegepst.engine.resources.Sound;
 import cegepst.mainGame.entities.Door;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
@@ -48,6 +50,7 @@ public class TestWorld extends World {
         this.player = player;
         (new WorldBuilder()).buildWorldFromJSON(Resource.TEST_COIN_WORLD_JSON_PATH, player);
         player.teleport(getSpawnPointX(),getSpawnPointY());
+        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.SHOP_MUSIC.getPath()), -20, this);
         hasBeenInitialized = true;
     }
 

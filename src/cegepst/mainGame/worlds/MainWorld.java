@@ -58,7 +58,7 @@ public class MainWorld extends World {
         initializeBorderLocations();
         instantiateBorders();
         setBackground(Resource.TEST_WORLD_IMG_PATH);
-        Sound.playLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20);
+        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20, this);
     }
 
     private void initializeBorderLocations() {
@@ -86,4 +86,5 @@ public class MainWorld extends World {
     }
 
     private MainWorld() {}
+
 }

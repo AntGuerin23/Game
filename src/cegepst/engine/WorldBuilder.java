@@ -33,19 +33,14 @@ public class WorldBuilder {
     }
 
     private void createObjects(JSONObject globalInfo) {
-        int index = 0;
-        JSONArray tileData = getTileData(globalInfo);
-        for (Object tileId : tileData) {
-            checkTile(tileId, index, globalInfo);
-            index++;
+        for (int i = 0; i < 2; i++) {
+            int index = 0;
+            JSONArray tileData = (i == 0) ? getTileData(globalInfo) : getObjectData(globalInfo);
+            for (Object tileId : tileData) {
+                checkTile(tileId, index, globalInfo);
+                index++;
+            }
         }
-        index = 0;
-        JSONArray objectData = getObjectData(globalInfo);
-        for (Object tileId : objectData) {
-            checkTile(tileId, index, globalInfo);
-            index++;
-        }
-
     }
 
     private void checkTile(Object tileId, int index, JSONObject globalInfo) {
@@ -131,7 +126,6 @@ public class WorldBuilder {
     private void createSpike(int tileId, int index, int worldWidth) {
         int locationX = index % worldWidth;
         int locationY = index / worldWidth;
-        System.out.println(locationX * 48 + " " + locationY * 48);
         new Spike(locationX * PIXEL_PER_TILE,locationY * PIXEL_PER_TILE, getSpikeDirection(tileId));
     }
 
