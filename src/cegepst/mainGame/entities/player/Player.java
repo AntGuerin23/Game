@@ -68,6 +68,7 @@ public class Player extends ControllableEntity implements Animatable {
         hp = MAX_HP;
         isDead = false;
         stunStatus = 0;
+        inventory.restartJetpackSound();
         EntityRepository.getInstance().registerEntity(this,false);
     }
 

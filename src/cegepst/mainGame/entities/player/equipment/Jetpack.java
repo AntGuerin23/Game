@@ -29,9 +29,9 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
         this.controller = controller;
         this.player = player;
         fuel = MAX_FUEL;
-        setDimension(16,18);
-        animator = new Animator(this, Resource.FLAME_SPRITE_SHEET,1, JetpackActions.BURN, 16);
-        EntityRepository.getInstance().registerEntity(this,false);
+        setDimension(16, 18);
+        animator = new Animator(this, Resource.FLAME_SPRITE_SHEET, 1, JetpackActions.BURN, 16);
+        EntityRepository.getInstance().registerEntity(this, false);
     }
 
     @Override
@@ -45,21 +45,21 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
 
     public void asyncDraw(Buffer buffer) {
         if (isFlying) {
-            animator.drawFlippableAnimation(buffer,  player.getX() - 5, player.getX() + 32, player.getY() + 45);
-            animator.drawFlippableAnimation(buffer,  player.getX() + 10, player.getX() + 15, player.getY() + 40);
+            animator.drawFlippableAnimation(buffer, player.getX() - 5, player.getX() + 32, player.getY() + 45);
+            animator.drawFlippableAnimation(buffer, player.getX() + 10, player.getX() + 15, player.getY() + 40);
         }
-        buffer.drawFlippableImage(sprite, player.getX() - 15 , player.getX() + 10, player.getY() - 8,47, 57,player.getHorizontalDirection());
+        buffer.drawFlippableImage(sprite, player.getX() - 15, player.getX() + 10, player.getY() - 8, 47, 57, player.getHorizontalDirection());
     }
 
     public void drawFuelGage(Buffer buffer, Camera camera) {
         buffer.drawRectangle(camera.getX() + 760, camera.getY() + 485, 35, 110, Color.DARK_GRAY);
         buffer.drawRectangle(camera.getX() + 764, camera.getY() + 489, 27, 102, Color.BLACK);
         buffer.drawRectangle(camera.getX() + 765, camera.getY() + 490, 25, 100, Color.ORANGE);
-        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 490, 25,  (int) (((double)100 / MAX_FUEL) *  (MAX_FUEL - fuel)),  Color.RED);
-        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 510, 25,  2,  Color.WHITE);
-        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 530, 25,  2,  Color.WHITE);
-        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 550, 25,  2,  Color.WHITE);
-        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 570, 25,  2,  Color.WHITE);
+        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 490, 25, (int) (((double) 100 / MAX_FUEL) * (MAX_FUEL - fuel)), Color.RED);
+        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 510, 25, 2, Color.WHITE);
+        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 530, 25, 2, Color.WHITE);
+        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 550, 25, 2, Color.WHITE);
+        buffer.drawRectangle(camera.getX() + 765, camera.getY() + 570, 25, 2, Color.WHITE);
     }
 
     public boolean isFlying() {
@@ -68,13 +68,31 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
 
     @Override
     public void update() {
-
     }
 
     @Override
     public void draw(Buffer buffer) {
-
     }
+
+    @Override
+    public boolean stopSound() {
+        if (!isFlying) {
+            isPlaySoundReady = true;
+        }
+        return !isFlying || player.isDead();
+    }
+
+    public void setIsPlaySoundReady(boolean isPlaySoundReady) {
+        this.isPlaySoundReady = isPlaySoundReady;
+    }
+
+    @Override
+    public boolean restartAnimation(Action currentAction) {
+        return false;
+    }
+
+    @Override
+    public void onAnimationEnd(Action action) {}
 
     private void playSoundEffect() {
         if (isFlying() && isPlaySoundReady) {
@@ -98,25 +116,10 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
     private void fly() {
         if (isFlying && player.getVerticalVelocity() < 0) {
             player.goBackUp();
-        }
-        else if (isFlying) {
+        } else if (isFlying) {
             player.goUp();
         }
     }
-
-    @Override
-    public boolean stopSound() {
-        if (!isFlying) {
-            isPlaySoundReady = true;
-        }
-        return !isFlying || player.isDead();
-    }
-
-    @Override
-    public boolean restartAnimation(Action currentAction) {
-        return false;
-    }
-
-    @Override
-    public void onAnimationEnd(Action action) {}
 }
+
+

@@ -5,7 +5,6 @@ import cegepst.engine.other.Camera;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class Inventory {
@@ -68,5 +67,9 @@ public class Inventory {
     public void pickupClimbingGloves() {
         ClimbingGloves gloves = new ClimbingGloves(player);
         inventory.add(gloves);
+    }
+
+    public void restartJetpackSound() {
+        jetpack.setIsPlaySoundReady(true);
     }
 }
