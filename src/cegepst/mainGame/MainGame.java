@@ -61,7 +61,7 @@ public class MainGame extends Game {
 
     private void instantiate() {
         instance = this;
-        currentWorld = new MainWorld();
+        currentWorld = MainWorld.getInstance();
         gamePad = new GamePad();
         player = Player.getInstance(gamePad);
         currentWorld.initialize(player);

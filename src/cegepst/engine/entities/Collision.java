@@ -1,7 +1,8 @@
 package cegepst.engine.entities;
 
-import cegepst.engine.repositories.CollidableRepository;
 import cegepst.engine.controls.Direction;
+import cegepst.engine.repositories.CollidableRepository;
+import cegepst.mainGame.MainGame;
 import cegepst.mainGame.worlds.World;
 
 import java.awt.*;
@@ -35,7 +36,7 @@ public class Collision {
         Rectangle hitBox = (checkingFloor) ? entity.getLowerHitBox() : entity.getUpperHitBox();
         for (Map.Entry<StaticEntity, World> entry : CollidableRepository.getInstance().getRepository()) {
             StaticEntity other = entry.getKey();
-            if (hitBox.intersects(other.getBounds())) {
+            if (hitBox.intersects(other.getBounds()) && entry.getValue() == MainGame.getInstance().getCurrentWorld()) {
                 return true;
             }
         }
@@ -77,7 +78,7 @@ public class Collision {
     private double getAllowedDistance(Rectangle collisionBound, double allowedDistance, DistanceCalculator calculator) {
         for (Map.Entry<StaticEntity, World> entry : CollidableRepository.getInstance().getRepository()) {
             StaticEntity other = entry.getKey();
-            if (collisionBound.intersects(other.getBounds())) {
+            if (collisionBound.intersects(other.getBounds()) && entry.getValue() == MainGame.getInstance().getCurrentWorld()) {
                 allowedDistance = Math.min(allowedDistance, calculator.calculateWith(other));
             }
         }

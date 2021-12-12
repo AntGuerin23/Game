@@ -1,9 +1,6 @@
 package cegepst.mainGame.worlds;
 
 import cegepst.engine.controls.Direction;
-import cegepst.engine.entities.StaticEntity;
-import cegepst.engine.graphics.Buffer;
-import cegepst.engine.mapCollisions.Blockade;
 import cegepst.engine.mapCollisions.CollisionParser;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
@@ -16,36 +13,30 @@ import cegepst.mainGame.entities.items.coin.CoinBag;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 public class MainWorld extends World {
 
     private Player player;
-    private ArrayList<Blockade> blockades;
     private Bouncer enemy;
+    private static MainWorld instance;
+    private boolean hasBeenInitialized = false;
+
+    public static MainWorld getInstance() {
+        if (instance == null) {
+            instance = new MainWorld();
+        }
+        return instance;
+    }
 
     public void initialize (Player player) {
-        this.player = player;
-        blockades = (new CollisionParser()).createBlockades(Resource.TEST_WORLD_JSON_PATH);
-        initializeEntities();
-        initializeBorderLocations();
-        instantiateBorders();
-        setBackground(Resource.TEST_WORLD_IMG_PATH);
-        Sound.playLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20);
+        if (!hasBeenInitialized) {
+            initializeContent(player);
+            hasBeenInitialized = true;
+        }
+        EntityRepository.getInstance().registerEntity(player, false);
     }
 
     private void instantiateBorders() {
         super.createBorders();
-    }
-
-    @Override
-    protected void drawEntities(Buffer buffer) {
-        for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
-            if (entry.getValue() == this) {
-                entry.getKey().draw(buffer);
-            }
-        }
     }
 
     @Override
@@ -56,6 +47,16 @@ public class MainWorld extends World {
     @Override
     public int getSpawnPointY() {
         return 990;
+    }
+
+    private void initializeContent(Player player) {
+        this.player = player;
+        (new CollisionParser()).createBlockades(Resource.TEST_WORLD_JSON_PATH);
+        initializeEntities();
+        initializeBorderLocations();
+        instantiateBorders();
+        setBackground(Resource.TEST_WORLD_IMG_PATH);
+        Sound.playLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20);
     }
 
     private void initializeBorderLocations() {
@@ -73,17 +74,13 @@ public class MainWorld extends World {
         new Spike(540,1250, Direction.UP);
         new Spike(590,1250, Direction.UP);
         new Spike(640,1250, Direction.UP);
-//        new Spike(382,1265, Direction.UP);
-//        new Spike(350,1265, Direction.UP);
-//        new Spike(350,1265, Direction.UP);
-//        new Spike(350,1265, Direction.UP);
         enemy = new Rat(600, 1200, 600, player, true);
         new Coin(0,1008,player);
-        //new Coin(50,1008,player);
         new Coin(100,1008,player);
-        //new Coin(150,1008,player);
         new Coin(200,1008,player);
         new Coin(250,1008,player);
         new CoinBag(150,1000,player,5);
     }
+
+    private MainWorld() {}
 }

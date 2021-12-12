@@ -154,7 +154,6 @@ public class Player extends ControllableEntity implements Animatable {
     public void onAnimationEnd(Action action) {}
 
     private void updateValues() {
-        EntityRepository.getInstance().registerEntity(this, false);
         manageDamage();
         inventory.update();
         saveVelocity();
