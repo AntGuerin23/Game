@@ -1,5 +1,6 @@
 package cegepst.mainGame.worlds;
 
+import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.mainGame.entities.Door;
 import cegepst.mainGame.entities.player.Player;
@@ -18,11 +19,12 @@ public class TestWorld extends World {
     }
 
     @Override
-    public void initialize(Player player) {
+    public void initialize(Player player, Camera camera) {
         if (!hasBeenInitialized) {
             initializeContent(player);
         }
         EntityRepository.getInstance().registerEntity(player, false);
+        EntityRepository.getInstance().registerEntity(camera, false);
     }
 
     @Override
@@ -40,14 +42,15 @@ public class TestWorld extends World {
         initializeBorderLocations();
         instantiateBorders();
         this.player = player;
+        player.teleport(500,500);
         hasBeenInitialized = true;
     }
 
     private void initializeBorderLocations() {
         super.startBorderX = 0;
         super.startBorderY = 0;
-        super.endBorderX = 1000;
-        super.endBorderY = 600;
+        super.endBorderX = 1500;
+        super.endBorderY = 1500;
     }
 
     private void instantiateBorders() {
@@ -56,9 +59,6 @@ public class TestWorld extends World {
 
     private void initializeEntities() {
         new Door(340,1000,MainWorld.getInstance());
-//        Blockade blockade = new Blockade();
-//        blockade.setDimension(650,30);
-//        blockade.teleport(100,470);
 //
 //        new Coin(155,410, player);
 //        new Coin(170,410, player);

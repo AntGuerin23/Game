@@ -24,9 +24,7 @@ public abstract class StaticEntity {
         this.height = height;
     }
 
-    public void onDeath() {
-
-    }
+    public void onDeath() {}
 
     public void kill() {
         isDead = true;

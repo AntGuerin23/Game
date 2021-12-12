@@ -66,9 +66,9 @@ public class MainGame extends Game {
         currentWorld = MainWorld.getInstance();
         gamePad = new GamePad();
         player = Player.getInstance(gamePad);
-        currentWorld.initialize(player);
-        player.teleport(currentWorld.getSpawnPointX(), currentWorld.getSpawnPointY());
         camera = new Camera(player, currentWorld);
+        currentWorld.initialize(player, camera);
+        player.teleport(currentWorld.getSpawnPointX(), currentWorld.getSpawnPointY());
     }
 
     private void manageInputs() {
@@ -125,7 +125,7 @@ public class MainGame extends Game {
             Door door = player.isTouchingDoor();
             if (door != null) {
                 currentWorld = door.getNewWorld();
-                currentWorld.initialize(player);
+                currentWorld.initialize(player, camera);
             }
         }
     }

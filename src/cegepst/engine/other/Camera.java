@@ -1,8 +1,8 @@
 package cegepst.engine.other;
 
-import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
+import cegepst.engine.repositories.EntityRepository;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
 import cegepst.mainGame.worlds.World;
@@ -25,13 +25,11 @@ public class Camera extends MovableEntity {
     public void update() {
         x = player.getX() - (800 / 2) + player.getWidth() / 2;
         y = player.getY() - (600 / 2);
-
         if (x > currentWorld.getEndBorderX() - 800) {
             x = currentWorld.getEndBorderX() - 800;
         } else if (x < currentWorld.getStartBorderX()) {
             x = currentWorld.getStartBorderX();
         }
-
         if (y > currentWorld.getEndBorderY() - 600) {
             y = currentWorld.getEndBorderY() - 600;
         } else if (y < currentWorld.getStartBorderY()) {

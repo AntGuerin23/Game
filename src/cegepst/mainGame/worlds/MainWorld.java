@@ -1,6 +1,7 @@
 package cegepst.mainGame.worlds;
 
 import cegepst.engine.mapCollisions.CollisionParser;
+import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
@@ -26,12 +27,13 @@ public class MainWorld extends World {
         return instance;
     }
 
-    public void initialize (Player player) {
+    public void initialize (Player player, Camera camera) {
         if (!hasBeenInitialized) {
             initializeContent(player);
             hasBeenInitialized = true;
         }
         EntityRepository.getInstance().registerEntity(player, false);
+        EntityRepository.getInstance().registerEntity(camera, false);
     }
 
     private void instantiateBorders() {
