@@ -9,16 +9,18 @@ public class IntroWorld extends World {
 
     private Player player;
 
-    public IntroWorld(Player player) {
-        this.player = player;
-        initializeBorderLocations();
-        instantiateBorders();
-        initializeCustomBlockades();
-    }
 
     @Override
     protected void drawEntities(Buffer buffer) {
 
+    }
+
+    @Override
+    public void initialize(Player player) {
+        this.player = player;
+        initializeBorderLocations();
+        instantiateBorders();
+        initializeCustomBlockades();
     }
 
     @Override

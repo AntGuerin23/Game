@@ -2,8 +2,10 @@ package cegepst.engine.entities;
 
 import cegepst.engine.repositories.CollidableRepository;
 import cegepst.engine.controls.Direction;
+import cegepst.mainGame.worlds.World;
 
 import java.awt.*;
+import java.util.Map;
 
 public class Collision {
 
@@ -31,7 +33,8 @@ public class Collision {
 
     public boolean checkIfVerticallyStuck(boolean checkingFloor) {
         Rectangle hitBox = (checkingFloor) ? entity.getLowerHitBox() : entity.getUpperHitBox();
-        for (StaticEntity other : CollidableRepository.getInstance()) {
+        for (Map.Entry<StaticEntity, World> entry : CollidableRepository.getInstance().getRepository()) {
+            StaticEntity other = entry.getKey();
             if (hitBox.intersects(other.getBounds())) {
                 return true;
             }
@@ -72,7 +75,8 @@ public class Collision {
     }
 
     private double getAllowedDistance(Rectangle collisionBound, double allowedDistance, DistanceCalculator calculator) {
-        for (StaticEntity other : CollidableRepository.getInstance()) {
+        for (Map.Entry<StaticEntity, World> entry : CollidableRepository.getInstance().getRepository()) {
+            StaticEntity other = entry.getKey();
             if (collisionBound.intersects(other.getBounds())) {
                 allowedDistance = Math.min(allowedDistance, calculator.calculateWith(other));
             }

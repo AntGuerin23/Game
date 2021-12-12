@@ -3,12 +3,10 @@ package cegepst.mainGame.entities.player.equipment;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
-import cegepst.engine.resources.Sound;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
-import javax.sound.sampled.AudioInputStream;
 import java.awt.*;
 
 public class Shotgun implements Equipable {
@@ -16,8 +14,6 @@ public class Shotgun implements Equipable {
     private Player player;
     private GamePad controller;
     private Image sprite;
-
-
 
     public Shotgun(Player player, GamePad controller) {
         this.player = player;

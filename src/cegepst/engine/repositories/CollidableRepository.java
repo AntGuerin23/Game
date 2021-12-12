@@ -1,16 +1,17 @@
 package cegepst.engine.repositories;
 
 import cegepst.engine.entities.StaticEntity;
+import cegepst.mainGame.MainGame;
+import cegepst.mainGame.worlds.World;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class CollidableRepository implements Iterable<StaticEntity> {
+public class CollidableRepository {
 
     private static CollidableRepository instance;
-    private final List<StaticEntity> registeredEntities;
+    private final HashMap<StaticEntity, World> registeredEntities;
 
     public static CollidableRepository getInstance() {
         if (instance == null) {
@@ -19,32 +20,19 @@ public class CollidableRepository implements Iterable<StaticEntity> {
         return instance;
     }
 
-    protected void registerEntities(Collection<StaticEntity> entities) {
-        registeredEntities.addAll(entities);
+    public Set<Map.Entry<StaticEntity, World>> getRepository() {
+        return registeredEntities.entrySet();
     }
 
     protected void registerEntity(StaticEntity entity) {
-        registeredEntities.add(entity);
+        registeredEntities.put(entity, MainGame.getInstance().getCurrentWorld());
     }
 
     protected void unregisterEntity(StaticEntity entity) {
         registeredEntities.remove(entity);
     }
 
-    public void unregisterEntities(Collection<StaticEntity> entities) {
-        registeredEntities.removeAll(entities);
-    }
-
-    public int count() {
-        return registeredEntities.size();
-    }
-
-    @Override
-    public Iterator<StaticEntity> iterator() {
-        return registeredEntities.iterator();
-    }
-
     private CollidableRepository() {
-        registeredEntities = new ArrayList<>();
+        registeredEntities = new HashMap<>();
     }
 }

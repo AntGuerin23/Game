@@ -17,14 +17,15 @@ import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainWorld extends World {
 
     private Player player;
-    private ArrayList<Blockade> blockades; //TODO: Delete when changing worlds
+    private ArrayList<Blockade> blockades;
     private Bouncer enemy;
 
-    public MainWorld(Player player) {
+    public void initialize (Player player) {
         this.player = player;
         blockades = (new CollisionParser()).createBlockades(Resource.TEST_WORLD_JSON_PATH);
         initializeEntities();
@@ -40,8 +41,10 @@ public class MainWorld extends World {
 
     @Override
     protected void drawEntities(Buffer buffer) {
-        for (StaticEntity entity : EntityRepository.getInstance()) {
-            entity.draw(buffer);
+        for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
+            if (entry.getValue() == this) {
+                entry.getKey().draw(buffer);
+            }
         }
     }
 

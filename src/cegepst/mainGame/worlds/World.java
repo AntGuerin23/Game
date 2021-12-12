@@ -1,9 +1,10 @@
 package cegepst.mainGame.worlds;
 
-import cegepst.engine.other.Camera;
-import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.mapCollisions.Blockade;
+import cegepst.engine.other.Camera;
+import cegepst.engine.resources.ResourceLoader;
+import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.awt.*;
@@ -18,9 +19,10 @@ public abstract class World {
     protected int endBorderX;
     protected int endBorderY;
 
-    protected abstract void drawEntities(Buffer buffer);
+    public abstract void initialize(Player player);
     public abstract int getSpawnPointX();
     public abstract int getSpawnPointY();
+    protected abstract void drawEntities(Buffer buffer);
 
     public void draw(Buffer buffer, Camera camera) {
         buffer.translate(camera);

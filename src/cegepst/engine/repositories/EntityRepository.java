@@ -1,17 +1,16 @@
 package cegepst.engine.repositories;
 
 import cegepst.engine.entities.StaticEntity;
+import cegepst.mainGame.MainGame;
+import cegepst.mainGame.worlds.World;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-public class EntityRepository implements Iterable<StaticEntity> {
+public class EntityRepository {
 
     private static EntityRepository instance;
-    private final List<StaticEntity> registeredEntities;
-    private final List<StaticEntity> creationBuffer;
+    private final HashMap<StaticEntity, World> registeredEntities;
+    private final HashMap<StaticEntity, World> creationBuffer;
 
     public static EntityRepository getInstance() {
         if (instance == null) {
@@ -20,24 +19,30 @@ public class EntityRepository implements Iterable<StaticEntity> {
         return instance;
     }
 
+    public Set<Map.Entry<StaticEntity, World>> getRepository() {
+        return registeredEntities.entrySet();
+    }
+
     public void registerEntities(Collection<StaticEntity> entities, boolean isCollidable) {
-        registeredEntities.addAll(entities);
-        if (isCollidable) {
-            CollidableRepository.getInstance().registerEntities(entities);
+        for (StaticEntity entity : entities) {
+            registeredEntities.put(entity, MainGame.getInstance().getCurrentWorld());
+            if (isCollidable) {
+                CollidableRepository.getInstance().registerEntity(entity);
+            }
         }
     }
 
     public void registerEntityBuffered(StaticEntity staticEntity) {
-        creationBuffer.add(staticEntity);
+        creationBuffer.put(staticEntity, MainGame.getInstance().getCurrentWorld());
     }
 
     public void emptyCreationBuffer() {
-        registerEntities(creationBuffer, false);
+        registerEntities(creationBuffer.keySet(), false);
         creationBuffer.clear();
     }
 
     public void registerEntity(StaticEntity entity, boolean isCollidable) {
-        registeredEntities.add(entity);
+        registeredEntities.put(entity, MainGame.getInstance().getCurrentWorld());
         if (isCollidable) {
             CollidableRepository.getInstance().registerEntity(entity);
         }
@@ -49,21 +54,14 @@ public class EntityRepository implements Iterable<StaticEntity> {
     }
 
     public void unregisterEntities(Collection<StaticEntity> entities) {
-        registeredEntities.removeAll(entities);
-        CollidableRepository.getInstance().unregisterEntities(entities);
-    }
-
-    public int count() {
-        return registeredEntities.size();
-    }
-
-    @Override
-    public Iterator<StaticEntity> iterator() {
-        return registeredEntities.iterator();
+        for (StaticEntity entity : entities) {
+            registeredEntities.remove(entity);
+            CollidableRepository.getInstance().unregisterEntity(entity);
+        }
     }
 
     private EntityRepository() {
-        creationBuffer = new ArrayList<>();
-        registeredEntities = new ArrayList<>();
+        creationBuffer = new HashMap<>();
+        registeredEntities = new HashMap<>();
     }
 }

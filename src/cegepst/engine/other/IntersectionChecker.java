@@ -2,11 +2,15 @@ package cegepst.engine.other;
 
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.entities.StaticEntity;
+import cegepst.mainGame.worlds.World;
+
+import java.util.Map;
 
 public class IntersectionChecker {
 
     public static StaticEntity checkIntersect(StaticEntity entity, String searchedEntity) {
-        for (StaticEntity staticEntity : EntityRepository.getInstance()) {
+        for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
+            StaticEntity staticEntity = entry.getKey();
             if (entity.intersectsWith(staticEntity)
                     && staticEntity.toString().equalsIgnoreCase(searchedEntity)) {
                 return staticEntity;

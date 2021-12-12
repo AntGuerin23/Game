@@ -14,7 +14,8 @@ public class Spike extends StaticEntity {
     private Image sprite;
 
     public Spike(int x, int y, Direction spikeDirection) {
-        setDimension(48,48);
+        setDimension((isSpikeUpOrDown(spikeDirection)) ? 48 : 39,
+                (isSpikeUpOrDown(spikeDirection)) ? 39 : 48);
         teleport(x,y);
         sprite = ResourceLoader.loadSprite(getSpritePath(spikeDirection));
         EntityRepository.getInstance().registerEntity(this,false);
@@ -28,6 +29,10 @@ public class Spike extends StaticEntity {
     @Override
     public String toString() {
         return "Spike";
+    }
+
+    private boolean isSpikeUpOrDown(Direction spikeDirection) {
+        return spikeDirection == Direction.UP || spikeDirection == Direction.DOWN;
     }
 
     private String getSpritePath(Direction spikeDirection) {

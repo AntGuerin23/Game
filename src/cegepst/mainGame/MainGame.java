@@ -15,6 +15,7 @@ import cegepst.mainGame.worlds.MainWorld;
 import cegepst.mainGame.worlds.World;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainGame extends Game {
 
@@ -22,6 +23,14 @@ public class MainGame extends Game {
     private Player player;
     private World currentWorld;
     private Camera camera;
+    private static MainGame instance;
+
+    public static MainGame getInstance() {
+        if (instance == null) {
+            instance = new MainGame();
+        }
+        return instance;
+    }
 
     @Override
     public void initialize() {
@@ -46,10 +55,16 @@ public class MainGame extends Game {
     @Override
     public void conclude() {}
 
+    public World getCurrentWorld() {
+        return currentWorld;
+    }
+
     private void instantiate() {
+        instance = this;
+        currentWorld = new MainWorld();
         gamePad = new GamePad();
         player = Player.getInstance(gamePad);
-        currentWorld = new MainWorld(player);
+        currentWorld.initialize(player);
         player.teleport(currentWorld.getSpawnPointX(), currentWorld.getSpawnPointY());
         camera = new Camera(player, currentWorld);
     }
@@ -73,8 +88,9 @@ public class MainGame extends Game {
     private void updateEntities() {
         CoinRespawner.getInstance().update();
         EntityRepository.getInstance().emptyCreationBuffer();
-        for (StaticEntity entity : EntityRepository.getInstance()) {
-            if (entity instanceof UpdatableEntity) {
+        for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
+            StaticEntity entity = entry.getKey();
+            if (entity instanceof UpdatableEntity && entry.getValue() == currentWorld) {
                 ((UpdatableEntity) entity).update();
             }
         }
@@ -87,7 +103,8 @@ public class MainGame extends Game {
     }
 
     private void tallyRemains(ArrayList<StaticEntity> deadEntities) {
-        for (StaticEntity entity : EntityRepository.getInstance()) {
+        for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
+            StaticEntity entity = entry.getKey();
             if (entity.isDead()) {
                 deadEntities.add(entity);
             }
@@ -104,6 +121,4 @@ public class MainGame extends Game {
     private void drawWorld(Buffer buffer, Camera camera) {
         currentWorld.draw(buffer, camera);
     }
-
-
 }

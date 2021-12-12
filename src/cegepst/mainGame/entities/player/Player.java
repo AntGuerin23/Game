@@ -1,14 +1,14 @@
 package cegepst.mainGame.entities.player;
 
 import cegepst.engine.controls.Direction;
-import cegepst.engine.other.Camera;
-import cegepst.engine.other.GameTime;
-import cegepst.engine.repositories.EntityRepository;
-import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.entities.ControllableEntity;
 import cegepst.engine.entities.StaticEntity;
-import cegepst.engine.resources.*;
 import cegepst.engine.graphics.Buffer;
+import cegepst.engine.other.Camera;
+import cegepst.engine.other.GameTime;
+import cegepst.engine.other.IntersectionChecker;
+import cegepst.engine.repositories.EntityRepository;
+import cegepst.engine.resources.*;
 import cegepst.mainGame.entities.items.coin.CoinRespawner;
 import cegepst.mainGame.entities.items.coin.DroppedCoin;
 import cegepst.mainGame.entities.player.equipment.Inventory;
@@ -32,7 +32,6 @@ public class Player extends ControllableEntity implements Animatable {
     private boolean stunned;
     private double lastVerticalVelocity;
     private static Player instance;
-    private Point lastGroundedLocation;
 
     public static Player getInstance(GamePad controller) {
         if (instance == null) {
@@ -60,7 +59,6 @@ public class Player extends ControllableEntity implements Animatable {
     public Action getNextAction(Action currentAction) {
         return updateAction();
     }
-
 
     public void foundCoin(int nbOfCoins) {
         coinCount += nbOfCoins;
@@ -155,6 +153,7 @@ public class Player extends ControllableEntity implements Animatable {
     public void onAnimationEnd(Action action) {}
 
     private void updateValues() {
+        EntityRepository.getInstance().registerEntity(this, false);
         manageDamage();
         inventory.update();
         saveVelocity();
@@ -288,7 +287,7 @@ public class Player extends ControllableEntity implements Animatable {
 
     private Player(GamePad controller) {
         super(controller);
-        EntityRepository.getInstance().registerEntity(this,false);
+        EntityRepository.getInstance().registerEntity(this, false);
         initializeValues();
         animator = new Animator(this, Resource.PLAYER_SPRITE_SHEET, 4, PlayerActions.RUN, 42);
         inventory = new Inventory(this, controller);
