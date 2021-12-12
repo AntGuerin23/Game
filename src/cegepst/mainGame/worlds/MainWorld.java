@@ -1,13 +1,12 @@
 package cegepst.mainGame.worlds;
 
-import cegepst.engine.controls.Direction;
 import cegepst.engine.mapCollisions.CollisionParser;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
+import cegepst.mainGame.entities.Door;
 import cegepst.mainGame.entities.enemies.Bouncer;
 import cegepst.mainGame.entities.enemies.Rat;
-import cegepst.mainGame.entities.enemies.Spike;
 import cegepst.mainGame.entities.items.coin.Coin;
 import cegepst.mainGame.entities.items.coin.CoinBag;
 import cegepst.mainGame.entities.player.Player;
@@ -67,13 +66,14 @@ public class MainWorld extends World {
     }
 
     private void initializeEntities() {
-        new Spike(340,1250, Direction.UP);
-        new Spike(390,1250, Direction.UP);
-        new Spike(440,1250, Direction.UP);
-        new Spike(490,1250, Direction.UP);
-        new Spike(540,1250, Direction.UP);
-        new Spike(590,1250, Direction.UP);
-        new Spike(640,1250, Direction.UP);
+        new Door(340,1185,TestWorld.getInstance());
+//        new Spike(340,1250, Direction.UP);
+//        new Spike(390,1250, Direction.UP);
+//        new Spike(440,1250, Direction.UP);
+//        new Spike(490,1250, Direction.UP);
+//        new Spike(540,1250, Direction.UP);
+//        new Spike(590,1250, Direction.UP);
+//        new Spike(640,1250, Direction.UP);
         enemy = new Rat(600, 1200, 600, player, true);
         new Coin(0,1008,player);
         new Coin(100,1008,player);

@@ -1,6 +1,7 @@
 package cegepst.mainGame.worlds;
 
 import cegepst.engine.repositories.EntityRepository;
+import cegepst.mainGame.entities.Door;
 import cegepst.mainGame.entities.player.Player;
 
 public class TestWorld extends World {
@@ -35,10 +36,10 @@ public class TestWorld extends World {
     }
 
     private void initializeContent(Player player) {
-        this.player = player;
+        initializeEntities();
         initializeBorderLocations();
         instantiateBorders();
-        initializeCustomBlockades();
+        this.player = player;
         hasBeenInitialized = true;
     }
 
@@ -53,7 +54,8 @@ public class TestWorld extends World {
         super.createBorders();
     }
 
-    private void initializeCustomBlockades() {
+    private void initializeEntities() {
+        new Door(340,1000,MainWorld.getInstance());
 //        Blockade blockade = new Blockade();
 //        blockade.setDimension(650,30);
 //        blockade.teleport(100,470);

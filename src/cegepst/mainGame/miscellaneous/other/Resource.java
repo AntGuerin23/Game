@@ -17,6 +17,7 @@ public enum Resource {
     SPIKE_RIGHT("images/spike-right.png"),
     SPIKE_DOWN("images/spike-down.png"),
     SPIKE_LEFT("images/spike-left.png"),
+    DOOR("images/door-export.png"),
 
     COIN_SOUND_EFFECT("sounds/coin.wav"),
     JETPACK_SOUND_EFFECT("sounds/jetpack.wav"),

@@ -38,4 +38,8 @@ public class MovementController extends Controller {
         return isKeyHeld(UP_KEY);
     }
 
+    public boolean isUpPressed() {
+        return isKeyPressed(UP_KEY);
+    }
+
 }

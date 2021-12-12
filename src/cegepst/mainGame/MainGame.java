@@ -7,6 +7,7 @@ import cegepst.engine.graphics.RenderingEngine;
 import cegepst.engine.other.Camera;
 import cegepst.engine.other.Game;
 import cegepst.engine.repositories.EntityRepository;
+import cegepst.mainGame.entities.Door;
 import cegepst.mainGame.entities.items.coin.CoinRespawner;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
@@ -43,6 +44,7 @@ public class MainGame extends Game {
     @Override
     public void update() {
         manageInputs();
+        checkForDoors();
         updateEntities();
         removeCorpses();
     }
@@ -115,6 +117,16 @@ public class MainGame extends Game {
         for (StaticEntity deadEntity : deadEntities) {
             deadEntity.onDeath();
             EntityRepository.getInstance().unregisterEntity(deadEntity);
+        }
+    }
+
+    private void checkForDoors() {
+        if (gamePad.isUpPressed()) {
+            Door door = player.isTouchingDoor();
+            if (door != null) {
+                currentWorld = door.getNewWorld();
+                currentWorld.initialize(player);
+            }
         }
     }
 

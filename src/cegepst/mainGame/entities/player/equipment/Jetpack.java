@@ -92,7 +92,8 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
     }
 
     @Override
-    public void onAnimationEnd(Action action) {}
+    public void onAnimationEnd(Action action) {
+    }
 
     private void playSoundEffect() {
         if (isFlying() && isPlaySoundReady) {
