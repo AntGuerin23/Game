@@ -1,7 +1,6 @@
 package cegepst.engine.resources;
 
 import cegepst.engine.graphics.Buffer;
-import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.awt.*;
@@ -39,7 +38,7 @@ public class Animator {
     }
 
     public void loadSpriteSheet(Resource resource) {
-        spriteSheet = ResourceLoader.loadSpriteSheet(resource.getPath());
+        spriteSheet = ResourceLoader.loadBufferedImage(resource.getPath());
     }
 
     private void playAnimation() {

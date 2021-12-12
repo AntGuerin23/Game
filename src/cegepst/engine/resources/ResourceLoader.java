@@ -21,7 +21,7 @@ public class ResourceLoader {
         }
     }
 
-    public static BufferedImage loadSpriteSheet(String path) {
+    public static BufferedImage loadBufferedImage(String path) {
         return (BufferedImage) loadSprite(path);
     }
 

@@ -1,9 +1,11 @@
 package cegepst.mainGame.worlds;
 
+import cegepst.engine.WorldBuilder;
 import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.mainGame.entities.Door;
 import cegepst.mainGame.entities.player.Player;
+import cegepst.mainGame.miscellaneous.other.Resource;
 
 public class TestWorld extends World {
 
@@ -22,6 +24,7 @@ public class TestWorld extends World {
     public void initialize(Player player, Camera camera) {
         if (!hasBeenInitialized) {
             initializeContent(player);
+            setBackground(Resource.TEST_WORLD_100);
         }
         EntityRepository.getInstance().registerEntity(player, false);
         EntityRepository.getInstance().registerEntity(camera, false);
@@ -43,6 +46,7 @@ public class TestWorld extends World {
         initializeBorderLocations();
         instantiateBorders();
         this.player = player;
+        (new WorldBuilder()).buildWorldFromJSON(Resource.TEST_COIN_WORLD_JSON_PATH, player);
         player.teleport(getSpawnPointX(),getSpawnPointY());
         hasBeenInitialized = true;
     }
@@ -50,8 +54,8 @@ public class TestWorld extends World {
     private void initializeBorderLocations() {
         super.startBorderX = 0;
         super.startBorderY = 0;
-        super.endBorderX = 1440;
-        super.endBorderY = 1500;
+        super.endBorderX = 4800;
+        super.endBorderY = 4800;
     }
 
     private void instantiateBorders() {

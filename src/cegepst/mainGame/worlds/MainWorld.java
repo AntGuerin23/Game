@@ -1,6 +1,6 @@
 package cegepst.mainGame.worlds;
 
-import cegepst.engine.mapCollisions.CollisionParser;
+import cegepst.engine.WorldBuilder;
 import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
@@ -53,7 +53,7 @@ public class MainWorld extends World {
 
     private void initializeContent(Player player) {
         this.player = player;
-        (new CollisionParser()).createBlockades(Resource.TEST_WORLD_JSON_PATH);
+        (new WorldBuilder()).buildWorldFromJSON(Resource.TEST_WORLD_JSON_PATH, player);
         initializeEntities();
         initializeBorderLocations();
         instantiateBorders();

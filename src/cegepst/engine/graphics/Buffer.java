@@ -1,7 +1,7 @@
 package cegepst.engine.graphics;
 
-import cegepst.engine.other.Camera;
 import cegepst.engine.controls.Direction;
+import cegepst.engine.other.Camera;
 
 import java.awt.*;
 import java.awt.font.TextLayout;

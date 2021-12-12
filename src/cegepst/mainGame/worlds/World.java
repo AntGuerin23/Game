@@ -9,14 +9,14 @@ import cegepst.engine.resources.ResourceLoader;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Map;
 
 public abstract class World {
 
     private static final int BORDER_Y_HEIGHT = 30;
     private static final int BORDER_X_WIDTH = 30;
-    private Image background;
+    private BufferedImage background;
     protected int startBorderX;
     protected int startBorderY;
     protected int endBorderX;
@@ -29,7 +29,7 @@ public abstract class World {
     public void draw(Buffer buffer, Camera camera) {
         buffer.translate(camera);
         if (background != null) {
-            buffer.drawImage(background,0,0);
+            buffer.drawImage(background.getSubimage(camera.getX(),camera.getY(),800,600), camera.getX(), camera.getY());
         }
         drawEntities(buffer);
     }
@@ -51,7 +51,7 @@ public abstract class World {
     }
 
     protected void setBackground(Resource resource) {
-        background = ResourceLoader.loadSprite(resource.getPath());
+        background = ResourceLoader.loadBufferedImage(resource.getPath());
     }
 
     protected void drawEntities(Buffer buffer) {
