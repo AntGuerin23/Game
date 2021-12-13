@@ -15,8 +15,8 @@ public class Rat extends Bouncer implements Animatable {
     private Animator animator;
     private Action lastAction;
 
-    public Rat(int x, int y, int roamDistance, Player player, boolean canBounce) {
-        super(x, y, roamDistance, player, canBounce);
+    public Rat(int x, int y, int roamDistance, Player player, boolean canBounce, int nbOfCoins) {
+        super(x, y, roamDistance, player, canBounce, nbOfCoins);
         initializeValues();
     }
 
@@ -67,7 +67,6 @@ public class Rat extends Bouncer implements Animatable {
         setMaxHp(10);
         setDimension(74,76);
         setSpeed(canBounce ? 4 : 6);
-        storedCoins = canBounce ? 15 : 10;
         animator = new Animator(this, Resource.RAT_SPRITE_SHEET, 3, RatActions.RUN,width);
     }
 

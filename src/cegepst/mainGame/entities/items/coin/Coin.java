@@ -47,7 +47,7 @@ public class Coin extends MovableEntity implements Animatable {
         StaticEntity intersectingEntity = IntersectionChecker.checkIntersect(this, "Player");
         if (intersectingEntity != null) {
             Sound.playOnce(ResourceLoader.loadSound(Resource.COIN_SOUND_EFFECT.getPath()), -10);
-            player.foundCoin(value);
+            player.modifyCoinCount(value);
             super.isDead = true;
         }
     }

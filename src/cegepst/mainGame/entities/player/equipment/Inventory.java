@@ -5,36 +5,37 @@ import cegepst.engine.other.Camera;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Inventory {
 
-    private ArrayList<Equipable> inventory;
-    private GamePad controller;
-    private Player player;
+    private final HashMap<String, Equipable> inventory;
+    private final GamePad controller;
+    private final Player player;
     private Shotgun shotgun;
     private Jetpack jetpack;
 
     public Inventory(Player player, GamePad controller) {
-        inventory = new ArrayList<>();
+        inventory = new HashMap<>();
         this.controller = controller;
         this.player = player;
     }
 
     public void update() {
-        for (Equipable equipable : inventory) {
+        updateVariables();
+        for (Equipable equipable : inventory.values()) {
             equipable.updateEquipment();
         }
     }
 
     public void drawShotgun(Buffer buffer) {
-        if (inventory.contains(shotgun)) {
+        if (shotgun != null) {
             shotgun.draw(buffer);
         }
     }
 
     public void drawJetpack(Buffer buffer) {
-        if (inventory.contains(jetpack)) {
+        if (jetpack != null) {
             jetpack.asyncDraw(buffer);
         }
     }
@@ -44,32 +45,28 @@ public class Inventory {
     }
 
     public boolean isJetpackFlying() {
-        if (inventory.contains(jetpack)) {
+        if (jetpack != null) {
             return jetpack.isFlying();
         }
         return false;
     }
 
     public boolean hasJetpack() {
-        return inventory.contains(jetpack);
+        return jetpack != null;
     }
 
-    public void pickupShotgun() {
-        shotgun = new Shotgun(player, controller);
-        inventory.add(shotgun);
+    public void addItem(Equipable item) {
+        item.initialize(player, controller);
+        inventory.put(item.toString(), item);
     }
 
-    public void pickupJetpack() {
-        jetpack = new Jetpack(player, controller);
-        inventory.add(jetpack);
-    }
-
-    public void pickupClimbingGloves() {
-        ClimbingGloves gloves = new ClimbingGloves(player);
-        inventory.add(gloves);
-    }
 
     public void restartJetpackSound() {
         jetpack.setIsPlaySoundReady(true);
+    }
+
+    private void updateVariables() {
+        jetpack = ((Jetpack) inventory.get("Jetpack"));
+        shotgun = ((Shotgun) inventory.get("Shotgun"));
     }
 }

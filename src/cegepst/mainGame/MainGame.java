@@ -13,6 +13,7 @@ import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
 import cegepst.mainGame.worlds.MainWorld;
+import cegepst.mainGame.worlds.ShopWorld;
 import cegepst.mainGame.worlds.World;
 
 import java.util.ArrayList;
@@ -36,9 +37,6 @@ public class MainGame extends Game {
     @Override
     public void initialize() {
         instantiate();
-        player.pickupJetpack();
-        player.pickupShotgun();
-       // player.pickupClimbingGloves();
     }
 
     @Override
@@ -67,7 +65,7 @@ public class MainGame extends Game {
         gamePad = new GamePad();
         player = Player.getInstance(gamePad);
         camera = new Camera(player, currentWorld);
-        currentWorld.initialize(player, camera);
+        fixWorldBug();
         player.teleport(currentWorld.getSpawnPointX(), currentWorld.getSpawnPointY());
     }
 
@@ -128,6 +126,14 @@ public class MainGame extends Game {
                 currentWorld.initialize(player, camera);
             }
         }
+    }
+
+    private void fixWorldBug() {
+        currentWorld.initialize(player, camera);
+        currentWorld = ShopWorld.getInstance();
+        currentWorld.initialize(player, camera);
+        currentWorld = MainWorld.getInstance();
+        currentWorld.initialize(player,camera);
     }
 
     private void drawWorld(Buffer buffer, Camera camera) {

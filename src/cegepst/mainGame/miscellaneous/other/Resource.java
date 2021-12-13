@@ -3,7 +3,7 @@ package cegepst.mainGame.miscellaneous.other;
 public enum Resource {
 
     TEST_WORLD_JSON_PATH("json/testMap48.json"),
-    TEST_COIN_WORLD_JSON_PATH("json/48100.json"),
+    SHOP_JSON("json/shop.json"),
 
     TEST_WORLD_IMG_PATH("images/testMap48.png"),
     PLAYER_SPRITE_SHEET("images/classic_guy-sheet42_48.png"),
@@ -23,6 +23,12 @@ public enum Resource {
     CRACKED_BLOCK("images/cracked-block.png"),
     TEST_WORLD_100("images/48100.png"),
     BLOCK_FRAGMENT("images/block-fragment.png"),
+    SHOP("images/shop.png"),
+    RESPAWN_TEXT("images/respawn-tutorial.png"),
+    SHOOT_TEXT("images/shoot-tutorial.png"),
+    FLY_TEXT("images/fly-tutorial.png"),
+    CLIMB_TEXT("images/climb-tutorial.png"),
+    GLOVE_SPRITE("images/gloves.png"),
 
     COIN_SOUND_EFFECT("sounds/coin.wav"),
     JETPACK_SOUND_EFFECT("sounds/jetpack.wav"),

@@ -7,11 +7,12 @@ public abstract class Bouncer extends Roamer {
     private int jumpCooldown = 50;
     protected boolean canBounce;
 
-    public Bouncer(int x, int y, int roamDistance, Player player, boolean canBounce) {
+    public Bouncer(int x, int y, int roamDistance, Player player, boolean canBounce, int nbOfCoins) {
         super(x, y, roamDistance, player);
         initializeValues(canBounce);
         setGravitating(true);
         setJumpForce(10);
+        storedCoins = nbOfCoins;
     }
 
     @Override

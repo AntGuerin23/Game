@@ -8,6 +8,7 @@ import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.*;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.actions.JetpackActions;
+import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.awt.*;
@@ -16,21 +17,21 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
 
     private static final int MAX_FUEL = 100;
     private int fuel;
-    private final Player player;
-    private final Image sprite;
-    private final MovementController controller;
+    private Player player;
+    private Image sprite;
+    private MovementController controller;
     private boolean isFlying;
-    private final Animator animator;
+    private Animator animator;
     private boolean isPlaySoundReady = true;
 
-    public Jetpack(Player player, MovementController controller) {
+    public void initialize(Player player, GamePad controller) {
         sprite = ResourceLoader.loadSprite(Resource.JETPACK_SPRITE.getPath());
         this.controller = controller;
         this.player = player;
         fuel = MAX_FUEL;
         setDimension(16, 18);
         animator = new Animator(this, Resource.FLAME_SPRITE_SHEET, 1, JetpackActions.BURN, 16);
-        EntityRepository.getInstance().registerEntity(this, false);
+        EntityRepository.getInstance().registerEntityBuffered(this);
     }
 
     @Override
@@ -66,12 +67,10 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
     }
 
     @Override
-    public void update() {
-    }
+    public void update() {}
 
     @Override
-    public void draw(Buffer buffer) {
-    }
+    public void draw(Buffer buffer) {}
 
     @Override
     public boolean stopSound() {
@@ -92,6 +91,11 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
 
     @Override
     public void onAnimationEnd(Action action) {}
+
+    @Override
+    public String toString() {
+        return "Jetpack";
+    }
 
     private void playSoundEffect() {
         if (isFlying() && isPlaySoundReady) {

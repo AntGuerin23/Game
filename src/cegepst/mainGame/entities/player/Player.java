@@ -9,9 +9,11 @@ import cegepst.engine.other.GameTime;
 import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.*;
+import cegepst.mainGame.entities.environment.BuyStation;
 import cegepst.mainGame.entities.environment.Door;
 import cegepst.mainGame.entities.items.coin.CoinRespawner;
 import cegepst.mainGame.entities.items.coin.DroppedCoin;
+import cegepst.mainGame.entities.player.equipment.Equipable;
 import cegepst.mainGame.entities.player.equipment.Inventory;
 import cegepst.mainGame.miscellaneous.actions.PlayerActions;
 import cegepst.mainGame.miscellaneous.other.GamePad;
@@ -54,6 +56,7 @@ public class Player extends ControllableEntity implements Animatable {
         super.moveAccordingToController();
         updateValues();
         updateResources();
+        checkForShopBuy();
     }
 
     @Override
@@ -61,7 +64,7 @@ public class Player extends ControllableEntity implements Animatable {
         return updateAction();
     }
 
-    public void foundCoin(int nbOfCoins) {
+    public void modifyCoinCount(int nbOfCoins) {
         coinCount += nbOfCoins;
     }
 
@@ -108,18 +111,6 @@ public class Player extends ControllableEntity implements Animatable {
 
     public Door isTouchingDoor() {
         return (Door) IntersectionChecker.checkIntersect(this,"Door");
-    }
-
-    public void pickupShotgun() {
-        inventory.pickupShotgun();
-    }
-
-    public void pickupJetpack() {
-        inventory.pickupJetpack();
-    }
-
-    public void pickupClimbingGloves() {
-        inventory.pickupClimbingGloves();
     }
 
     public void drawStaticImages(Buffer buffer, Camera camera) {
@@ -190,7 +181,7 @@ public class Player extends ControllableEntity implements Animatable {
     }
 
     private void initializeValues() {
-        coinCount = 0;
+        coinCount = 300; //TODO: Reset this to 0
         hp = MAX_HP;
         setSpeed(5);
         setDimension(42,46);
@@ -218,6 +209,18 @@ public class Player extends ControllableEntity implements Animatable {
         }
         if (hasJustJumped) {
             hasJustJumped = false;
+        }
+    }
+
+    private void checkForShopBuy() {
+        if (controller.isUpHeld()) {
+            StaticEntity entity = IntersectionChecker.checkIntersect(this,"BuyStation");
+            if (entity instanceof BuyStation) {
+                Equipable item = ((BuyStation) entity).buyItem(this);
+                if (item != null) {
+                    inventory.addItem(item);
+                }
+            }
         }
     }
 

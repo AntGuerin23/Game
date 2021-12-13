@@ -5,7 +5,6 @@ import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
-import cegepst.mainGame.entities.enemies.Bouncer;
 import cegepst.mainGame.entities.environment.CrackedBlock;
 import cegepst.mainGame.entities.environment.Crate;
 import cegepst.mainGame.entities.environment.Door;
@@ -16,10 +15,9 @@ import cegepst.mainGame.miscellaneous.other.Resource;
 
 public class MainWorld extends World {
 
-    private Player player;
-    private Bouncer enemy;
     private static MainWorld instance;
     private boolean hasBeenInitialized = false;
+    private Player player;
 
     public static MainWorld getInstance() {
         if (instance == null) {
@@ -33,6 +31,7 @@ public class MainWorld extends World {
             initializeContent(player);
             hasBeenInitialized = true;
         }
+        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20, this);
         EntityRepository.getInstance().registerEntity(player, false);
         EntityRepository.getInstance().registerEntity(camera, false);
         player.teleport(getSpawnPointX(), getSpawnPointY());
@@ -59,7 +58,6 @@ public class MainWorld extends World {
         initializeBorderLocations();
         instantiateBorders();
         setBackground(Resource.TEST_WORLD_IMG_PATH);
-        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20, this);
     }
 
     private void initializeBorderLocations() {
@@ -70,22 +68,13 @@ public class MainWorld extends World {
     }
 
     private void initializeEntities() {
-        new Door(340,1185,TestWorld.getInstance());
-//        new Spike(340,1250, Direction.UP);
-//        new Spike(390,1250, Direction.UP);
-//        new Spike(440,1250, Direction.UP);
-//        new Spike(490,1250, Direction.UP);
-//        new Spike(540,1250, Direction.UP);
-//        new Spike(590,1250, Direction.UP);
-//        new Spike(640,1250, Direction.UP);
-        //enemy = new Rat(600, 1200, 600, player, true);
+        new Door(340,1185, ShopWorld.getInstance());
         new CrackedBlock(1200,1200);
         new CrackedBlock(1248,1200);
         new CrackedBlock(1296,1200);
         new CrackedBlock(1200,1152);
         new CrackedBlock(1248,1152);
         new CrackedBlock(1296,1152);
-
         new Coin(0,1008,player);
         new Coin(100,1008,player);
         new Coin(200,1008,player);
@@ -93,7 +82,6 @@ public class MainWorld extends World {
         new CoinBag(150,1000,player,5);
         new Crate(800,1200,player);
         new Crate(900,1200,player);
-
     }
 
     private MainWorld() {}

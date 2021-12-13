@@ -3,9 +3,11 @@ package cegepst.engine.other;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.repositories.EntityRepository;
+import cegepst.engine.resources.ResourceLoader;
 import cegepst.mainGame.MainGame;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
+import cegepst.mainGame.miscellaneous.other.Resource;
 import cegepst.mainGame.worlds.World;
 
 import java.awt.*;
@@ -14,11 +16,13 @@ public class Camera extends MovableEntity {
 
     private Player player;
     private World currentWorld;
+    private Image respawnText;
 
     public Camera(Player player, World currentWorld) {
         EntityRepository.getInstance().registerEntity(this,false);
         this.player = player;
         this.currentWorld = currentWorld;
+        respawnText = ResourceLoader.loadSprite(Resource.RESPAWN_TEXT.getPath());
         setDimension(800, 600);
     }
 
@@ -62,12 +66,12 @@ public class Camera extends MovableEntity {
     }
 
     private void drawText(Buffer buffer) {
+        buffer.drawText("Coins : " + player.getCoinCount(), x, y + 80, Color.WHITE);
         if (player.isDead()) {
-            buffer.drawText("Press 'R' to continue",x + 300,y + 300, Color.WHITE);
+            buffer.drawImage(respawnText,x + 155, y + 280);
         }
         if (GameSettings.debug) {
-            buffer.drawText("FPS: " + GameTime.getCurrentFps(), x + 200, y + 20, Color.WHITE);
-            //buffer.drawText(GameTime.getElapsedFormattedTime(), x + 10, y + 40, Color.WHITE);
+            buffer.drawText("FPS: " + GameTime.getCurrentFps(), x, y + 60, Color.WHITE);
         }
     }
 

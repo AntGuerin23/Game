@@ -1,6 +1,8 @@
 package cegepst.engine.resources;
 
 
+import cegepst.mainGame.MainGame;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -35,7 +37,7 @@ public class Sound {
                     clip.start();
                     while (entity != null && clip.isOpen()) {
                         System.out.print(""); //N'arrête pas le thread sans ça ????????????? étrange
-                        if (entity.stopSound()) {
+                        if (entity.stopSound() || !MainGame.getInstance().gameIsInProgress()) {
                             clip.close();
                             clip.stop();
                         }

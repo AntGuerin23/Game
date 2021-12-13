@@ -5,19 +5,22 @@ import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
+import cegepst.engine.resources.SoundStopper;
+import cegepst.mainGame.entities.environment.BuyStation;
 import cegepst.mainGame.entities.environment.Door;
+import cegepst.mainGame.entities.environment.ShopItem;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
-public class TestWorld extends World {
+public class ShopWorld extends World implements SoundStopper {
 
     private Player player;
-    private static TestWorld instance;
+    private static ShopWorld instance;
     private boolean hasBeenInitialized = false;
 
-    public static TestWorld getInstance() {
+    public static ShopWorld getInstance() {
         if (instance == null) {
-            instance = new TestWorld();
+            instance = new ShopWorld();
         }
         return instance;
     }
@@ -26,8 +29,9 @@ public class TestWorld extends World {
     public void initialize(Player player, Camera camera) {
         if (!hasBeenInitialized) {
             initializeContent(player);
-            setBackground(Resource.TEST_WORLD_100);
+            setBackground(Resource.SHOP);
         }
+        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.SHOP_MUSIC.getPath()), -20, this);
         EntityRepository.getInstance().registerEntity(player, false);
         EntityRepository.getInstance().registerEntity(camera, false);
         player.teleport(getSpawnPointX(),getSpawnPointY());
@@ -35,12 +39,12 @@ public class TestWorld extends World {
 
     @Override
     public int getSpawnPointX() {
-        return 200;
+        return 340;
     }
 
     @Override
     public int getSpawnPointY() {
-        return 200;
+        return 750;
     }
 
     private void initializeContent(Player player) {
@@ -48,17 +52,16 @@ public class TestWorld extends World {
         initializeBorderLocations();
         instantiateBorders();
         this.player = player;
-        (new WorldBuilder()).buildWorldFromJSON(Resource.TEST_COIN_WORLD_JSON_PATH, player);
+        (new WorldBuilder()).buildWorldFromJSON(Resource.SHOP_JSON, player);
         player.teleport(getSpawnPointX(),getSpawnPointY());
-        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.SHOP_MUSIC.getPath()), -20, this);
         hasBeenInitialized = true;
     }
 
     private void initializeBorderLocations() {
         super.startBorderX = 0;
         super.startBorderY = 0;
-        super.endBorderX = 4800;
-        super.endBorderY = 4800;
+        super.endBorderX = 1536;
+        super.endBorderY = 1152;
     }
 
     private void instantiateBorders() {
@@ -66,15 +69,11 @@ public class TestWorld extends World {
     }
 
     private void initializeEntities() {
-        new Door(340,1000,MainWorld.getInstance());
-//
-//        new Coin(155,410, player);
-//        new Coin(170,410, player);
-//        new Coin(185,410, player);
-//        new Coin(200,410, player);
-//        new Coin(215,410, player);
-//        new Coin(230,410, player);
+        new Door(340,650,MainWorld.getInstance());
+        new BuyStation(815,700, ShopItem.SHOTGUN);
+        new BuyStation(917,680, ShopItem.JETPACK);
+        new BuyStation(1015,673, ShopItem.GLOVES);
     }
 
-    private TestWorld() {}
+    private ShopWorld() {}
 }

@@ -34,6 +34,10 @@ public abstract class Game {
         renderingEngine.addKeyListener(listener);
     }
 
+    public boolean gameIsInProgress() {
+        return playing;
+    }
+
     private void run() {
         renderingEngine.start();
         GameTime.getInstance();

@@ -15,10 +15,9 @@ public class Shotgun implements Equipable {
     private GamePad controller;
     private Image sprite;
 
-    public Shotgun(Player player, GamePad controller) {
+    public void initialize(Player player, GamePad controller) {
         this.player = player;
         this.controller = controller;
-
         sprite = ResourceLoader.loadSprite(Resource.SHOTGUN_SPRITE.getPath());
     }
 
@@ -31,5 +30,10 @@ public class Shotgun implements Equipable {
 
     public void draw(Buffer buffer) {
         buffer.drawFlippableImage(sprite, player.getX() + 5, player.getX() - 17, player.getY() + 20,54, 22,player.getHorizontalDirection());
+    }
+
+    @Override
+    public String toString() {
+        return "Shotgun";
     }
 }
