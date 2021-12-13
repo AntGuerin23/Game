@@ -118,7 +118,7 @@ public class WorldBuilder {
     }
 
     private void checkForSpike(int tileId, int index, int worldWidth) {
-        if (getObjectId(tileId) >= 21 && getObjectId(tileId) <= 24) {
+        if (getObjectId(tileId) >= 22 && getObjectId(tileId) <= 25) {
             createSpike(tileId, index, worldWidth);
         }
     }
@@ -130,23 +130,23 @@ public class WorldBuilder {
     }
 
     private Direction getSpikeDirection(int tileId) {
-        if (tileId == 21) {
+        if (tileId == 22) {
             return Direction.UP;
         }
-        if (tileId == 22) {
+        if (tileId == 23) {
             return Direction.RIGHT;
         }
-        if (tileId == 23) {
+        if (tileId == 24) {
             return Direction.DOWN;
         }
-        if (tileId == 24) {
+        if (tileId == 25) {
             return Direction.LEFT;
         }
         return null;
     }
 
     private void checkForCoin(int tileId, int index, int worldWidth) {
-        if (getObjectId(tileId) == 46) {
+        if (getObjectId(tileId) == 21) {
             int locationX = index % worldWidth;
             int locationY = index / worldWidth;
             new Coin(locationX * PIXEL_PER_TILE, locationY * PIXEL_PER_TILE, player);

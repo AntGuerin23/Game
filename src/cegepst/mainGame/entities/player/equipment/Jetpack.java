@@ -4,8 +4,10 @@ import cegepst.engine.controls.MovementController;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.other.Camera;
+import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.*;
+import cegepst.mainGame.entities.items.FuelContainer;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.actions.JetpackActions;
 import cegepst.mainGame.miscellaneous.other.GamePad;
@@ -41,6 +43,7 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
         horizontalDirection = player.getHorizontalDirection();
         updateState();
         fly();
+        checkForContainer();
     }
 
     public void asyncDraw(Buffer buffer) {
@@ -121,6 +124,14 @@ public class Jetpack extends MovableEntity implements Equipable, SoundStopper, A
             player.goBackUp();
         } else if (isFlying) {
             player.goUp();
+        }
+    }
+
+    private void checkForContainer() {
+        FuelContainer container = (FuelContainer) IntersectionChecker.checkIntersect(player,"FuelContainer");
+        if (container != null && container.isPickable()) {
+            fuel = MAX_FUEL;
+            container.pickUp();
         }
     }
 }

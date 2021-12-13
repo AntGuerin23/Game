@@ -140,10 +140,11 @@ public class Player extends ControllableEntity implements Animatable {
 
     @Override
     public void onDeath() {
-        for (int i = 0; i < coinCount; i++) {
+        int coinsLost = Math.min(40, coinCount);
+        for (int i = 0; i < coinsLost; i++) {
             new DroppedCoin(x, y, this);
         }
-        coinCount = 0;
+        coinCount -= coinsLost;
     }
 
     @Override

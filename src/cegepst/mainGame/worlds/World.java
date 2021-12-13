@@ -78,12 +78,12 @@ public abstract class World implements SoundStopper {
     private void createFloor(int floorLocation, boolean isStartBorder) {
         Blockade floor = new Blockade();
         floor.teleport(0,floorLocation - ((isStartBorder) ? BORDER_Y_HEIGHT : 0));
-        floor.setDimension(10000,BORDER_Y_HEIGHT);
+        floor.setDimension(20000,BORDER_Y_HEIGHT);
     }
 
     private void createWall(int wallLocation, boolean isStartBorder) {
         Blockade wall = new Blockade();
         wall.teleport(wallLocation - ((isStartBorder) ? BORDER_X_WIDTH : 0),0);
-        wall.setDimension(BORDER_X_WIDTH,10000);
+        wall.setDimension(BORDER_X_WIDTH,20000);
     }
 }

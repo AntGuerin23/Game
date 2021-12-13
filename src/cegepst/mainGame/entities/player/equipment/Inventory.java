@@ -62,7 +62,9 @@ public class Inventory {
 
 
     public void restartJetpackSound() {
-        jetpack.setIsPlaySoundReady(true);
+        if (jetpack != null) {
+            jetpack.setIsPlaySoundReady(true);
+        }
     }
 
     private void updateVariables() {

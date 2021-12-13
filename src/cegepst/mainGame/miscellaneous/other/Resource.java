@@ -4,6 +4,7 @@ public enum Resource {
 
     TEST_WORLD_JSON_PATH("json/testMap48.json"),
     SHOP_JSON("json/shop.json"),
+    MAIN_WORLD_JSON("json/mainWorld.json"),
 
     TEST_WORLD_IMG_PATH("images/testMap48.png"),
     PLAYER_SPRITE_SHEET("images/classic_guy-sheet42_48.png"),
@@ -29,6 +30,8 @@ public enum Resource {
     FLY_TEXT("images/fly-tutorial.png"),
     CLIMB_TEXT("images/climb-tutorial.png"),
     GLOVE_SPRITE("images/gloves.png"),
+    FUEL_SPRITE("images/fuel.png"),
+    MAIN_WORLD("images/mainWorld.png"),
 
     COIN_SOUND_EFFECT("sounds/coin.wav"),
     JETPACK_SOUND_EFFECT("sounds/jetpack.wav"),
