@@ -19,7 +19,7 @@ public abstract class MovableEntity extends UpdatableEntity {
     protected int lastX;
     protected int lastY;
     protected int stunStatus;
-    private static final double gravityForce = 1.5;
+    protected double gravityForce = 1.5;
     protected long firstAirFrameTime;
     private boolean wasGroundedLastFrame;
     protected boolean hasJustJumped;

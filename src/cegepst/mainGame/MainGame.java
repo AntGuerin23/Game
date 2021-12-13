@@ -7,7 +7,7 @@ import cegepst.engine.graphics.RenderingEngine;
 import cegepst.engine.other.Camera;
 import cegepst.engine.other.Game;
 import cegepst.engine.repositories.EntityRepository;
-import cegepst.mainGame.entities.objects.Door;
+import cegepst.mainGame.entities.environment.Door;
 import cegepst.mainGame.entities.items.coin.CoinRespawner;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;

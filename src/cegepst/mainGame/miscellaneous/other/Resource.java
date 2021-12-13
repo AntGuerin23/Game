@@ -20,7 +20,9 @@ public enum Resource {
     SPIKE_LEFT("images/spike-left.png"),
     DOOR("images/door.png"),
     CRATE("images/crate.png"),
+    CRACKED_BLOCK("images/cracked-block.png"),
     TEST_WORLD_100("images/48100.png"),
+    BLOCK_FRAGMENT("images/block-fragment.png"),
 
     COIN_SOUND_EFFECT("sounds/coin.wav"),
     JETPACK_SOUND_EFFECT("sounds/jetpack.wav"),

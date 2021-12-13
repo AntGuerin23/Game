@@ -1,5 +1,6 @@
 package cegepst.engine.other;
 
+import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.mainGame.MainGame;
@@ -19,6 +20,20 @@ public class IntersectionChecker {
             }
         }
 
+        return null;
+    }
+
+    public static StaticEntity checkHitboxIntersect(StaticEntity entity, String searchedEntity) {
+        for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
+            StaticEntity staticEntity = entry.getKey();
+            if (staticEntity instanceof MovableEntity) {
+                if (((MovableEntity) staticEntity).hitBoxIntersectsWith(entity)
+                        && staticEntity.toString().equalsIgnoreCase(searchedEntity)
+                        && entry.getValue() == MainGame.getInstance().getCurrentWorld()) {
+                    return staticEntity;
+                }
+            }
+        }
         return null;
     }
 }
