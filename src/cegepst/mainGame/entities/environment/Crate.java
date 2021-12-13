@@ -1,7 +1,9 @@
 package cegepst.mainGame.entities.environment;
 
 import cegepst.engine.entities.MovableEntity;
+import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
+import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.mainGame.entities.player.Player;
@@ -20,20 +22,31 @@ public class Crate extends MovableEntity {
         sprite = ResourceLoader.loadSprite(Resource.CRATE.getPath());
         EntityRepository.getInstance().registerEntity(this,true);
         setDimension(48,48);
-        setSpeed(1);
+        setSpeed(2);
         teleport(x,y);
     }
 
     @Override
     public void update() {
         super.update();
-        if (player.isPressingLeftAndRightButtons() && player.isTouchingWall() && player.hitBoxIntersectsWith(this)) {
-            moveHorizontally(player.getHorizontalDirection());
+        if (player.isPressingLeftAndRightButtons() && player.isTouchingWall() && player.hitBoxIntersectsWith(this) && player.isGrounded()) {
+            horizontalDirection = player.getHorizontalDirection();
+            moveHorizontally(horizontalDirection);
+        }
+        StaticEntity entity = IntersectionChecker.checkHitboxIntersect(this,"Crate");
+        if (entity != null && player.isPressingLeftAndRightButtons() && player.isTouchingWall() && player.hitBoxIntersectsWith(entity)) {
+            horizontalDirection = ((Crate) entity).horizontalDirection;
+            moveHorizontally(horizontalDirection);
         }
     }
 
     @Override
     public void draw(Buffer buffer) {
         buffer.drawImage(sprite, x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Crate";
     }
 }

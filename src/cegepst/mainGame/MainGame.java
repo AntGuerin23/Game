@@ -38,7 +38,7 @@ public class MainGame extends Game {
         instantiate();
         player.pickupJetpack();
         player.pickupShotgun();
-        player.pickupClimbingGloves();
+       // player.pickupClimbingGloves();
     }
 
     @Override

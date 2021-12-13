@@ -8,6 +8,7 @@ import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.mainGame.entities.player.equipment.Bullet;
+import cegepst.mainGame.miscellaneous.other.Randomizer;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
 import java.awt.*;
@@ -20,6 +21,7 @@ public class CrackedBlock extends MovableEntity {
     private int hp;
     private int moveIndex;
     private boolean stunned;
+    private Bullet lastBullet;
 
     public CrackedBlock(int x, int y) {
         teleport(x,y);
@@ -27,7 +29,6 @@ public class CrackedBlock extends MovableEntity {
         sprite = ResourceLoader.loadSprite(Resource.CRACKED_BLOCK.getPath());
         moveIndex = 0;
         setGravitating(true);
-        //gravityForce = 0.01;
         setSpeed(2);
         hp = MAX_HP;
         EntityRepository.getInstance().registerEntity(this, true);
@@ -54,10 +55,13 @@ public class CrackedBlock extends MovableEntity {
         if (!stunned) {
             Bullet bullet = (Bullet) IntersectionChecker.checkHitboxIntersect(this,"Bullet");
             if (bullet != null) {
+                if (hp == 1) {
+                    lastBullet = bullet;
+                }
                 bullet.kill();
                 getHit();
                 for (int i = 0; i < 4; i++) {
-                    new BlockFragment(x,y);
+                    new BlockFragment(x + ((bullet.getHorizontalDirection() == Direction.RIGHT) ? -3 : 51),y, bullet.getHorizontalDirection());
                 }
             }
         }
@@ -97,7 +101,7 @@ public class CrackedBlock extends MovableEntity {
     public void onDeath() {
         super.onDeath();
         for (int i = 0; i < 40; i++) {
-            new BlockFragment(x,y);
+            new BlockFragment(x + 20, y, (Randomizer.randomInt(0, 1) == 0) ? Direction.LEFT : Direction.RIGHT);
         }
     }
 }

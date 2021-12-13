@@ -91,7 +91,9 @@ public class MainWorld extends World {
         new Coin(200,1008,player);
         new Coin(250,1008,player);
         new CoinBag(150,1000,player,5);
-        new Crate(390,1200,player);
+        new Crate(800,1200,player);
+        new Crate(900,1200,player);
+
     }
 
     private MainWorld() {}

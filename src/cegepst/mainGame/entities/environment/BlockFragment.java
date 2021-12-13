@@ -12,23 +12,22 @@ import java.awt.*;
 
 public class BlockFragment extends MovableEntity {
 
+    private static final int DESPAWN_DELAY = 300;
+    private int delay;
     private Direction direction;
     private Image sprite;
 
-    public BlockFragment(int x, int y) {
+    public BlockFragment(int x, int y, Direction bulletDirection) {
         EntityRepository.getInstance().registerEntityBuffered(this);
         setDimension(4,4);
-        initializeValues();
-        this.direction = (Randomizer.randomInt(0, 1) == 0) ? Direction.LEFT : Direction.RIGHT;
-        teleport(x + ((this.direction == Direction.LEFT) ? -3 : 51) ,y + 20);
-        sprite = ResourceLoader.loadSprite(Resource.BLOCK_FRAGMENT.getPath());
-        gravityForce = 0.5;
+        initializeValues(x, y, bulletDirection);
     }
 
     @Override
     public void update() {
         super.update();
         scatter();
+        despawn();
     }
 
     @Override
@@ -36,15 +35,27 @@ public class BlockFragment extends MovableEntity {
         buffer.drawImage(sprite, x, y);
     }
 
-    private void initializeValues() {
+    private void initializeValues(int x, int y, Direction bulletDirection) {
         setGravitating(true);
         setSpeed(Randomizer.randomInt(15, 50) / (double) 10);
+        delay = DESPAWN_DELAY;
+        sprite = ResourceLoader.loadSprite(Resource.BLOCK_FRAGMENT.getPath());
+        gravityForce = 0.5;
+        this.direction = bulletDirection.revert();
+        teleport(x,y + 20);
     }
 
     private void scatter() {
         moveHorizontally(direction);
         if (getSpeed() > 0) {
             setSpeed(getSpeed() - 0.08);
+        }
+    }
+
+    private void despawn() {
+        delay--;
+        if (delay <= 0) {
+            isDead = true;
         }
     }
 }
