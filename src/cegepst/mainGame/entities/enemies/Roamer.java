@@ -5,7 +5,7 @@ import cegepst.mainGame.entities.player.Player;
 
 public abstract class Roamer extends Enemy {
 
-    private int roamDistance;
+
     private int startingX;
     private int endingX;
     private Direction direction;

@@ -31,10 +31,7 @@ public class MainWorld extends World {
             initializeContent(player);
             hasBeenInitialized = true;
         }
-        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20, this);
-        EntityRepository.getInstance().registerEntity(player, false);
-        EntityRepository.getInstance().registerEntity(camera, false);
-        player.teleport(getSpawnPointX(), getSpawnPointY());
+        reset(camera);
     }
 
     private void instantiateBorders() {
@@ -82,6 +79,13 @@ public class MainWorld extends World {
         new CoinBag(150,1000,player,5);
         new Crate(800,1200,player);
         new Crate(900,1200,player);
+    }
+
+    private void reset(Camera camera) {
+        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20, this);
+        EntityRepository.getInstance().registerEntity(player, false);
+        EntityRepository.getInstance().registerEntity(camera, false);
+        player.teleport(getSpawnPointX(), getSpawnPointY());
     }
 
     private MainWorld() {}

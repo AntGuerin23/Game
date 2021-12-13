@@ -31,10 +31,7 @@ public class ShopWorld extends World implements SoundStopper {
             initializeContent(player);
             setBackground(Resource.SHOP);
         }
-        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.SHOP_MUSIC.getPath()), -20, this);
-        EntityRepository.getInstance().registerEntity(player, false);
-        EntityRepository.getInstance().registerEntity(camera, false);
-        player.teleport(getSpawnPointX(),getSpawnPointY());
+        reset(camera);
     }
 
     @Override
@@ -73,6 +70,13 @@ public class ShopWorld extends World implements SoundStopper {
         new BuyStation(815,700, ShopItem.SHOTGUN);
         new BuyStation(917,680, ShopItem.JETPACK);
         new BuyStation(1015,673, ShopItem.GLOVES);
+    }
+
+    private void reset(Camera camera) {
+        Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.SHOP_MUSIC.getPath()), -20, this);
+        EntityRepository.getInstance().registerEntity(player, false);
+        EntityRepository.getInstance().registerEntity(camera, false);
+        player.teleport(getSpawnPointX(),getSpawnPointY());
     }
 
     private ShopWorld() {}

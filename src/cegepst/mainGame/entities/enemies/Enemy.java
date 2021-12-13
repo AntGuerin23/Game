@@ -5,6 +5,7 @@ import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
 import cegepst.engine.other.IntersectionChecker;
 import cegepst.engine.repositories.EntityRepository;
+import cegepst.mainGame.entities.items.coin.CoinBag;
 import cegepst.mainGame.entities.items.coin.DroppedCoin;
 import cegepst.mainGame.entities.player.Player;
 
@@ -16,6 +17,7 @@ public abstract class Enemy extends MovableEntity {
     protected int storedCoins;
     private Player player;
     protected boolean stunned;
+    protected int roamDistance;
 
     @Override
     public abstract void draw(Buffer buffer);
@@ -34,9 +36,14 @@ public abstract class Enemy extends MovableEntity {
 
     @Override
     public void onDeath() {
-        for (int i = 0; i < storedCoins; i++) {
-            new DroppedCoin(x, y, player);
+        if (roamDistance > 0) {
+            for (int i = 0; i < storedCoins; i++) {
+                new DroppedCoin(x, y, player);
+            }
+        } else {
+            new CoinBag(x,y,player,storedCoins);
         }
+
     }
 
     protected void setMaxHp(int maxHp) {
