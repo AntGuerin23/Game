@@ -4,6 +4,7 @@ import cegepst.engine.controls.Direction;
 import cegepst.engine.mapCollisions.Blockade;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.mainGame.entities.enemies.Spike;
+import cegepst.mainGame.entities.items.FuelContainer;
 import cegepst.mainGame.entities.items.coin.Coin;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
@@ -48,6 +49,7 @@ public class WorldBuilder {
         JSONArray tileset = getTileset(globalInfo);
         checkForSpike(getObjectId(tileId), index, worldWidth);
         checkForCoin(getObjectId(tileId), index, worldWidth);
+        checkForFuelContainer(getObjectId(tileId), index, worldWidth);
         if (tileIdExists((getRealTileId(tileId)), tileset)) {
             createBlockade(index, worldWidth, tileId, tileset);
         }
@@ -150,6 +152,14 @@ public class WorldBuilder {
             int locationX = index % worldWidth;
             int locationY = index / worldWidth;
             new Coin(locationX * PIXEL_PER_TILE, locationY * PIXEL_PER_TILE, player);
+        }
+    }
+
+    private void checkForFuelContainer(int tileId, int index, int worldWidth) {
+        if (getObjectId(tileId) == 34) {
+            int locationX = index % worldWidth;
+            int locationY = index / worldWidth;
+            new FuelContainer(locationX * PIXEL_PER_TILE, locationY * PIXEL_PER_TILE);
         }
     }
 }
