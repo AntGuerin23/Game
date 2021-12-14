@@ -34,7 +34,8 @@ public class Animator {
     }
 
     public void drawFlippableAnimation(Buffer buffer, int x, int flippedX, int y) {
-        buffer.drawFlippableImage(frames[currentAction.getId()][currentAnimationFrame], x, flippedX, y, entity.getWidth(), entity.getHeight(), entity.getHorizontalDirection());
+        buffer.drawFlippableImage(frames[currentAction.getId()][currentAnimationFrame], x, flippedX,
+                y, entity.getWidth(), entity.getHeight(), entity.getHorizontalDirection());
     }
 
     public void loadSpriteSheet(Resource resource) {
