@@ -18,12 +18,6 @@ public class Inventory {
     public Inventory(Player player, GamePad controller) {
         inventory = new HashMap<>();
         this.controller = controller;
-        jetpack = new Jetpack();
-        jetpack.initialize(player,controller);
-        inventory.put("Jetpack", jetpack);
-        shotgun = new Shotgun();
-        shotgun.initialize(player, controller);
-        inventory.put("Shotgun", shotgun);
         this.player = player;
     }
 

@@ -8,11 +8,14 @@ import java.awt.event.KeyListener;
 public abstract class Game {
 
     private boolean playing = true;
-    private RenderingEngine renderingEngine;
+    private final RenderingEngine renderingEngine;
 
     public abstract void initialize();
+
     public abstract void update();
+
     public abstract void draw(Buffer buffer);
+
     public abstract void conclude();
 
     public Game() {

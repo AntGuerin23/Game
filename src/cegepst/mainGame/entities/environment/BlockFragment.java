@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class BlockFragment extends MovableEntity {
 
-    private static final int DESPAWN_DELAY = 60;
+    private static final int DESPAWN_DELAY = 30;
     private int delay;
     private Direction direction;
     private Image sprite;

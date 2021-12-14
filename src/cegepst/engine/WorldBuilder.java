@@ -168,7 +168,7 @@ public class WorldBuilder {
     }
 
     private void checkForCrackedBlocks(int tileId, int index, int worldWidth) {
-        if (getObjectId(tileId) == 64) {
+        if (getObjectId(tileId) == 57) {
             int locationX = index % worldWidth;
             int locationY = index / worldWidth;
             new CrackedBlock(locationX * PIXEL_PER_TILE, locationY * PIXEL_PER_TILE);

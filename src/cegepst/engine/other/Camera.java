@@ -14,12 +14,12 @@ import java.awt.*;
 
 public class Camera extends MovableEntity {
 
-    private Player player;
+    private final Player player;
     private World currentWorld;
-    private Image respawnText;
+    private final Image respawnText;
 
     public Camera(Player player, World currentWorld) {
-        EntityRepository.getInstance().registerEntity(this,false);
+        EntityRepository.getInstance().registerEntity(this, false);
         this.player = player;
         this.currentWorld = currentWorld;
         respawnText = ResourceLoader.loadSprite(Resource.RESPAWN_TEXT.getPath());
@@ -68,7 +68,7 @@ public class Camera extends MovableEntity {
     private void drawText(Buffer buffer) {
         buffer.drawText("Coins : " + player.getCoinCount(), x, y + 80, Color.WHITE);
         if (player.isDead()) {
-            buffer.drawImage(respawnText,x + 155, y + 280);
+            buffer.drawImage(respawnText, x + 155, y + 280);
         }
         if (GameSettings.debug) {
             buffer.drawText("FPS: " + GameTime.getCurrentFps(), x, y + 60, Color.WHITE);

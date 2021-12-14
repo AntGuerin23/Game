@@ -11,6 +11,7 @@ public class GamePad extends MovementController {
     private static final int FULL_SCREEN_KEY = KeyEvent.VK_F11;
     private static final int DEBUG_KEY = KeyEvent.VK_F3;
     private static final int RESPAWN_KEY = KeyEvent.VK_R;
+    private static final int GOD_MODE_KEY = KeyEvent.VK_F12;
 
     public GamePad() {
         bindKey(QUIT_KEY);
@@ -18,6 +19,7 @@ public class GamePad extends MovementController {
         bindKey(DEBUG_KEY);
         bindKey(FIRE_KEY);
         bindKey(RESPAWN_KEY);
+        bindKey(GOD_MODE_KEY);
     }
 
     public boolean isQuitPressed() {
@@ -38,6 +40,10 @@ public class GamePad extends MovementController {
 
     public boolean isRespawnPressed() {
         return isKeyPressed(RESPAWN_KEY);
+    }
+
+    public boolean isGodModePressed() {
+        return isKeyPressed(GOD_MODE_KEY);
     }
 
 

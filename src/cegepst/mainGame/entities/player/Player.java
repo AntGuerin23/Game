@@ -13,8 +13,7 @@ import cegepst.mainGame.entities.environment.BuyStation;
 import cegepst.mainGame.entities.environment.Door;
 import cegepst.mainGame.entities.items.coin.CoinRespawner;
 import cegepst.mainGame.entities.items.coin.DroppedCoin;
-import cegepst.mainGame.entities.player.equipment.Equipable;
-import cegepst.mainGame.entities.player.equipment.Inventory;
+import cegepst.mainGame.entities.player.equipment.*;
 import cegepst.mainGame.miscellaneous.actions.PlayerActions;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
@@ -24,7 +23,7 @@ import java.awt.*;
 
 public class Player extends ControllableEntity implements Animatable {
 
-    private final static int MAX_HP = 5;
+    private final static int MAX_HP = 3;
     private final static int STUN_DURATION = 60;
     private int coinCount;
     private int hp;
@@ -35,6 +34,7 @@ public class Player extends ControllableEntity implements Animatable {
     private boolean stunned;
     private double lastVerticalVelocity;
     private static Player instance;
+    private boolean godMode = false;
 
     public static Player getInstance(GamePad controller) {
         if (instance == null) {
@@ -102,7 +102,7 @@ public class Player extends ControllableEntity implements Animatable {
         if (verticalVelocity > 4) {
             verticalVelocity = 4;
         }
-        firstAirFrameTime = GameTime.getCurrentTime() - 250;
+        firstAirFrameTime = GameTime.getCurrentTime() - 175;
     }
 
     public void goBackUp() {
@@ -155,6 +155,11 @@ public class Player extends ControllableEntity implements Animatable {
         return Math.abs(x - other.getX()) < 800 && Math.abs(y - other.getY()) < 600;
     }
 
+    public void godMode() {
+        coinCount = 300;
+        godMode = true;
+    }
+
     @Override
     public void onAnimationEnd(Action action) {}
 
@@ -190,7 +195,7 @@ public class Player extends ControllableEntity implements Animatable {
     }
 
     private void initializeValues() {
-        coinCount = 300; //TODO: Reset this to 0
+        coinCount = 0;
         hp = MAX_HP;
         setSpeed(5);
         setDimension(42,46);
@@ -292,8 +297,10 @@ public class Player extends ControllableEntity implements Animatable {
     }
 
     private void getHit(int damage) {
-        hp -= damage;
-        Sound.playOnce(ResourceLoader.loadSound(Resource.DAMAGE_SOUND_EFFECT.getPath()),-10);
+        if (!godMode) {
+            Sound.playOnce(ResourceLoader.loadSound(Resource.DAMAGE_SOUND_EFFECT.getPath()),-20);
+            hp -= damage;
+        }
     }
 
     private void checkIfDead() {

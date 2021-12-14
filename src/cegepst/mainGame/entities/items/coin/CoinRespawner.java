@@ -6,9 +6,11 @@ import java.awt.*;
 
 public class CoinRespawner {
 
-    private static final int DELAY_TIME = 20;
+    private static final int RESPAWN_DELAY = 20;
+    private static final int LOCATION_DELAY = 60;
     private int nbOfLostCoins;
-    private int delay;
+    private int respawnDelay;
+    private int locationDelay;
     private static CoinRespawner instance;
     private Point lastPlayerLocation;
     private boolean timerHasStarted;
@@ -30,8 +32,12 @@ public class CoinRespawner {
     }
 
     public void updatePlayerLocation(Point lastPlayerLocation, Player player) {
-        this.lastPlayerLocation = lastPlayerLocation;
-        this.player = player;
+        if (locationDelay <= 0) {
+            this.lastPlayerLocation = lastPlayerLocation;
+            this.player = player;
+            locationDelay = LOCATION_DELAY;
+        }
+        locationDelay--;
     }
 
     public void notifyAboutCoinDeath() {
@@ -43,22 +49,24 @@ public class CoinRespawner {
     }
 
     private void createCoinBagIfTimerDone() {
-        if (delay <= 0) {
+        if (respawnDelay <= 0) {
             new CoinBag(lastPlayerLocation.x, lastPlayerLocation.y, player, nbOfLostCoins);
             timerHasStarted = false;
-            delay = DELAY_TIME;
+            respawnDelay = RESPAWN_DELAY;
             nbOfLostCoins = 0;
         }
     }
 
     private void decrementTimer() {
         if (timerHasStarted) {
-            delay--;
+            respawnDelay--;
         }
     }
 
     private CoinRespawner() {
-        delay = DELAY_TIME;
+        respawnDelay = RESPAWN_DELAY;
+        locationDelay = LOCATION_DELAY;
         timerHasStarted = false;
+        lastPlayerLocation = new Point(0,0);
     }
 }

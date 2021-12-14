@@ -32,6 +32,7 @@ public enum Resource {
     GLOVE_SPRITE("images/gloves.png"),
     FUEL_SPRITE("images/fuel.png"),
     MAIN_WORLD("images/mainWorld.png"),
+    OLD_MAN("images/old-man.png"),
 
     COIN_SOUND_EFFECT("sounds/coin.wav"),
     JETPACK_SOUND_EFFECT("sounds/jetpack.wav"),

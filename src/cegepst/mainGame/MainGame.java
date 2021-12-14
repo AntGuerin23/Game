@@ -85,6 +85,9 @@ public class MainGame extends Game {
             player.respawn();
             player.teleport(currentWorld.getSpawnPointX(),currentWorld.getSpawnPointY());
         }
+        if (gamePad.isGodModePressed()) {
+            player.godMode();
+        }
     }
 
     private void updateEntities() {

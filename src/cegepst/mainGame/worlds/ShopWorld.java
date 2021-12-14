@@ -8,6 +8,7 @@ import cegepst.engine.resources.Sound;
 import cegepst.engine.resources.SoundStopper;
 import cegepst.mainGame.entities.environment.BuyStation;
 import cegepst.mainGame.entities.environment.Door;
+import cegepst.mainGame.entities.environment.OldMan;
 import cegepst.mainGame.entities.environment.ShopItem;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
@@ -70,6 +71,7 @@ public class ShopWorld extends World implements SoundStopper {
         new BuyStation(815,700, ShopItem.SHOTGUN);
         new BuyStation(917,680, ShopItem.JETPACK);
         new BuyStation(1015,673, ShopItem.GLOVES);
+        new OldMan(1115, 694);
     }
 
     private void reset(Camera camera) {
