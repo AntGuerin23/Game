@@ -3,7 +3,9 @@ package cegepst.engine;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.mapCollisions.Blockade;
 import cegepst.engine.resources.ResourceLoader;
+import cegepst.mainGame.entities.enemies.Rat;
 import cegepst.mainGame.entities.enemies.Spike;
+import cegepst.mainGame.entities.environment.CrackedBlock;
 import cegepst.mainGame.entities.items.FuelContainer;
 import cegepst.mainGame.entities.items.coin.Coin;
 import cegepst.mainGame.entities.player.Player;
@@ -50,6 +52,8 @@ public class WorldBuilder {
         checkForSpike(getObjectId(tileId), index, worldWidth);
         checkForCoin(getObjectId(tileId), index, worldWidth);
         checkForFuelContainer(getObjectId(tileId), index, worldWidth);
+        checkForCrackedBlocks(getObjectId(tileId), index, worldWidth);
+        checkForRats(getObjectId(tileId), index, worldWidth);
         if (tileIdExists((getRealTileId(tileId)), tileset)) {
             createBlockade(index, worldWidth, tileId, tileset);
         }
@@ -120,7 +124,7 @@ public class WorldBuilder {
     }
 
     private void checkForSpike(int tileId, int index, int worldWidth) {
-        if (getObjectId(tileId) >= 22 && getObjectId(tileId) <= 25) {
+        if (getObjectId(tileId) >= 43 && getObjectId(tileId) <= 46) {
             createSpike(tileId, index, worldWidth);
         }
     }
@@ -132,34 +136,51 @@ public class WorldBuilder {
     }
 
     private Direction getSpikeDirection(int tileId) {
-        if (tileId == 22) {
+        if (tileId == 43) {
             return Direction.UP;
         }
-        if (tileId == 23) {
+        if (tileId == 44) {
             return Direction.RIGHT;
         }
-        if (tileId == 24) {
+        if (tileId == 45) {
             return Direction.DOWN;
         }
-        if (tileId == 25) {
+        if (tileId == 46) {
             return Direction.LEFT;
         }
         return null;
     }
 
     private void checkForCoin(int tileId, int index, int worldWidth) {
-        if (getObjectId(tileId) == 21) {
+        if (getObjectId(tileId) == 42) {
             int locationX = index % worldWidth;
             int locationY = index / worldWidth;
-            new Coin(locationX * PIXEL_PER_TILE, locationY * PIXEL_PER_TILE, player);
+            new Coin(locationX * PIXEL_PER_TILE + 9, locationY * PIXEL_PER_TILE, player);
         }
     }
 
     private void checkForFuelContainer(int tileId, int index, int worldWidth) {
-        if (getObjectId(tileId) == 34) {
+        if (getObjectId(tileId) == 47) {
             int locationX = index % worldWidth;
             int locationY = index / worldWidth;
-            new FuelContainer(locationX * PIXEL_PER_TILE, locationY * PIXEL_PER_TILE);
+            new FuelContainer(locationX * PIXEL_PER_TILE + 6, locationY * PIXEL_PER_TILE);
+        }
+    }
+
+    private void checkForCrackedBlocks(int tileId, int index, int worldWidth) {
+        if (getObjectId(tileId) == 64) {
+            int locationX = index % worldWidth;
+            int locationY = index / worldWidth;
+            new CrackedBlock(locationX * PIXEL_PER_TILE, locationY * PIXEL_PER_TILE);
+        }
+    }
+
+    private void checkForRats(int tileId, int index, int worldWidth) {
+        if (getObjectId(tileId) == 67) {
+            int locationX = index % worldWidth;
+            int locationY = index / worldWidth;
+            Rat rat = new Rat((locationX * PIXEL_PER_TILE) - 17, locationY * PIXEL_PER_TILE, 0, player, false, 2);
+            rat.setMaxHp(3);
         }
     }
 }

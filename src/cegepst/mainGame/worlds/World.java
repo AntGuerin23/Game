@@ -62,7 +62,7 @@ public abstract class World implements SoundStopper {
 
     protected void drawEntities(Buffer buffer) {
         for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
-            if (entry.getValue() == this) {
+            if (entry.getValue() == this && MainGame.getInstance().isPlayerNear(entry.getKey())) {
                 entry.getKey().draw(buffer);
             }
         }

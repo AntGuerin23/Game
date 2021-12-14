@@ -21,7 +21,7 @@ public abstract class Bouncer extends Roamer {
         if (canBounce) {
             if (jumpCooldown == 0) {
                 jump();
-                jumpCooldown = 120;
+                jumpCooldown = 40;
             }
             jumpCooldown--;
         }

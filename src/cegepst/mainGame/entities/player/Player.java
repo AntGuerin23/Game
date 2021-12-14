@@ -52,6 +52,7 @@ public class Player extends ControllableEntity implements Animatable {
 
     @Override
     public void update() {
+        System.out.println(x + " " + y);
         super.update();
         super.moveAccordingToController();
         updateValues();
@@ -107,6 +108,9 @@ public class Player extends ControllableEntity implements Animatable {
     public void goBackUp() {
         verticalDirection = Direction.UP;
         verticalVelocity += 3;
+        if (verticalVelocity < -4) {
+            verticalVelocity = -4;
+        }
     }
 
     public Door isTouchingDoor() {
@@ -140,11 +144,15 @@ public class Player extends ControllableEntity implements Animatable {
 
     @Override
     public void onDeath() {
-        int coinsLost = Math.min(40, coinCount);
+        int coinsLost = Math.min(20, coinCount);
         for (int i = 0; i < coinsLost; i++) {
             new DroppedCoin(x, y, this);
         }
         coinCount -= coinsLost;
+    }
+
+    public boolean isNear(StaticEntity other) {
+        return Math.abs(x - other.getX()) < 800 && Math.abs(y - other.getY()) < 600;
     }
 
     @Override

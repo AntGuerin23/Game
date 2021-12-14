@@ -9,8 +9,8 @@ import java.util.*;
 public class EntityRepository {
 
     private static EntityRepository instance;
-    private final HashMap<StaticEntity, World> registeredEntities;
-    private final HashMap<StaticEntity, World> creationBuffer;
+    private final LinkedHashMap<StaticEntity, World> registeredEntities;
+    private final LinkedHashMap<StaticEntity, World> creationBuffer;
 
     public static EntityRepository getInstance() {
         if (instance == null) {
@@ -42,6 +42,7 @@ public class EntityRepository {
     }
 
     public void registerEntity(StaticEntity entity, boolean isCollidable) {
+        registeredEntities.remove(entity);
         registeredEntities.put(entity, MainGame.getInstance().getCurrentWorld());
         if (isCollidable) {
             CollidableRepository.getInstance().registerEntity(entity);
@@ -61,7 +62,7 @@ public class EntityRepository {
     }
 
     private EntityRepository() {
-        creationBuffer = new HashMap<>();
-        registeredEntities = new HashMap<>();
+        creationBuffer = new LinkedHashMap<>();
+        registeredEntities = new LinkedHashMap<>();
     }
 }

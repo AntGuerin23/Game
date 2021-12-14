@@ -32,12 +32,14 @@ public abstract class Roamer extends Enemy {
     }
 
     private void roam() {
-        if (super.x >= endingX) {
-            direction = Direction.LEFT;
+        if (roamDistance > 0) {
+            if (super.x >= endingX) {
+                direction = Direction.LEFT;
+            }
+            if (super.x <= startingX) {
+                direction = Direction.RIGHT;
+            }
+            moveHorizontally(direction);
         }
-        if (super.x <= startingX) {
-            direction = Direction.RIGHT;
-        }
-        moveHorizontally(direction);
     }
 }

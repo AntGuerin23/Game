@@ -41,12 +41,12 @@ public abstract class Enemy extends MovableEntity {
                 new DroppedCoin(x, y, player);
             }
         } else {
-            new CoinBag(x,y,player,storedCoins);
+            new CoinBag(x + 23,y,player,storedCoins);
         }
 
     }
 
-    protected void setMaxHp(int maxHp) {
+    public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
         hp = maxHp;
     }

@@ -36,7 +36,7 @@ public class Collision {
         Rectangle hitBox = (checkingFloor) ? entity.getLowerHitBox() : entity.getUpperHitBox();
         for (Map.Entry<StaticEntity, World> entry : CollidableRepository.getInstance().getRepository()) {
             StaticEntity other = entry.getKey();
-            if (hitBox.intersects(other.getBounds()) && entry.getValue() == MainGame.getInstance().getCurrentWorld()) {
+            if (hitBox.intersects(other.getBounds()) && entry.getValue() == MainGame.getInstance().getCurrentWorld() && MainGame.getInstance().isPlayerNear(other)) {
                 return true;
             }
         }
@@ -78,7 +78,7 @@ public class Collision {
     private double getAllowedDistance(Rectangle collisionBound, double allowedDistance, DistanceCalculator calculator) {
         for (Map.Entry<StaticEntity, World> entry : CollidableRepository.getInstance().getRepository()) {
             StaticEntity other = entry.getKey();
-            if (collisionBound.intersects(other.getBounds()) && entry.getValue() == MainGame.getInstance().getCurrentWorld()) {
+            if (collisionBound.intersects(other.getBounds()) && entry.getValue() == MainGame.getInstance().getCurrentWorld() && MainGame.getInstance().isPlayerNear(other)) {
                 allowedDistance = Math.min(allowedDistance, calculator.calculateWith(other));
             }
         }

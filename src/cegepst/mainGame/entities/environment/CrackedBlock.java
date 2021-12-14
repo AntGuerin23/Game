@@ -16,7 +16,7 @@ import java.awt.*;
 public class CrackedBlock extends MovableEntity {
 
     private static final int MAX_HP = 3;
-    private static final int STUN_TIME = 20;
+    private static final int STUN_TIME = 7;
     private Image sprite;
     private int hp;
     private int moveIndex;
@@ -100,7 +100,7 @@ public class CrackedBlock extends MovableEntity {
     @Override
     public void onDeath() {
         super.onDeath();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 30; i++) {
             new BlockFragment(x + 20, y, (Randomizer.randomInt(0, 1) == 0) ? Direction.LEFT : Direction.RIGHT);
         }
     }

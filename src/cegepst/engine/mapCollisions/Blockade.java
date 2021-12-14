@@ -1,8 +1,8 @@
 package cegepst.engine.mapCollisions;
 
-import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.entities.StaticEntity;
 import cegepst.engine.graphics.Buffer;
+import cegepst.engine.repositories.CollidableRepository;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
 
 import java.awt.*;
@@ -10,7 +10,7 @@ import java.awt.*;
 public class Blockade extends StaticEntity {
 
     public Blockade() {
-        EntityRepository.getInstance().registerEntity(this, true);
+        CollidableRepository.getInstance().registerEntity(this);
     }
 
     @Override

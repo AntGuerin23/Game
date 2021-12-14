@@ -38,6 +38,10 @@ public class CoinRespawner {
         nbOfLostCoins++;
     }
 
+    public boolean isRespawnReady() {
+        return !timerHasStarted;
+    }
+
     private void createCoinBagIfTimerDone() {
         if (delay <= 0) {
             new CoinBag(lastPlayerLocation.x, lastPlayerLocation.y, player, nbOfLostCoins);

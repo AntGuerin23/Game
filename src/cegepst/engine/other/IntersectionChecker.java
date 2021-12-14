@@ -13,7 +13,7 @@ public class IntersectionChecker {
     public static StaticEntity checkIntersect(StaticEntity entity, String searchedEntity) {
         for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
             StaticEntity staticEntity = entry.getKey();
-            if (entity.intersectsWith(staticEntity)
+            if (entity.intersectsWith(staticEntity) && MainGame.getInstance().isPlayerNear(staticEntity)
                     && staticEntity.toString().equalsIgnoreCase(searchedEntity)
                     && entry.getValue() == MainGame.getInstance().getCurrentWorld()) {
                 return staticEntity;
@@ -26,7 +26,7 @@ public class IntersectionChecker {
     public static StaticEntity checkHitboxIntersect(StaticEntity entity, String searchedEntity) {
         for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
             StaticEntity staticEntity = entry.getKey();
-            if (staticEntity instanceof MovableEntity) {
+            if (staticEntity instanceof MovableEntity && MainGame.getInstance().isPlayerNear(staticEntity)) {
                 if (((MovableEntity) staticEntity).hitBoxIntersectsWith(entity)
                         && staticEntity.toString().equalsIgnoreCase(searchedEntity)
                         && entry.getValue() == MainGame.getInstance().getCurrentWorld()) {

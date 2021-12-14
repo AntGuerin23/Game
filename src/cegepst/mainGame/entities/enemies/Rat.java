@@ -64,7 +64,7 @@ public class Rat extends Bouncer implements Animatable {
     }
 
     private void initializeValues() {
-        setMaxHp(10);
+        setMaxHp(6);
         setDimension(74,76);
         setSpeed(canBounce ? 4 : 6);
         animator = new Animator(this, Resource.RAT_SPRITE_SHEET, 3, RatActions.RUN,width);

@@ -24,7 +24,7 @@ public class CollidableRepository {
         return registeredEntities.entrySet();
     }
 
-    protected void registerEntity(StaticEntity entity) {
+    public void registerEntity(StaticEntity entity) {
         registeredEntities.put(entity, MainGame.getInstance().getCurrentWorld());
     }
 

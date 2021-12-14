@@ -36,7 +36,7 @@ public class ShopWorld extends World implements SoundStopper {
 
     @Override
     public int getSpawnPointX() {
-        return 340;
+        return 355;
     }
 
     @Override

@@ -13,7 +13,6 @@ import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.GamePad;
 import cegepst.mainGame.miscellaneous.other.GameSettings;
 import cegepst.mainGame.worlds.MainWorld;
-import cegepst.mainGame.worlds.ShopWorld;
 import cegepst.mainGame.worlds.World;
 
 import java.util.ArrayList;
@@ -59,14 +58,17 @@ public class MainGame extends Game {
         return currentWorld;
     }
 
+    public boolean isPlayerNear(StaticEntity other) {
+        return player.isNear(other);
+    }
+
     private void instantiate() {
         instance = this;
         currentWorld = MainWorld.getInstance();
         gamePad = new GamePad();
         player = Player.getInstance(gamePad);
         camera = new Camera(player, currentWorld);
-        fixWorldBug();
-        player.teleport(currentWorld.getSpawnPointX(), currentWorld.getSpawnPointY());
+        currentWorld.initialize(player, camera);
     }
 
     private void manageInputs() {
@@ -79,7 +81,7 @@ public class MainGame extends Game {
         if (gamePad.isFullScreenPressed()) {
             RenderingEngine.getInstance().getScreen().toggleFullscreen();
         }
-        if (gamePad.isRespawnPressed() && player.isDead()) {
+        if (gamePad.isRespawnPressed() && player.isDead() && CoinRespawner.getInstance().isRespawnReady()) {
             player.respawn();
             player.teleport(currentWorld.getSpawnPointX(),currentWorld.getSpawnPointY());
         }
@@ -90,7 +92,7 @@ public class MainGame extends Game {
         EntityRepository.getInstance().emptyCreationBuffer();
         for (Map.Entry<StaticEntity, World> entry : EntityRepository.getInstance().getRepository()) {
             StaticEntity entity = entry.getKey();
-            if (entity instanceof UpdatableEntity && entry.getValue() == currentWorld) {
+            if (entity instanceof UpdatableEntity && entry.getValue() == currentWorld && (MainGame.getInstance().isPlayerNear(entity) || entity instanceof Camera)) {
                 ((UpdatableEntity) entity).update();
             }
         }
@@ -126,14 +128,6 @@ public class MainGame extends Game {
                 currentWorld.initialize(player, camera);
             }
         }
-    }
-
-    private void fixWorldBug() {
-        currentWorld.initialize(player, camera);
-        currentWorld = ShopWorld.getInstance();
-        currentWorld.initialize(player, camera);
-        currentWorld = MainWorld.getInstance();
-        currentWorld.initialize(player,camera);
     }
 
     private void drawWorld(Buffer buffer, Camera camera) {

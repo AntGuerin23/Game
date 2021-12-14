@@ -5,7 +5,10 @@ import cegepst.engine.other.Camera;
 import cegepst.engine.repositories.EntityRepository;
 import cegepst.engine.resources.ResourceLoader;
 import cegepst.engine.resources.Sound;
+import cegepst.mainGame.entities.enemies.Rat;
+import cegepst.mainGame.entities.environment.Crate;
 import cegepst.mainGame.entities.environment.Door;
+import cegepst.mainGame.entities.items.coin.CoinBag;
 import cegepst.mainGame.entities.player.Player;
 import cegepst.mainGame.miscellaneous.other.Resource;
 
@@ -23,9 +26,11 @@ public class MainWorld extends World {
     }
 
     public void initialize (Player player, Camera camera) {
+        player.teleport(getSpawnPointX(), getSpawnPointY());
         if (!hasBeenInitialized) {
             initializeContent(player);
             hasBeenInitialized = true;
+            //player.teleport(6167, 8306);
         }
         reset(camera);
     }
@@ -36,12 +41,12 @@ public class MainWorld extends World {
 
     @Override
     public int getSpawnPointX() {
-        return 30;
+        return 9605;
     }
 
     @Override
     public int getSpawnPointY() {
-        return 990;
+        return 9600;
     }
 
     private void initializeContent(Player player) {
@@ -61,28 +66,30 @@ public class MainWorld extends World {
     }
 
     private void initializeEntities() {
-        new Door(340,1185, ShopWorld.getInstance());
-//        new CrackedBlock(1200,1200);
-//        new CrackedBlock(1248,1200);
-//        new CrackedBlock(1296,1200);
-//        new CrackedBlock(1200,1152);
-//        new CrackedBlock(1248,1152);
-//        new CrackedBlock(1296,1152);
-//        new Coin(0,1008,player);
-//        new Coin(100,1008,player);
-//        new Coin(200,1008,player);
-//        new Coin(250,1008,player);
-//        new CoinBag(150,1000,player,5);
-//        new Crate(800,1200,player);
-//        new Crate(900,1200,player);
-//        new FuelContainer(600,900);
+        new Door(9590,9580, ShopWorld.getInstance());
+        new Crate(11500,12650,player);
+        new Rat(9555,12818,470,player,false,0);
+        new Rat(8900,12818,455,player,false,0);
+        new Crate(6536, 12818, player);
+        new Crate(6751, 12818, player);
+        new CoinBag(6578, 9938, player, 15);
+        new CoinBag(12181, 7202, player, 25);
+        new CoinBag(12342, 7824, player, 15);
+        new CoinBag(3984, 8306, player, 25);
+        new Rat(7432, 8306,730,player,false,5);
+        new Rat(6538, 8354,600,player,true,10);
+        new Rat(6638, 8354,500,player,true,10);
+        new Rat(3984,8306,650,player,false,0);
+        new Rat(4000,8306,650,player,false,0);
+        new Rat(4100,8306,550,player,false,0);
+        new Rat(4200,8306,450,player,false,0);
+        new Rat(4300,8306,350,player,false,0);
     }
 
     private void reset(Camera camera) {
         Sound.playStoppableLoop(ResourceLoader.loadSound(Resource.MAIN_MUSIC.getPath()), -20, this);
         EntityRepository.getInstance().registerEntity(player, false);
         EntityRepository.getInstance().registerEntity(camera, false);
-        player.teleport(getSpawnPointX(), getSpawnPointY());
     }
 
     private MainWorld() {}
